@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const etudiantSchema = new Schema({
     email: { type: String, required: true, unique: true },
     emailVerified: { type: Boolean, default: false },
     emailVerificationToken: { type: String }, // Store email verification token
@@ -76,10 +76,9 @@ const userSchema = new Schema({
     // Security and login details
     refreshToken: { type: String }, // For refresh token in JWT-based auth
     lastLogin: { type: Date }, // Store last login time
-
-
     role: { type: String, enum: ['etudiant', 'membre', 'clubManger', 'admin'], default: 'etudiant' },
+    
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Etudiant', etudiantSchema);

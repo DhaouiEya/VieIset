@@ -1,38 +1,56 @@
-require('dotenv').config(); // Load environment variables de fichier .env ex process.env.PORT    
-const express = require('express');  //importes le module Express, qui te permet de créer un serveur web avec Node.js.
-const app = express(); // crée une instance de l'application , , c’est-à-dire ton serveur backend.
-const routes = require('./routes');
+require('dotenv').config(); // Charge les variables d'environnement
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const helmet = require('helmet');
+const path = require('path');
+const clubRoutes = require('./routes/clubRoutes'); // routes spécifiques club
 const { errorMiddleware } = require('./middlewares/errorHandler');
-const cors = require('cors'); //pour gérer les requêtes cross-origin (CORS)
-const helmet = require('helmet');// Security middleware to set various HTTP headers
-const path = require('path'); //trouver le bon chemin de fichier
 
+const app = express();
 
-//middleware Express 
-//toutes les requêtes entrantes qui contiennent un corps JSON (body) doivent être automatiquement parsées (converties) en objet JavaScript utilisable dans req.body.
+// Middleware pour parser les requêtes JSON
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Allow requests from your frontend
 
+// Configuration CORS
 const corsOptions = {
-  origin: '*', // Replace with the URL of your Angular app
+  origin: '*', // mettre l’URL du front Angular en prod
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
-
 app.use(cors(corsOptions));
 
+// Sécurité avec Helmet
 app.use(
   helmet({
-    crossOriginResourcePolicy: false, // le frontend peut utiliser les ressource de mon  backend ,Je veux que les autres sites puissent utiliser mes ressource (image , video ..). 
+    crossOriginResourcePolicy: false, // autorise l’accès aux ressources statiques (images, vidéos, etc.)
   })
 );
 
-// serve static files from the "uploads" directory
+// Servir les fichiers statiques (images, etc.)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use('/api',routes)
 
+app.use('/api/clubs', clubRoutes);
+
+// Middleware global pour gérer les erreurs
 app.use(errorMiddleware);
 
-module.exports = app; 
+
+// Connexion MongoDB + démarrage du serveur
+const PORT = process.env.PORT || 9000;
+// console.log("MONGO_URL:", process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('MongoDB connected');
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+  });
+
+module.exports = app;
