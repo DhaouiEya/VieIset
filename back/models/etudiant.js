@@ -67,7 +67,7 @@ const userSchema = new Schema({
     allergies: [{ type: String }],
     accessibilityNeeds: { type: String }, // Handicap ou besoins particuliers
 
-    isActive: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
     isOnline: { type: Boolean, default: true },
 
     // Social login fields
@@ -77,8 +77,9 @@ const userSchema = new Schema({
     refreshToken: { type: String }, // For refresh token in JWT-based auth
     lastLogin: { type: Date }, // Store last login time
 
-
+ preRegistered: { type: Boolean, default: false }, // Indique si l'utilisateur a rempli les infos pré-inscription
     role: { type: String, enum: ['user', 'admin', 'clubManager'], default: 'user' },
+
 
 }, { timestamps: true });
 
