@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publier un événement</title>
+  <style>
+    /* Variables CSS pour une maintenance facile */
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --primary-light: #4895ef;
+      --secondary: #7209b7;
+      --success: #4cc9f0;
+      --danger: #e63946;
+      --warning: #f4a261;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 12px;
+      --border-radius-sm: 8px;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    }
+
+    /* Reset et styles de base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: var(--dark);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    /* Animation d'entrée */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* En-tête du formulaire */
+    .form-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 0 1rem;
+    }
+
+    .form-header h3 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.5px;
+    }
+
+    .form-header p {
+      font-size: 1.1rem;
+      color: var(--gray);
+      font-weight: 400;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Carte principale */
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Groupes de formulaire */
+    .form-group {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      color: var(--dark);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    /* Champs de formulaire */
+    .form-control {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      font-size: 1rem;
+      border: 2px solid var(--light-gray);
+      border-radius: var(--border-radius-sm);
+      transition: var(--transition);
+      background: white;
+      font-family: inherit;
+      position: relative;
+    }
+
+    .form-control::placeholder {
+      color: #a0a0a0;
+      font-weight: 400;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .form-control:hover {
+      border-color: #c0c0c0;
+    }
+
+    /* Textarea spécifique */
+    textarea.form-control {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    /* Disposition en ligne pour les dates */
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 0 -0.75rem;
+    }
+
+    .form-col {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    /* Badge optionnel */
+    .optional-badge {
+      background: linear-gradient(135deg, var(--light-gray) 0%, #dde1e7 100%);
+      color: var(--gray);
+      font-size: 0.75rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      margin-left: 0.5rem;
+      font-weight: 500;
+      border: 1px solid #e1e5e9;
+    }
+
+    /* Alertes */
+    .alert {
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--border-radius-sm);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .alert-danger {
+      background: linear-gradient(135deg, rgba(230, 57, 70, 0.08) 0%, rgba(230, 57, 70, 0.12) 100%);
+      color: var(--danger);
+      border-left: 4px solid var(--danger);
+      border: 1px solid rgba(230, 57, 70, 0.2);
+    }
+
+    .alert-danger::before {
+      content: '⚠';
+      font-size: 1.2rem;
+    }
+
+    /* Boutons */
+    .form-group:last-of-type {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--light-gray);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      min-width: 120px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    /* .btn-success {
+      background: var(--gradient);
+      color: white;
+      box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+    } */
+
+    .btn-success:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+    }
+
+    .btn-success:active {
+      transform: translateY(0);
+    }
+
+    .btn-success:disabled {
+      background: var(--gray);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+      opacity: 0.6;
+    }
+
+    /* CORRECTION : Style pour l'état de chargement */
+    .btn-loading {
+      position: relative;
+      color: white !important;
+    }
+
+    .btn-loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      right: 20px;
+    }
+
+     @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .btn-link {
+      background: transparent;
+      color: var(--gray);
+      border: 2px solid var(--light-gray);
+      padding: calc(1rem - 2px) calc(2rem - 2px);
+    }
+
+    .btn-link:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+      background: rgba(67, 97, 238, 0.05);
+    }
+
+    /* États de validation */
+    .form-control.ng-invalid.ng-touched {
+      border-color: var(--danger);
+      background: rgba(230, 57, 70, 0.02);
+    }
+
+    .form-control.ng-valid.ng-touched {
+      border-color: #38b000;
+      background: rgba(56, 176, 0, 0.02);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+
+      .card {
+        padding: 2rem 1.5rem;
+      }
+
+      .form-header h3 {
+        font-size: 2rem;
+      }
+
+      .form-header p {
+        font-size: 1rem;
+      }
+
+      .form-row {
+        gap: 0;
+      }
+
+      .form-col {
+        flex: 100%;
+        min-width: auto;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .btn-link {
+        order: 2;
+      }
+
+      /* Ajustement du spinner sur mobile */
+      .btn-loading::after {
+        right: calc(50% - 60px); /* Centre le spinner sur mobile */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 1.5rem 1rem;
+      }
+
+      .form-header {
+        margin-bottom: 2rem;
+      }
+
+      .form-header h3 {
+        font-size: 1.75rem;
+      }
+
+      .form-control {
+        padding: 0.875rem 1rem;
+      }
+    }
+
+    /* Améliorations d'accessibilité */
+    .form-control:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-header">
+      <h3>Publier un événement</h3>
+      <p>Remplissez les informations ci-dessous pour créer votre événement</p>
+    </div>
+
+    <div class="card">
+      <form>
+        <div class="form-group">
+          <label class="form-label">Titre</label>
+          <input class="form-control" placeholder="Donnez un titre accrocheur" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" placeholder="Décrivez votre événement"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Lieu</label>
+          <input class="form-control" placeholder="Lieu de l'événement" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label class="form-label">Date & heure de début</label>
+              <input type="datetime-local" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label class="form-label">Date & heure de fin <span class="optional-badge">Optionnel</span></label>
+              <input type="datetime-local" class="form-control" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Capacité <span class="optional-badge">Optionnel</span></label>
+          <input type="number" class="form-control" placeholder="Nombre max participants" />
+        </div>
+
+        <div class="alert alert-danger" style="display: none;">Exemple de message d'erreur</div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-success" id="submitBtn">Publier</button>
+          <a href="#" class="btn btn-link">Annuler</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Script pour démontrer l'état de chargement
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+
+      // Activer l'état de chargement
+      submitBtn.disabled = true;
+      submitBtn.classList.add('btn-loading');
+
+      setTimeout(() => {
+        // Désactiver l'état de chargement
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('btn-loading');
+
+        // Afficher un message d'erreur de démonstration
+        const alert = document.querySelector('.alert');
+        alert.textContent = 'Erreur de démonstration : Impossible de publier l\'événement';
+        alert.style.display = 'flex';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
