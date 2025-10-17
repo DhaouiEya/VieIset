@@ -78,7 +78,7 @@ const userSchema = new Schema({
     lastLogin: { type: Date }, // Store last login time
 
 
-    role: { type: String, enum: ['user', 'admin', 'clubManager'], default: 'user' },
+    role: { type: String, enum: ['etudiant', 'membre', 'clubManger', 'admin'], default: 'etudiant' },
 
 }, { timestamps: true });
 
