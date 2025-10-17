@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Etudiant = require("../models/etudiant");
 const club=new mongoose.Schema({
     nom:{type:String,required:true},
     description:{type:String,required:true},
@@ -14,9 +14,15 @@ const club=new mongoose.Schema({
       facebook: { type: String },
       instagram: { type: String }
     },
-    responsable:{type:mongoose.Schema.Types.ObjectId,
-        ref : 'ResponsableClub',
-    }
+   manager: { 
+         type: mongoose.Schema.Types.ObjectId, 
+         ref: 'Etudiant',
+        required: true
+    },
+    membres: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Etudiant'
+    }]
 },{timestamps:true});
 
 module.exports=mongoose.model('Club',club);
