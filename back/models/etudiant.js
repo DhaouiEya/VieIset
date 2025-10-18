@@ -79,7 +79,8 @@ const etudiantSchema = new Schema({
     role: { type: String, enum: ['etudiant', 'membre', 'clubManger', 'admin'], default: 'etudiant' },
     
 
-     preRegistered: { type: Boolean, default: false }, // Indique si l'utilisateur a rempli les infos pré-inscription
+ preRegistered: { type: Boolean, default: false }, // Indique si l'utilisateur a rempli les infos pré-inscription
+    role: { type: String, enum: ['user', 'admin', 'clubManager'], default: 'user' },
 
 
 }, { timestamps: true });
