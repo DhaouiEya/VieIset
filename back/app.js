@@ -6,6 +6,7 @@ const { errorMiddleware } = require('./middlewares/errorHandler');
 const cors = require('cors'); //pour gérer les requêtes cross-origin (CORS)
 const helmet = require('helmet');// Security middleware to set various HTTP headers
 const path = require('path'); //trouver le bon chemin de fichier
+const connectDB = require('./db'); //importer la fonction de connexion à la base de données (tasnime)
 
 
 //middleware Express 
