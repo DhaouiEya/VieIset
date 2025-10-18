@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { EventListComponent } from './components/event-list/event-list.component';
-import { CreateClubComponent } from "./components/clubs/create-club/create-club.component";
+// import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
 
 @Component({
   selector: 'app-root',
-  imports: [CreateClubComponent],
-  //imports: [RouterOutlet, EventListComponent, CreateClubComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

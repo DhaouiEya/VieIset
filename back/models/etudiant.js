@@ -67,7 +67,7 @@ const etudiantSchema = new Schema({
     allergies: [{ type: String }],
     accessibilityNeeds: { type: String }, // Handicap ou besoins particuliers
 
-    isActive: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
     isOnline: { type: Boolean, default: true },
 
     // Social login fields
@@ -78,6 +78,10 @@ const etudiantSchema = new Schema({
     lastLogin: { type: Date }, // Store last login time
     role: { type: String, enum: ['etudiant', 'membre', 'clubManger', 'admin'], default: 'etudiant' },
     
+
+ preRegistered: { type: Boolean, default: false }, // Indique si l'utilisateur a rempli les infos pré-inscription
+    role: { type: String, enum: ['user', 'admin', 'clubManager'], default: 'user' },
+
 
 }, { timestamps: true });
 
