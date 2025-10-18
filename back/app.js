@@ -1,11 +1,12 @@
 require('dotenv').config(); // Charge les variables d'environnement
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
-const helmet = require('helmet');
-const path = require('path');
-const clubRoutes = require('./routes/clubRoutes'); // routes spécifiques club
 const { errorMiddleware } = require('./middlewares/errorHandler');
+const cors = require('cors'); //pour gérer les requêtes cross-origin (CORS)
+const helmet = require('helmet');// Security middleware to set various HTTP headers
+const path = require('path'); //trouver le bon chemin de fichier
+
+const routes = require('./routes');
 
 const app = express();
 
@@ -32,8 +33,8 @@ app.use(
 // Servir les fichiers statiques (images, etc.)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+app.use('/api', routes);
 
-app.use('/api/clubs', clubRoutes);
 
 // Middleware global pour gérer les erreurs
 app.use(errorMiddleware);

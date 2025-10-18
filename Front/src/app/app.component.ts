@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { EventListComponent } from './components/event-list/event-list.component';
+// import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,EventListComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
