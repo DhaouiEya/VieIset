@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
-const clubRoutes = require('./routes/clubRoutes'); // routes spécifiques club
 const { errorMiddleware } = require('./middlewares/errorHandler');
+const routes = require('./routes'); // Importer les routes principales
 
 const app = express();
 
@@ -33,7 +33,7 @@ app.use(
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
-app.use('/api/clubs', clubRoutes);
+app.use('/api', routes);
 
 // Middleware global pour gérer les erreurs
 app.use(errorMiddleware);

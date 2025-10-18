@@ -38,22 +38,22 @@ const etudiantSchema = new Schema({
 
     languages: [{ type: String, enum: ['Français', 'Anglais', 'Espagnol', 'Allemand', 'Italien', 'Chinois', 'Arabe', 'Russe', 'Japonais', 'Turc', 'Coréen', 'Autre'] }],
 
-    volunteering: [{                // Expériences associatives ou bénévolat
-        organization: { type: String },
-        role: { type: String },
-        description: { type: String },
-        startDate: { type: Date },
-        endDate: { type: Date }
-    }],
+    // volunteering: [{                // Expériences associatives ou bénévolat
+    //     organization: { type: String },
+    //     role: { type: String },
+    //     description: { type: String },
+    //     startDate: { type: Date },
+    //     endDate: { type: Date }
+    // }],
 
-    certifications: [{
-        title: { type: String, required: true },
-        institution: { type: String },
-        description: { type: String },
-        issueDate: { type: Date },
-        expiryDate: { type: Date },
-        documentURL: { type: String }
-    }],
+    // certifications: [{
+    //     title: { type: String, required: true },
+    //     institution: { type: String },
+    //     description: { type: String },
+    //     issueDate: { type: Date },
+    //     expiryDate: { type: Date },
+    //     documentURL: { type: String }
+    // }],
 
   
 
