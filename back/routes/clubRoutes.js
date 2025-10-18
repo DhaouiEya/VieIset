@@ -20,6 +20,8 @@ router.post("/", async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+
+
 router.get('/clubManager/:id', async (req, res) => {
   const managerId = req.params.id;
   try {
