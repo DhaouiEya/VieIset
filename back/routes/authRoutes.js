@@ -4,8 +4,10 @@ const authMiddleware = require('../middlewares/authMiddlewares');
 const router = express.Router();
 
 router.post('/', authController.register);
+router.get('/verify-email/:token', authController.verifyEmail);
+router.post('/resendVerificationEmail', authController.resendVerificationEmail);
+router.post('/google-login', authController.googleLogin);
+router.put('/:id/pre-register',authController.infos);
 
-//router.post('/google-login', authController.googleLogin);
-//GET
-//router.get('/me',authMiddleware,authController.me); 
+router.get('/me',authMiddleware,authController.me); 
 module.exports = router;
