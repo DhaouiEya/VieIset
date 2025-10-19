@@ -1,4 +1,4 @@
-import { RegistrationComponent } from './components/registration/registration.component';
+import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { Routes } from '@angular/router';
 // import { PublicationPostComponent } from './responsible-club/publication-post/publication-post.component';
 import { EventCreateComponent } from './components/event-create/event-create.component';
@@ -10,7 +10,7 @@ import { EspaceClubComponent } from './components/clubs/espace-club/espace-club.
 
 import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
 import { ClubsListComponent } from './components/clubs/clubs-list/clubs-list.component';
 import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
 import { ParticipationFormsComponent } from './responsable-club/participation-forms/participation-forms.component';
