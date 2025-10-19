@@ -1,0 +1,151 @@
+{
+  "timestamp": "2025-10-18T18:15:22.273Z",
+  "method": "POST",
+  "url": "/api/auth",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "TypeError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "validateRequiredFields is not a function",
+  "stack": "TypeError: validateRequiredFields is not a function\n    at exports.register (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:25:33)\n    at Layer.handleRequest (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:295:15\n    at processParams (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:582:12)\n    at next (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:291:5)\n    at Function.handle (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:186:3)"
+},
+{
+  "timestamp": "2025-10-18T18:16:58.033Z",
+  "method": "POST",
+  "url": "/api/auth",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "ReferenceError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "generateToken is not defined",
+  "stack": "ReferenceError: generateToken is not defined\n    at exports.register (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:50:40)"
+},
+{
+  "timestamp": "2025-10-18T18:18:16.458Z",
+  "method": "POST",
+  "url": "/api/auth",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "ValidationError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Etudiant validation failed: role: `memebre` is not a valid enum value for path `role`.",
+  "stack": "ValidationError: Etudiant validation failed: role: `memebre` is not a valid enum value for path `role`.\n    at Document.invalidate (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\document.js:3362:32)\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\document.js:3123:17\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\schemaType.js:1417:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+  "errors": {
+    "role": {
+      "name": "ValidatorError",
+      "message": "`memebre` is not a valid enum value for path `role`.",
+      "properties": {
+        "message": "`memebre` is not a valid enum value for path `role`.",
+        "type": "enum",
+        "enumValues": [
+          "user",
+          "admin",
+          "clubManager"
+        ],
+        "path": "role",
+        "value": "memebre",
+        "length": 7
+      },
+      "kind": "enum",
+      "path": "role",
+      "value": "memebre"
+    }
+  }
+},
+{
+  "timestamp": "2025-10-18T18:18:31.882Z",
+  "method": "POST",
+  "url": "/api/auth",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "ValidationError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Etudiant validation failed: role: `memebre` is not a valid enum value for path `role`.",
+  "stack": "ValidationError: Etudiant validation failed: role: `memebre` is not a valid enum value for path `role`.\n    at Document.invalidate (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\document.js:3362:32)\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\document.js:3123:17\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\schemaType.js:1417:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+  "errors": {
+    "role": {
+      "name": "ValidatorError",
+      "message": "`memebre` is not a valid enum value for path `role`.",
+      "properties": {
+        "message": "`memebre` is not a valid enum value for path `role`.",
+        "type": "enum",
+        "enumValues": [
+          "user",
+          "admin",
+          "clubManager"
+        ],
+        "path": "role",
+        "value": "memebre",
+        "length": 7
+      },
+      "kind": "enum",
+      "path": "role",
+      "value": "memebre"
+    }
+  }
+},
+{
+  "timestamp": "2025-10-18T18:19:59.365Z",
+  "method": "POST",
+  "url": "/api/auth",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "Error",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorCode": "EAUTH",
+  "errorMessage": "Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-471144239bdsm182320395e9.3 - gsmtp",
+  "stack": "Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-471144239bdsm182320395e9.3 - gsmtp\n    at SMTPConnection._formatError (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:809:19)\n    at SMTPConnection._actionAUTHComplete (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1595:34)\n    at SMTPConnection.<anonymous> (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:556:26)\n    at SMTPConnection._processResponse (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:993:20)\n    at SMTPConnection._onData (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:774:14)\n    at SMTPConnection._onSocketData (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:195:44)\n    at TLSSocket.emit (node:events:519:28)\n    at addChunk (node:internal/streams/readable:559:12)\n    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)\n    at Readable.push (node:internal/streams/readable:390:5)"
+},
+{
+  "timestamp": "2025-10-18T18:44:23.422Z",
+  "method": "POST",
+  "url": "/api/auth",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "MongoServerError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorCode": 11000,
+  "errorMessage": "E11000 duplicate key error collection: vieIsetDB.etudiants index: cin_1 dup key: { cin: null }",
+  "stack": "MongoServerError: E11000 duplicate key error collection: vieIsetDB.etudiants index: cin_1 dup key: { cin: null }\n    at InsertOneOperation.handleOk (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at tryOperation (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:214:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async executeOperation (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:78:16)\n    at async Collection.insertOne (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\collection.js:154:16)",
+  "keyValue": {
+    "cin": null
+  }
+},
+{
+  "timestamp": "2025-10-18T18:46:43.234Z",
+  "method": "POST",
+  "url": "/api/auth",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "MongoServerError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorCode": 11000,
+  "errorMessage": "E11000 duplicate key error collection: vieIsetDB.etudiants index: cin_1 dup key: { cin: null }",
+  "stack": "MongoServerError: E11000 duplicate key error collection: vieIsetDB.etudiants index: cin_1 dup key: { cin: null }\n    at InsertOneOperation.handleOk (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at tryOperation (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:214:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async executeOperation (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:78:16)\n    at async Collection.insertOne (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\collection.js:154:16)",
+  "keyValue": {
+    "cin": null
+  }
+},
+{
+  "timestamp": "2025-10-18T18:50:46.550Z",
+  "method": "POST",
+  "url": "/api/auth",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "MongoServerError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorCode": 11000,
+  "errorMessage": "E11000 duplicate key error collection: vieIsetDB.etudiants index: cin_1 dup key: { cin: null }",
+  "stack": "MongoServerError: E11000 duplicate key error collection: vieIsetDB.etudiants index: cin_1 dup key: { cin: null }\n    at InsertOneOperation.handleOk (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at tryOperation (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:214:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async executeOperation (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:78:16)\n    at async Collection.insertOne (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\collection.js:154:16)",
+  "keyValue": {
+    "cin": null
+  }
+},

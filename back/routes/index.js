@@ -7,6 +7,7 @@ const clubRoutes=require('./clubRoutes');
 
 router.use('/postes', posteRoutes);
 router.use('/auth', authRoutes);
+router.use('/clubs', clubRoutes);
 
 
 module.exports=router;
