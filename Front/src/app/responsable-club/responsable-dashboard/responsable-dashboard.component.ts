@@ -12,8 +12,4 @@ import { HomeReponsableComponent } from "../home-reponsable/home-reponsable.comp
 export class ResponsableDashboardComponent {
 
   constructor(private router: Router) {}
-
-  navigateToPublications() {
-    this.router.navigate(['publications']);
-  }
 }
