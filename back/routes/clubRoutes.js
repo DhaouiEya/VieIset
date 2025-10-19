@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const clubController = require("../controllers/clubController");
+const authMiddleware = require('../middlewares/authMiddlewares');
+
 //post
 
 
 router.post("/", clubController.createClub);
 router.get("/clubManager/:id", clubController.getClubByManager);
-// router.get("/", clubController.getAllClubs);
+router.get("/", clubController.getAllClubs);
 
 // //securiser la route avec authMiddleware si role clubManager
 // router.post("/", async (req, res) => {

@@ -1,0 +1,24 @@
+<header class="app-header">
+  <nav class="nav-container">
+    <div class="nav-logo">
+      <a routerLink="/home">UniClubs</a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
+      <li><a routerLink="/clubs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Clubs</a></li>
+      <li><a routerLink="/events" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Events</a></li>
+      <li><a routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">À Propos</a></li>
+    </ul>
+
+    <div class="nav-profile">
+      <a routerLink="/profile" aria-label="Profil">
+        <!-- Icône de profil SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </a>
+    </div>
+  </nav>
+</header>

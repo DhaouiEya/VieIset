@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Club } from '../models/club';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 const URL = 'http://localhost:9000/api/clubs';
 @Injectable({
@@ -15,5 +16,9 @@ export class ClubService {
   }
   createClub(club: Club){
     return this.http.post<Club>(URL,club);
+  }
+
+  getClubs():Observable<{ success: boolean, data: Club[] }>{
+    return this.http.get<{ success: boolean, data: Club[] }>(URL);
   }
 }

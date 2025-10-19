@@ -208,7 +208,7 @@ export class RegistrationComponent {
         tap((auth) => {
           if (auth) {
             // Redirection après login réussi
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/clubs']);
           }
         }),
         switchMap((auth) => {

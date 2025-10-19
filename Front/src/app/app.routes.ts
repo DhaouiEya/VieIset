@@ -7,6 +7,7 @@ import { EventListComponent } from './components/event-list/event-list.component
 import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { ClubsListComponent } from './components/clubs/clubs-list/clubs-list.component';
 
 export const routes: Routes = [
   // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -15,6 +16,8 @@ export const routes: Routes = [
   { path: 'verify-email', component: VerifyEmailComponent },
   { path: 'dashboard', component: ResponsableDashboardComponent },
   // { path: 'publications', component: PublicationPostComponent },
+
+  { path: 'clubs', component: ClubsListComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'events', component: EventListComponent },
   { path: 'events/create', component: EventCreateComponent },

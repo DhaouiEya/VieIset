@@ -23,7 +23,8 @@ const club=new mongoose.Schema({
     membres: [{ 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Etudiant'
-    }]
+    }],
+    actif:{type:Boolean,default:true}
 },{timestamps:true});
 
 module.exports=mongoose.model('Club',club);

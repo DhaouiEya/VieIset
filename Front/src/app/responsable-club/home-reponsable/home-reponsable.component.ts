@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home-reponsable',
-  imports: [RouterLink,RouterLinkActive,RouterOutlet],
+  imports: [RouterLink,RouterOutlet],
   templateUrl: './home-reponsable.component.html',
   styleUrl: './home-reponsable.component.css'
 })

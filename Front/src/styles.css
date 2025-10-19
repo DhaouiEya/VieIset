@@ -2,3 +2,17 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+:root {
+  --background-color: #f4f7f9;
+  --card-background: #ffffff;
+  --primary-text-color: #2c3e50;
+  --secondary-text-color: #7f8c8d;
+  --accent-color-1: #00aaff;
+  --accent-color-2: #ff4081;
+  --status-active: #4caf50;
+  --status-inactive: #f44336;
+  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --card-hover-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
