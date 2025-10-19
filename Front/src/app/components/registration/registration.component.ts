@@ -1,0 +1,126 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { first, Observable, Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
+import { UserModel } from '../../models/user.model';
+import { CommonModule } from '@angular/common';
+import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
+import { SocialUser, SocialAuthService, GoogleLoginProvider, SocialLoginModule } from 'angularx-social-login';
+
+@Component({
+  selector: 'app-registration',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, PasswordStrengthMeterComponent, SocialLoginModule],
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css'],
+})
+export class RegistrationComponent {
+  registrationForm!: FormGroup;
+  hasError!: boolean;
+  message: string = 'The registration details are incorrect';
+  user!: SocialUser;
+
+  // private fields
+  private unsubscribe: Subscription[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private socialAuthService: SocialAuthService,
+  ) {}
+
+  ngOnInit(): void {
+    this.initForm();
+  }
+
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.registrationForm.controls;
+  }
+
+initForm() {
+  this.registrationForm = this.fb.group({
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(320)]],
+    password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
+    cPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
+  }, { validators: this.passwordMatchValidator });
+}
+
+// Validateur custom
+passwordMatchValidator(form: FormGroup) {
+  const password = form.get('password')?.value;
+  const cPassword = form.get('cPassword')?.value;
+  if (password !== cPassword) {
+    form.get('cPassword')?.setErrors({ ConfirmPassword: true });
+  } else {
+    form.get('cPassword')?.setErrors(null);
+  }
+}
+
+
+
+
+  submit() {
+        this.hasError = false;
+
+  if (this.registrationForm.invalid) {
+    this.registrationForm.markAllAsTouched();
+    return;
+  }
+
+  const registerData = {
+    firstName: this.f['firstName'].value,
+    lastName: this.f['lastName'].value,
+    email: this.f['email'].value,
+    password: this.f['password'].value
+  };
+
+  const registerSubscr = this.authService.register(registerData).subscribe({
+    next: (res) => {
+      console.log('Inscription réussie:', res.success);
+      if (res.success) {
+        this.router.navigate(['/send-verification-email']);
+      }
+    },
+    error: (err) => {
+      console.log("erreur ",err);
+      console.error('Erreur inscription:', err);
+      this.hasError = true;
+      this.message = err.error.message;
+    }
+  });
+
+  this.unsubscribe.push(registerSubscr);
+}
+
+
+  ngOnDestroy() {
+    this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  }
+
+  getControlClass(controlName: string): any {
+    const control = this.registrationForm.get(controlName);
+    return {
+      'is-invalid': control?.invalid && (control?.dirty || control?.touched),
+      'is-valid': control?.valid && (control?.dirty || control?.touched),
+    };
+  }
+
+  signUpWithGoogle() {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((user) => {
+      this.user = user;
+      // Envoie le token Google à ton backend pour création de compte / login
+      this.authService.googleLogin(user.idToken).subscribe({
+        next: (res) => {
+          console.log('Inscription réussie', res);
+        },
+        error: (err) => console.error(err),
+      });
+    });
+  }
+
+}
