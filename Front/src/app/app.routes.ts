@@ -26,13 +26,13 @@ export const routes: Routes = [
   { path: 'events', component: EventListComponent },
   { path: 'events/create', component: EventCreateComponent },
   { path: 'events/:id', component: EventDetailComponent },
-<<<<<<< HEAD
+
   {path: 'createClub ',component:CreateClubComponent },
 //il faut  avec id 
  //  {path: 'espaceClub/:id',component:EspaceClubComponent },
   {path: 'espaceClub',component:EspaceClubComponent },
-=======
+
   {path: 'participation-forms', component: ParticipationFormsComponent}
->>>>>>> b854bee (récupération des donnée du google sheet)
+
 ]
 
