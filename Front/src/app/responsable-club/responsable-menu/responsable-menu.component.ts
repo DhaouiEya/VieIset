@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-responsable-menu',
-  imports: [CommonModule,RouterLink,RouterLinkActive,RouterModule],
+  imports: [CommonModule,RouterLink,RouterModule],
   templateUrl: './responsable-menu.component.html',
   styleUrl: './responsable-menu.component.css'
 })

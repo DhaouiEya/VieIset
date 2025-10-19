@@ -33,8 +33,8 @@ export const routes: Routes = [
 
   {path: 'createClub ',component:CreateClubComponent },
 //il faut  avec id
- //  {path: 'espaceClub/:id',component:EspaceClubComponent },
-  {path: 'espaceClub',component:EspaceClubComponent },
+  {path: 'espaceClub/:id',component:EspaceClubComponent },
+  // {path: 'espaceClub',component:EspaceClubComponent },
 
   {path: 'participation-forms', component: ParticipationFormsComponent}
 

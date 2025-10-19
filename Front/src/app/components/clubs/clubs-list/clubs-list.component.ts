@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Club } from '../../../models/club';
 import { ClubService } from '../../../services/club.service';
-import { HeaderComponent } from "../../header/header.component";
-import { FooterComponent } from "../../footer/footer.component";
+import { HeaderComponent } from '../../header/header.component';
+import { FooterComponent } from '../../footer/footer.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clubs-list',
@@ -13,7 +14,7 @@ import { FooterComponent } from "../../footer/footer.component";
 export class ClubsListComponent implements OnInit {
   clubs: Club[] = [];
 
-  constructor(private clubService: ClubService) {}
+  constructor(private clubService: ClubService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadClubs();
@@ -34,5 +35,7 @@ export class ClubsListComponent implements OnInit {
     );
   }
 
-
+  goToClubSpace(id: string | undefined) {
+    this.router.navigate(['/espaceClub', id]);
+  }
 }
