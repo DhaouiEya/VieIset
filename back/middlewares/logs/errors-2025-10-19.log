@@ -1,0 +1,33 @@
+{
+  "timestamp": "2025-10-19T11:28:51.789Z",
+  "method": "POST",
+  "url": "/api/auth/google-login",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "ValidationError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Etudiant validation failed: role: `memebre` is not a valid enum value for path `role`.",
+  "stack": "ValidationError: Etudiant validation failed: role: `memebre` is not a valid enum value for path `role`.\n    at Document.invalidate (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\document.js:3362:32)\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\document.js:3123:17\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\schemaType.js:1417:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+  "errors": {
+    "role": {
+      "name": "ValidatorError",
+      "message": "`memebre` is not a valid enum value for path `role`.",
+      "properties": {
+        "message": "`memebre` is not a valid enum value for path `role`.",
+        "type": "enum",
+        "enumValues": [
+          "membre",
+          "admin",
+          "clubManager"
+        ],
+        "path": "role",
+        "value": "memebre",
+        "length": 7
+      },
+      "kind": "enum",
+      "path": "role",
+      "value": "memebre"
+    }
+  }
+},
