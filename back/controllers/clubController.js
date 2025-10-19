@@ -1,5 +1,5 @@
 const Club = require("../models/club");
-
+const Poste = require("../models/Poste");
 
 // Ajouter un nouveau club
 exports.createClub = async (req, res) => {
@@ -47,4 +47,34 @@ exports.getAllClubs = async (req, res) => {
 
 
 
+// Récupérer un club par son ID et ses posts
+exports.getClubById = async (req, res) => {
+  try {
+    const clubId = req.params.id;
+
+    // Récupérer le club avec info manager et membres
+    const club = await Club.findById(clubId)
+      .populate('manager', 'firstName lastName email') // info du manager
+
+    if (!club) {
+      return res.status(404).json({ message: 'Club non trouvé' });
+    }
+
+    // Récupérer les posts liés au manager du club (ou tu peux créer un champ clubId si tu veux)
+    // Exemple pour inclure la réaction actuelle de l'utilisateur
+    const posts = await Poste.find({ clubManager: club.manager._id }).sort({ dateCreation: -1 }).lean();
+posts.forEach(post => {
+  const reactions = post.reactions || []; // si undefined, on utilise un tableau vide
+  const userReaction = reactions.find(r => r.userId.toString() === req.user._id.toString());
+  post.userReaction = userReaction ? userReaction.type : null;
+});
+
+    // Réponse
+    res.json({ data: { club, posts } });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
 
