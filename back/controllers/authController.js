@@ -210,7 +210,7 @@ exports.resendVerificationEmail = async (req, res, next) => {
         if (user.emailVerified) {
             return res.status(400).json({
                 success: false,
-                message: 'Email already verified.'
+                message: 'Email déjà vérifié'
             });
         }
 
@@ -272,7 +272,7 @@ exports.googleLogin = async (req, res, next) => {
             } else {
                 // Create new user
                 user = new User({
-                    role: 'memebre',
+                    role: 'membre',
                     googleId,
                     email,
                     firstName: name?.split(' ')[0] || '',
