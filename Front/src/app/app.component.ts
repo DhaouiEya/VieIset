@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+// import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],

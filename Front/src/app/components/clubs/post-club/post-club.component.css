@@ -1,0 +1,130 @@
+.post-card {
+  margin-bottom: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* Avatar dans le header du post */
+.post-avatar {
+  width: 50px;           /* taille fixe */
+  height: 50px;
+  border-radius: 50%;    /* rend l'image ronde */
+  overflow: hidden;      /* découpe l'image si elle dépasse */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;    /* espace entre avatar et texte */
+}
+
+.post-avatar img {
+  width: 100%;           /* prend toute la taille du container */
+  height: 100%;
+  object-fit: cover;     /* pour que l'image remplisse le cercle sans déformation */
+  display: block;
+}
+
+.post-content {
+  font-size: 15px;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+
+
+.post-actions {
+  padding: 8px 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.action-container {
+  display: flex;
+  gap: 12px; /* espacement entre les boutons */
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+ 
+
+  background: #f5f5f5;
+  border: none;
+  border-radius: 24px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background: #e0e0e0;
+  transform: scale(1.05);
+}
+
+.action-btn mat-icon {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+
+.like-btn mat-icon:hover {
+  color: #e53935;
+  transform: scale(1.2);
+
+}
+
+
+.comment-btn mat-icon:hover {
+  color: #1976d2;
+  transform: scale(1.2);
+}
+
+
+.post-content {
+  max-height: 45px;      /* 3 lignes max */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 1.5;
+  color: #444;
+  transition: 0.3s ease;
+  padding: 0 8px;
+}
+
+.post-content.expanded {
+  max-height: none; /* montre tout le texte */
+}
+
+.read-more {
+  color: #1976d2;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
+  padding-left: 8px;
+}
+
+.post-image {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+
+.post-image.small {
+  max-height: 400px;
+  object-fit: cover; /* image petite quand texte réduit */
+  padding: 10px 20px;
+}
+
+.post-card {
+  padding-bottom: 8px;
+}
+
