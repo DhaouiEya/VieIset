@@ -11,6 +11,8 @@ import { EspaceClubComponent } from './components/clubs/espace-club/espace-club.
 import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
+import { ParticipationFormsComponent } from './responsable-club/participation-forms/participation-forms.component';
 
 
 export const routes: Routes = [
@@ -19,14 +21,18 @@ export const routes: Routes = [
   { path: 'send-verification-email', component: EmailVerificationComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
   { path: 'dashboard', component: ResponsableDashboardComponent },
-  // { path: 'publications', component: PublicationPostComponent },
+  { path: 'publications', component: PublicationPostComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'events', component: EventListComponent },
   { path: 'events/create', component: EventCreateComponent },
   { path: 'events/:id', component: EventDetailComponent },
+<<<<<<< HEAD
   {path: 'createClub ',component:CreateClubComponent },
 //il faut  avec id 
  //  {path: 'espaceClub/:id',component:EspaceClubComponent },
   {path: 'espaceClub',component:EspaceClubComponent },
+=======
+  {path: 'participation-forms', component: ParticipationFormsComponent}
+>>>>>>> b854bee (récupération des donnée du google sheet)
 ]
 
