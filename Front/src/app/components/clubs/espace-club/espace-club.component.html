@@ -10,8 +10,8 @@
     <img class="profile-photo" [src]="club.imageProfil" alt="Profil du club">
     <div class="info-section">
       <h2>{{ club.nom }}</h2>
-      <p>slogan slogan slogan</p>
-     
+      <p>{{club.description}}</p>
+
     </div>
   </div>
   <!-- <mat-divider></mat-divider> -->
@@ -43,10 +43,10 @@
   <!-- COLONNE GAUCHE FIXE -->
  <div class="club-sidebar mat-elevation-z2">
 
- 
+
 
   <div class="sidebar-section">
-   
+
     <h3>Informations</h3>
     <p><strong>Adresse :</strong> {{ club.adresse }}</p>
     <p><strong>Département :</strong> {{ club.departement }}</p>
@@ -54,7 +54,7 @@
   </div>
 
   <div class="sidebar-section">
-    
+
     <h3>Contact</h3>
     <div>
         <script src="https://cdn.lordicon.com/lordicon.js"></script>
@@ -79,7 +79,7 @@
   </div>
 @if(club.reseaux){
   <div class="sidebar-section">
-    
+
     <h3>Réseaux</h3>
     <div >
         <script src="https://cdn.lordicon.com/lordicon.js"></script>
@@ -101,27 +101,28 @@
     colors="primary:#ee66aa,secondary:#a866ee"
     style="width:50px;height:50px">
 </lord-icon>
-        
+
         <span>{{ club.reseaux.instagram }}</span></div>
   </div>
   }
 
   <div class="sidebar-section">
-   
-    <h3>Manager</h3>
 
-    <p>{{ club.manager }}</p>
-    
+    <h3>Manager</h3>
+    <!-- <p>{{ club.manager.firstName }} {{ club.manager.lastName }}</p> -->
+
+    <p>{{ club.manager }} {{ club.manager }}</p>
+
   </div>
 
 </div>
 
-   
+
   <!-- COLONNE DROITE QUI SCROLL -->
   <div class="club-posts">
     <h3>Publications récentes</h3>
     @for (post of posts; track $index) {
-      <app-post-club [post]="post" [clubNom]="club"></app-post-club>
+      <app-post-club [post]="post" [club]="club"></app-post-club>
     }
   </div>
 

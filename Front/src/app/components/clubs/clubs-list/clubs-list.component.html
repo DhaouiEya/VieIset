@@ -28,9 +28,7 @@
     }
     </div>
     <div class="card-footer">
-      <div class="club-manager">
-        Géré par <strong></strong>
-      </div>
+
       <div class="social-links">
         @if( club.reseaux?.facebook) {
         <a  [href]="club.reseaux?.facebook" target="_blank" aria-label="Facebook">
@@ -45,6 +43,12 @@
       }
 
       </div>
+
+<button class="btn btn-primary btn-sm rounded-pill" (click)="goToClubSpace(club._id)">
+  <i class="bi bi-house-door-fill me-2"></i> Espace Club
+</button>
+
+
     </div>
   </div>
 }

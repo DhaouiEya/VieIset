@@ -10,6 +10,8 @@ router.post("/", clubController.createClub);
 router.get("/clubManager/:id", clubController.getClubByManager);
 router.get("/", clubController.getAllClubs);
 
+// GET club + posts
+router.get('/:id', authMiddleware,clubController.getClubById);
 // //securiser la route avec authMiddleware si role clubManager
 // router.post("/", async (req, res) => {
 //     try {
