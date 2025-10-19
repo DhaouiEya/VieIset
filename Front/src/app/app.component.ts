@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { EspaceClubComponent } from "./components/clubs/espace-club/espace-club.component";
 // import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
 
 @Component({
