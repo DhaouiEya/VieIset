@@ -1,0 +1,46 @@
+<div class="d-flex flex-column flex-center flex-column-fluid"
+      style="
+       background-image: url('bg7.jpg');
+       background-size: cover;
+       background-position: center;
+       min-height: 100vh;
+     ">
+  <!-- Content centré -->
+  <div class="d-flex flex-column flex-center text-center p-10">
+    <!-- Card blanche -->
+    <div class="card card-flush w-md-650px py-5"
+         style="background:#fff; border-radius:16px; box-shadow:0 8px 20px rgba(0,0,0,0.1);">
+      <div class="card-body py-15 py-lg-20">
+
+        <!-- Logo -->
+        <div class="mb-7">
+          <a href="/" class="">
+            <img alt="Logo Vie Étudiante ISET" src="angular-icon-1.svg" class="h-50px">
+          </a>
+        </div>
+
+        <!-- Titre -->
+        <h1 class="fw-bolder text-gray-900 mb-5">
+          Bienvenue sur Vie Étudiante ISET !
+        </h1>
+
+        <!-- Texte -->
+        <div class="fw-semibold fs-6 text-gray-700 mb-7">
+          Merci pour votre inscription.<br>
+          Explore toutes les fonctionnalités pour gérer tes activités et rester informé(e) sur la vie étudiante !
+        </div>
+
+        <!-- Illustration -->
+        <div class="mb-7">
+          <img src="welcome.png" class="mw-100 mh-300px" alt="Bienvenue Étudiant">
+        </div>
+
+        <!-- Bouton -->
+        <div>
+          <a class="btn btn-primary btn-sm px-8" [routerLink]="['/dashboard']">Commencer</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

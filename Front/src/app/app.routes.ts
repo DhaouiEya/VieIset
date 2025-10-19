@@ -1,14 +1,21 @@
+import { RegistrationComponent } from './components/registration/registration.component';
 import { Routes } from '@angular/router';
-// import { ResponsibleDashboardComponent } from './responsible-club/responsible-dashboard/responsible-dashboard.component';
 // import { PublicationPostComponent } from './responsible-club/publication-post/publication-post.component';
 import { EventCreateComponent } from './components/event-create/event-create.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { EventListComponent } from './components/event-list/event-list.component';
+import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
+import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  // { path: 'dashboard', component: ResponsibleDashboardComponent },
+  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/register', pathMatch: 'full' },
+  { path: 'send-verification-email', component: EmailVerificationComponent },
+  { path: 'verify-email', component: VerifyEmailComponent },
+  { path: 'dashboard', component: ResponsableDashboardComponent },
   // { path: 'publications', component: PublicationPostComponent },
+  { path: 'register', component: RegistrationComponent },
   { path: 'events', component: EventListComponent },
   { path: 'events/create', component: EventCreateComponent },
   { path: 'events/:id', component: EventDetailComponent },
