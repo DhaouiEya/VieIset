@@ -53,7 +53,8 @@
                 "node_modules/bootstrap/dist/css/bootstrap.min.css",
 
               "src/styles.css",
-              "src/app/assets/css/style.rtl.css"
+              "src/app/assets/css/style.rtl.css",
+              "@angular/material/prebuilt-themes/rose-red.css"
             ],
             "scripts": []
           },
@@ -107,7 +108,14 @@
                 "input": "public"
               }
             ],
+<<<<<<< HEAD
             "styles": ["src/styles.css"],
+=======
+            "styles": [
+              "@angular/material/prebuilt-themes/rose-red.css",
+              "src/styles.css"
+            ],
+>>>>>>> 0fcacfc95183cb815914ce1aca97e9b3dcd48408
             "scripts": []
           }
         }
