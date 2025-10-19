@@ -21,7 +21,7 @@
           <!-- Connexion Google -->
           <div class="row g-3 mb-3">
             <div class="col-12">
-              <a id="googleLoginButton" (click)="signUpWithGoogle()"
+              <a id="googleLoginButton" (click)="triggerGoogleSignIn()"
                 class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
                 <img alt="Logo Google" src="google-icon.svg" class="h-15px me-3" />
                 Se connecter avec Google
@@ -33,17 +33,17 @@
           <div class="separator separator-content my-4"></div>
 
           <!-- Alertes d'erreur -->
-     <!-- Alertes d'erreur -->
-<ng-container *ngIf="hasError">
-  <div class="mb-3 alert alert-danger d-flex align-items-start" role="alert">
-    <i class="bi bi-exclamation-circle-fill me-2 fs-4"></i>
-    <div class="d-flex flex-column">
+          <!-- Alertes d'erreur -->
+          <ng-container *ngIf="hasError">
+            <div class="mb-3 alert alert-danger d-flex align-items-start" role="alert">
+              <i class="bi bi-exclamation-circle-fill me-2 fs-4"></i>
+              <div class="d-flex flex-column">
 
-      <span><strong>Erreur :</strong>
-        {{ message }}</span>
-    </div>
-  </div>
-</ng-container>
+                <span><strong>Erreur :</strong>
+                  {{ message }}</span>
+              </div>
+            </div>
+          </ng-container>
 
 
           <!-- Champs du formulaire -->
@@ -73,22 +73,22 @@
               [ngClass]="getControlClass('email')" />
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'required',
-        message: 'Email is required',
+        message: 'Email est obligatoire',
         control: registrationForm.controls['email']
       }"></ng-container>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'email',
-        message: 'Email is invalid',
+        message: 'Email est invalide',
         control: registrationForm.controls['email']
       }"></ng-container>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'minlength',
-        message: 'Email should have at least 3 symbols',
+        message: 'Email doit contenir au moins 3 caractères',
         control: registrationForm.controls['email']
       }"></ng-container>
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'maxLength',
-        message: 'Email should have maximum 360 symbols',
+        message: 'Email doit contenir au maximum 360 caractères',
         control: registrationForm.controls['email']
       }"></ng-container>
           </div>
@@ -104,7 +104,7 @@
               <!-- Message d'erreur s’il y a -->
               <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'required',
-        message: 'Mot de passe requis',
+        message: 'Mot de passe est obligatoire',
         control: registrationForm.controls['password']
       }"></ng-container>
 
@@ -138,7 +138,9 @@
       ">
               <div class="fv-plugins-message-container">
                 <div class="fv-help-block">
-                  'Passsword' and 'Confirm Password' didn't match.
+                  <span role="alert">
+                    Les mots de passe ne correspondent pas
+                  </span>
                 </div>
               </div>
             </ng-container>

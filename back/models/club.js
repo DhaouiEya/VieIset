@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Etudiant = require("../models/etudiant");
 const club=new mongoose.Schema({
     nom:{type:String,required:true},
+    activites: [{ type: String ,required:true}],
     description:{type:String,required:true},
     imageProfil:{type:String,required:true},
     imageFond:{type:String,required:true},
