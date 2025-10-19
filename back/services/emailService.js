@@ -34,7 +34,7 @@ async function sendEmail({ to, subject, html, from }) {
     }
 
     const mailOptions = {
-        from: from || `"Facturation" <${process.env.EMAIL_USER}>`,
+        from: from || `"Vie Iset" <${process.env.EMAIL_USER}>`,
         to,
         subject,
         html,
