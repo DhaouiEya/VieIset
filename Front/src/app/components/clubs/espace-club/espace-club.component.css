@@ -1,0 +1,237 @@
+.club-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.cover-photo img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.profile-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  position: relative;
+}
+
+.profile-photo {
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  border: 4px solid white;
+  position: absolute;
+  top: -65px;
+  left: 20px;
+  background: #fff;
+}
+
+.info-section {
+  margin-left: 260px;
+}
+
+.info-section h2 {
+  margin-bottom: 8px;
+    font-size: 30px;
+}
+
+
+/* Barre de navigation (style Facebook) */
+.club-nav {
+    margin:30px ;
+  display: flex;
+  justify-content: space-between; /* espace entre les groupes */
+  align-items: center;
+  padding: 10px 16px;
+  border-top: 2px solid #ccc;     /* bordure en haut */
+  border-bottom: 2px solid #ccc;  /* bordure en bas */
+}
+
+.left-buttons button,
+.right-button button {
+  margin: 0 4px;
+}
+
+/* Styles indépendants pour hover et active */
+.left-buttons button.active {
+  color: #1976d2;
+  border-bottom: 3px solid #1976d2;
+  border-radius: 0;
+}
+
+.left-buttons button:hover {
+  color: #1976d2;
+  border-bottom: 3px solid #1976d2;
+  border-radius: 0;
+}
+.right-button button {
+  background-color: #1976d2;  /* bleu principal */
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ombre subtile */
+}
+
+.right-button button:hover {
+  background-color: #1565c0; /* bleu plus foncé au survol */
+  transform: translateY(-1px); /* effet “lift” */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.right-button button:active {
+  background-color: #0d47a1; /* bleu encore plus foncé au clic */
+  transform: translateY(0); } /* retour à la*
+
+
+
+/* Style pour le bouton au survol */
+/* .club-nav button:hover {
+  color: #ff5722; 
+  border-bottom: 3px solid #ff5722;
+  border-radius: 0;
+} */
+
+
+
+.posts-section {
+  padding: 20px;
+}
+
+.posts-layout {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh - 250px); /* Ajuste selon ta navbar/couverture */
+}
+
+/* ------------------ Sidebar Général ------------------ */
+.club-sidebar {
+  width: 28%;
+  min-width: 250px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeIn 0.5s ease;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Sections internes */
+.sidebar-section {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sidebar-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Hover effect pour interactivité */
+.sidebar-section:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Titres des sections */
+.sidebar-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1976d2;
+}
+
+/* Paragraphes de contenu */
+.sidebar-section p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #555;
+  margin: 4px 0;
+}
+
+/* Styling des contacts avec icônes */
+.sidebar-section div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.sidebar-section div span {
+  font-size: 14px;
+  color: #333;
+  word-break: break-word;
+}
+.sidebar-section div span:hover {
+  text-decoration: underline;
+  color: #1976d2; /* facultatif : couleur bleu Facebook */
+}
+
+/* Lord-icon styles */
+lord-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+lord-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Padding et espacement pour plus de confort */
+.club-sidebar .sidebar-section:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+/* Responsive : réduire largeur sidebar sur petit écran */
+@media (max-width: 992px) {
+  .club-sidebar {
+    width: 100%;
+    position: relative;
+    top: auto;
+    margin-bottom: 20px;
+  }
+}
+
+/* post
+/* Colonne droite (posts) */
+.club-posts {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Pour éviter un scrollbar moche */
+.club-posts::-webkit-scrollbar {
+  width: 6px;
+}
+.club-posts::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+
