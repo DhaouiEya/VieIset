@@ -26,7 +26,7 @@ export class PublicationPostComponent implements OnInit {
       ngOnInit(): void {
          this.posteForm = this.fb.group({
       titre: ['', Validators.required],
-      description: ['', Validators.required]
+      //description: ['', Validators.required]
     });
     this.loadPostes();
   }
@@ -78,12 +78,48 @@ export class PublicationPostComponent implements OnInit {
   }
 
     // Création avec partage immédiat
-  partagerPoste() {
+ partagerPoste() {
     if (this.posteForm.invalid) {
-      alert('Veuillez remplir tous les champs obligatoires.');
+      import('sweetalert2').then((Swal) => {
+        Swal.default.fire({
+          icon: 'warning',
+          title: 'Champs obligatoires',
+          text: 'Veuillez remplir tous les champs obligatoires.',
+          confirmButtonColor: '#3085d6'
+        });
+      });
       return;
     }
 
+    // SweetAlert de confirmation
+    import('sweetalert2').then((Swal) => {
+      Swal.default.fire({
+        title: 'Confirmer la publication',
+        html: `
+          <div style="text-align: left;">
+            <p><strong>Titre :</strong> ${this.posteForm.value.titre}</p>
+            <p><strong>Description :</strong> ${this.posteForm.value.description}</p>
+            ${this.selectedImage ? `<p><strong>Image :</strong> ${this.selectedImage.name}</p>` : ''}
+            ${this.selectedVideo ? `<p><strong>Vidéo :</strong> ${this.selectedVideo.name}</p>` : ''}
+          </div>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui, publier !',
+        cancelButtonText: 'Annuler',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.publierPoste();
+        }
+      });
+    });
+  }
+
+  // Méthode séparée pour la publication effective
+  private publierPoste() {
     const formData = new FormData();
     formData.append('titre', this.posteForm.value.titre);
     formData.append('description', this.posteForm.value.description);
@@ -96,17 +132,44 @@ export class PublicationPostComponent implements OnInit {
       formData.append('video', this.selectedVideo);
     }
 
-    this.posteService.createPosteWithFiles(formData).subscribe({
-      next: (poste) => {
-        console.log('✅ Poste créé et partagé', poste);
-        this.posteForm.reset();
-        this.selectedImage = null;
-        this.selectedVideo = null;
-        this.loadPostes();
-      },
-      error: (err) => console.error('Erreur lors de la création du poste', err)
+    // Afficher un indicateur de chargement
+    import('sweetalert2').then((Swal) => {
+      Swal.default.fire({
+        title: 'Publication en cours...',
+        text: 'Veuillez patienter',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.default.showLoading();
+        }
+      });
+
+      this.posteService.createPosteWithFiles(formData).subscribe({
+        next: (poste) => {
+          Swal.default.fire({
+            icon: 'success',
+            title: 'Publié !',
+            text: 'Votre publication a été partagée avec succès',
+            confirmButtonColor: '#3085d6'
+          });
+
+          this.posteForm.reset();
+          this.selectedImage = null;
+          this.selectedVideo = null;
+          this.loadPostes();
+        },
+        error: (err) => {
+          console.error('Erreur lors de la création du poste', err);
+          Swal.default.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors de la publication',
+            confirmButtonColor: '#d33'
+          });
+        }
+      });
     });
   }
+
 
 
   cloturerPoste(poste: Poste) {
