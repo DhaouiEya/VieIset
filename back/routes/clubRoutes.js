@@ -6,6 +6,7 @@ const clubController = require("../controllers/clubController");
 
 router.post("/", clubController.createClub);
 router.get("/clubManager/:id", clubController.getClubByManager);
+// router.get("/", clubController.getAllClubs);
 
 // //securiser la route avec authMiddleware si role clubManager
 // router.post("/", async (req, res) => {
