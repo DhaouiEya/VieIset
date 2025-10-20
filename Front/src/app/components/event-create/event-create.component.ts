@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { EventService, Event } from '../../services/event.service';
+import { Event } from '../../models/event.model';
+import { EventService } from '../../services/event.service';
 import { RouterModule, Router } from '@angular/router';
 
 @Component({
@@ -15,9 +16,10 @@ export class EventCreateComponent {
   newEvent: Event = {
     title: '',
     description: '',
-    location: '',
+    localisation: '',
     startDate: '',
     endDate: '',
+    lienImage: '',
     capacity: 0
   };
 
@@ -26,22 +28,39 @@ export class EventCreateComponent {
 
   constructor(private eventSvc: EventService, private router: Router) {}
 
-  submit() {
-    if (!this.newEvent.title || !this.newEvent.startDate) {
-      this.error = 'Titre et date de début requis.';
-      return;
-    }
-    this.loading = true;
-    this.eventSvc.createEvent(this.newEvent).subscribe({
-      next: (ev) => {
-        this.loading = false;
-        this.router.navigate(['/events']); // Retour à la liste après création
-      },
-      error: (err) => {
-        this.loading = false;
-        this.error = 'Erreur lors de la création de l’événement.';
-        console.error(err);
-      }
-    });
+selectedImage: File | null = null;
+
+onFileSelected(event: any) {
+  this.selectedImage = event.target.files[0];
+}
+
+submit() {
+  if (!this.newEvent.title || !this.newEvent.startDate) {
+    this.error = 'Titre et date de début requis.';
+    return;
   }
+
+  const formData = new FormData();
+  formData.append('title', this.newEvent.title);
+  formData.append('description', this.newEvent.description);
+  formData.append('localisation', this.newEvent.localisation);
+  formData.append('startDate', this.newEvent.startDate);
+  if (this.newEvent.endDate) formData.append('endDate', this.newEvent.endDate);
+  formData.append('capacity', this.newEvent.capacity?.toString() || '0');
+  if (this.selectedImage) formData.append('image', this.selectedImage);
+
+  this.loading = true;
+  this.eventSvc.createEventWithFiles(formData).subscribe({
+    next: (ev) => {
+      this.loading = false;
+      this.router.navigate(['/events']);
+    },
+    error: (err) => {
+      this.loading = false;
+      this.error = 'Erreur lors de la création de l’événement.';
+      console.error(err);
+    }
+  });
+}
+
 }

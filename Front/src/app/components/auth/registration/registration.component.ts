@@ -1,3 +1,4 @@
+import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -17,7 +18,6 @@ import {
 } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
 
 declare const google: any;
 
@@ -25,9 +25,9 @@ declare const google: any;
   selector: 'app-registration',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
-    PasswordStrengthMeterComponent,
+    CommonModule,
+   PasswordStrengthMeterComponent,
   ],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],

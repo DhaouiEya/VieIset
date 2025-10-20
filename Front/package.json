@@ -26,6 +26,7 @@
     "angular-password-strength-meter": "^12.0.0",
     "angularx-social-login": "^4.1.0",
     "bootstrap": "^5.3.8",
+    "password-strength-meter": "^2.1.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.26.3",
     "tslib": "^2.3.0",
