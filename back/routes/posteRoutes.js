@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const posteController = require('../controllers/posteController');
+const authMiddleware = require('../middlewares/authMiddlewares');
 const multer = require('multer');
 const path = require('path');
 
@@ -40,5 +41,7 @@ router.get('/', posteController.getAllPostes);
 
 // Mettre à jour l'état d'un poste
 router.put('/:id/etat', posteController.updatePosteEtat);
+
+router.put('/react/:postId', authMiddleware, posteController.reactToPost);
 
 module.exports = router;

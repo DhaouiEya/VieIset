@@ -15,8 +15,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
-import { UserModel } from '../../models/user.model';
+import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 //import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
 
@@ -208,7 +207,7 @@ export class RegistrationComponent {
         tap((auth) => {
           if (auth) {
             // Redirection après login réussi
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/clubs']);
           }
         }),
         switchMap((auth) => {

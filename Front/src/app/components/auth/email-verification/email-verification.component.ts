@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { timer } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-email-verification',
@@ -57,13 +57,13 @@ export class EmailVerificationComponent {
       },
       error: (err) => {
         console.error(err);
-        if (err.error?.message === 'Email déjà vérifié') {
-          this.statusMessage =
-            'Votre email est déjà vérifié. Redirection en cours...';
-          setTimeout(() => this.router.navigate(['/dashboard']), 3000);
-        } else{
+        // if (err.error?.message === 'Email déjà vérifié') {
+        //   this.statusMessage =
+        //     'Votre email est déjà vérifié. Redirection en cours...';
+        //   setTimeout(() => this.router.navigate(['/dashboard']), 3000);
+        // } else{
           this.statusMessage = err.error?.message || 'Erreur serveur, veuillez réessayer plus tard.';
-        }
+
         this.sending = false;
       },
       complete: () => {
