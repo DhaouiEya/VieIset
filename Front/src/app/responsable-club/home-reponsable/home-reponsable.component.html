@@ -1,15 +1,17 @@
- <div class="main-content">
+<div class="dashboard-container">
+  <app-responsable-menu></app-responsable-menu>
+  <div class="main-content">
     <h1>Tableau de Bord Responsable</h1>
     <div class="dashboard-grid">
       <div class="card">
         <h3>Publications</h3>
         <p>Gérer les publications du club</p>
-        <button class="btn-primary"  routerLink="/adminclubdashboard/publications" >Voir Publications</button>
+        <button class="btn-primary" routerLink="/publications">Voir Publications</button>
       </div>
       <div class="card">
-        <h3>Statistiques</h3>
-        <p>Consulter les statistiques</p>
-        <button class="btn-secondary">Voir Stats</button>
+        <h3>Formulaires</h3>
+        <p>Gérer les formulaires de participation</p>
+        <button class="btn-primary" routerLink="/participation-forms">Voir Formulaires</button>
       </div>
       <div class="card">
         <h3>Membres</h3>
@@ -23,4 +25,5 @@
       </div>
     </div>
   </div>
+</div>
 <router-outlet />

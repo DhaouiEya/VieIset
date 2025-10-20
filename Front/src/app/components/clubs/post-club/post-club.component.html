@@ -1,0 +1,61 @@
+<mat-card class="post-card">
+  <!-- Header -->
+  <mat-card-header>
+    <div mat-card-avatar class="post-avatar">
+      <img [src]="club?.imageProfil" alt="">
+    </div>
+    <mat-card-title>{{ club?.nom }}</mat-card-title>
+    <mat-card-subtitle>{{ post.dateCreation | date:'medium' }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <!-- Contenu -->
+  <mat-card-content>
+    <p class="post-content" [class.expanded]="isExpanded">
+      {{ post.description }}
+    </p>
+
+        @if (!isExpanded && post.description?.length > 100) {
+
+    <span class="read-more" (click)="isExpanded = true">
+      Lire plus...
+    </span>
+  }
+    @if (isExpanded) {
+    <span  class="read-more" (click)="isExpanded = false">
+      Réduire
+    </span>
+  }
+  </mat-card-content>
+
+  <!-- Image -->
+  @if(post.lienImage) {
+
+  <img mat-card-image [src]="post.lienImage" class="post-image" [class.small]="!isExpanded" />
+  }
+  <!-- Vidéo -->
+  @if(post.lienVideo) {
+  <div class="post-video">
+    <video width="100%" controls>
+      <source [src]="post.lienVideo" type="video/mp4">
+      Votre navigateur ne supporte pas la vidéo.
+    </video>
+  </div>
+  }
+
+  <!-- Actions sociales -->
+<mat-card-actions class="post-actions">
+  <button class="action-btn"
+          [ngClass]="{ 'active-jaime': userReaction === 'jaime' }"
+          (click)="toggleReaction('jaime')">
+    <mat-icon>thumb_up</mat-icon>
+    <span>{{ post.nbReactions?.jaime || 0 }}</span>
+  </button>
+
+  <button class="action-btn"
+          [ngClass]="{ 'active-jaimePas': userReaction === 'jaimePas' }"
+          (click)="toggleReaction('jaimePas')">
+    <mat-icon>thumb_down</mat-icon>
+    <span>{{ post.nbReactions?.jaimePas || 0 }}</span>
+  </button>
+</mat-card-actions>
+

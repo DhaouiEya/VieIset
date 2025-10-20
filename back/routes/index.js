@@ -3,12 +3,14 @@ const router = express.Router();
 const posteRoutes = require('./posteRoutes');
 const authRoutes =  require('./authRoutes');
 const clubRoutes=require('./clubRoutes');
-const eventRoutes = require('./eventRoutes');
-//j'ai ajouter cette ligne pour les routes des evenements <--NH
+const demandeAdhesionRoutes=require('./demandeAdhesionRoutes');
+
+
 router.use('/postes', posteRoutes);
 router.use('/auth', authRoutes);
-router.use('/events', eventRoutes);
 router.use('/clubs', clubRoutes);
+router.use('/demandeAdhesion', demandeAdhesionRoutes);
+
 
 module.exports=router;
 
