@@ -18,7 +18,7 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { UserModel } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
-import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
+//import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
 
 declare const google: any;
 
@@ -28,7 +28,7 @@ declare const google: any;
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    PasswordStrengthMeterComponent,
+   // PasswordStrengthMeterComponent,
   ],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],
