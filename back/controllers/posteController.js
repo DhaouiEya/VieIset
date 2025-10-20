@@ -1,5 +1,5 @@
 const posteService = require('../services/posteService');
-
+const Poste = require('../models/Poste');
 // Contrôleur pour créer un poste
 const createPoste = async (req, res) => {
   try {
@@ -56,8 +56,50 @@ const updatePosteEtat = async (req, res) => {
   }
 };
 
+
+const reactToPost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { reaction } = req.body; // 'jaime', 'jaimePas' ou null
+    const userId = req.user._id;
+
+    const post = await Poste.findById(postId);
+    
+    if (!post) return res.status(404).json({ message: "Post non trouvé" });
+
+    // Chercher la réaction précédente de cet utilisateur
+    const existing = post.reactions.find(r => r.userId.toString() === userId.toString());
+
+    if (existing) {
+      if (reaction === existing.type || reaction === null) {
+        // Annuler la réaction précédente
+        post.reactions = post.reactions.filter(r => r.userId.toString() !== userId.toString());
+      } else {
+        // Changer de réaction (ex: "J’aime" -> "J’aime pas")
+        existing.type = reaction;
+      }
+    } else if (reaction) {
+      // Nouvelle réaction
+      post.reactions.push({ userId, type: reaction });
+    }
+
+    // Recalculer les compteurs
+    post.nbReactions.jaime = post.reactions.filter(r => r.type === 'jaime').length;
+    post.nbReactions.jaimePas = post.reactions.filter(r => r.type === 'jaimePas').length;
+
+    await post.save();
+
+    res.json({ message: "Réaction mise à jour", data: post });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+};
+
+
 module.exports = {
   createPoste,
   getAllPostes,
   updatePosteEtat,
+  reactToPost
 };

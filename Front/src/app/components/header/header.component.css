@@ -1,0 +1,130 @@
+/* App Header Navigation */
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+
+  /* background: rgba(255, 255, 255, 0.85); */
+  background: var(--background-color);
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.nav-logo a {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-text-color);
+  text-decoration: none;
+}
+
+/* === Correction ici === */
+.nav-links {
+  display: flex;          /* horizontal */
+  list-style: none;
+  gap: 2.5rem;
+  align-items: center;    /* pour centrer verticalement */
+  margin: 0;              /* retirer marge par défaut ul */
+  padding: 0;
+}
+
+.nav-links li {
+  display: flex;          /* pour s'assurer que les li s'alignent bien */
+  align-items: center;
+}
+
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--secondary-text-color);
+  font-weight: 600;        /* un peu plus épais */
+  font-size: 1.2rem;       /* augmenter la taille du texte */
+  padding: 0.75rem 0;      /* plus d’espace vertical */
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--primary-text-color);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background-color: var(--accent-color-1);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-profile a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  color: var(--primary-text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-profile a:hover {
+  background-color: var(--accent-color-1);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 0 1rem;
+    height: 70px;
+  }
+  body {
+    padding-top: 70px;
+  }
+  .nav-links {
+    gap: 1.5rem;
+  }
+  .nav-logo a {
+    font-size: 1.5rem;
+  }
+  .nav-links a {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .nav-links {
+    display: none; /* cacher liens sur très petit écran */
+  }
+  .nav-container {
+    justify-content: space-between;
+  }
+}
