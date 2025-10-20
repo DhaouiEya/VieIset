@@ -9,11 +9,11 @@ import { CreateClubComponent } from './components/clubs/create-club/create-club.
 import { EspaceClubComponent } from './components/clubs/espace-club/espace-club.component';
 
 import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
-import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
 import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
 import { ClubsListComponent } from './components/clubs/clubs-list/clubs-list.component';
 import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
 import { ParticipationFormsComponent } from './responsable-club/participation-forms/participation-forms.component';
+import { EmailVerificationComponent } from './components/auth/email-verification/email-verification.component';
 
 
 export const routes: Routes = [
