@@ -1,12 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const clubController = require("../controllers/clubController");
+const authMiddleware = require('../middlewares/authMiddlewares');
+
 //post
 
 
 router.post("/", clubController.createClub);
 router.get("/clubManager/:id", clubController.getClubByManager);
+router.get("/", clubController.getAllClubs);
 
+
+// GET club + posts
+router.get('/:id', authMiddleware,clubController.getClubById);
 // //securiser la route avec authMiddleware si role clubManager
 // router.post("/", async (req, res) => {
 //     try {
@@ -39,6 +45,7 @@ router.get("/clubManager/:id", clubController.getClubByManager);
 //     res.status(500).json({ message: 'Erreur serveur', error: error.message });
 //   }
 // });
+
 
 
 

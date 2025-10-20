@@ -5,15 +5,11 @@ import { HomeReponsableComponent } from "../home-reponsable/home-reponsable.comp
 
 @Component({
   selector: 'app-responsable-dashboard',
-  imports: [ResponsableMenuComponent, RouterOutlet, HomeReponsableComponent],
+  imports: [ResponsableMenuComponent, RouterOutlet,],
   templateUrl: './responsable-dashboard.component.html',
   styleUrl: './responsable-dashboard.component.css'
 })
 export class ResponsableDashboardComponent {
 
   constructor(private router: Router) {}
-
-  navigateToPublications() {
-    this.router.navigate(['publications']);
-  }
 }
