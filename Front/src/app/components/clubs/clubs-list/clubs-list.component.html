@@ -1,0 +1,59 @@
+<app-header></app-header>
+<div class="m-15 ">
+
+<div class="main-header pt-20">
+  <h1>Clubs Universitaires</h1>
+  <p>Découvrez, rejoignez et participez à la vie étudiante.</p>
+</div>
+
+<div class="clubs-grid">
+  @for (club of clubs; track $index) {
+  <div class="club-card" >
+    <div class="card-header" [style.backgroundImage]="'url(' + club.imageFond + ')'">
+      <div class="header-content">
+        <h3 class="club-name">{{ club.nom }}</h3>
+
+        <p class="club-department" >{{ club.departement }}</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="club-description">{{ club.description }}</p>
+      @if(club.activites?.length) {
+      <div class="club-activities" >
+
+        @for (act of club.activites; track $index) {
+          <span class="activity-tag">{{ act }}</span>
+        }
+      </div>
+    }
+    </div>
+    <div class="card-footer">
+
+      <div class="social-links">
+        @if( club.reseaux?.facebook) {
+        <a  [href]="club.reseaux?.facebook" target="_blank" aria-label="Facebook">
+    <i class="bi bi-facebook" style="font-size: 1.5rem; color:#4267B2;"></i>
+        </a>
+      }
+        @if( club.reseaux?.instagram) {
+
+        <a [href]="club.reseaux?.instagram" target="_blank" aria-label="Instagram">
+    <i class="bi bi-instagram" style="font-size: 1.5rem; color:#C13584;"></i>
+        </a>
+      }
+
+      </div>
+
+<button class="btn btn-primary btn-sm rounded-pill" (click)="goToClubSpace(club._id)">
+  <i class="bi bi-house-door-fill me-2"></i> Espace Club
+</button>
+
+
+    </div>
+  </div>
+}
+</div>
+
+</div>
+
+<app-footer></app-footer>

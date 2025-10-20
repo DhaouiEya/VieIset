@@ -1,0 +1,18 @@
+  .footer-link {
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+  }
+  .social-icon {
+    color: #2c3e50;
+    font-size: 18px;
+    transition: color 0.3s, transform 0.3s;
+  }
+  .social-icon:hover {
+    color: #007bff;
+    transform: scale(1.2);
+  }

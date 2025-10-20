@@ -4,7 +4,7 @@ import { ResponsableMenuComponent } from '../responsable-menu/responsable-menu.c
 
 @Component({
   selector: 'app-home-reponsable',
-  imports: [RouterLink,RouterLinkActive,RouterOutlet, ResponsableMenuComponent,RouterModule],
+  imports: [RouterLink,RouterOutlet, ResponsableMenuComponent,RouterModule],
   templateUrl: './home-reponsable.component.html',
   styleUrl: './home-reponsable.component.css'
 })

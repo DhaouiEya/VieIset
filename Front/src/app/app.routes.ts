@@ -1,4 +1,4 @@
-import { RegistrationComponent } from './components/registration/registration.component';
+import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { Routes } from '@angular/router';
 // import { PublicationPostComponent } from './responsible-club/publication-post/publication-post.component';
 import { EventCreateComponent } from './components/event-create/event-create.component';
@@ -9,10 +9,12 @@ import { CreateClubComponent } from './components/clubs/create-club/create-club.
 import { EspaceClubComponent } from './components/clubs/espace-club/espace-club.component';
 
 import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
-import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+//import { EmailVerificationComponent } from './components/email-verification/email-verification.component';
+import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
+import { ClubsListComponent } from './components/clubs/clubs-list/clubs-list.component';
 import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
 import { ParticipationFormsComponent } from './responsable-club/participation-forms/participation-forms.component';
+import { EmailVerificationComponent } from './components/auth/email-verification/email-verification.component';
 
 
 export const routes: Routes = [
@@ -21,6 +23,9 @@ export const routes: Routes = [
   { path: 'send-verification-email', component: EmailVerificationComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
   { path: 'dashboard', component: ResponsableDashboardComponent },
+  // { path: 'publications', component: PublicationPostComponent },
+
+  { path: 'clubs', component: ClubsListComponent },
   { path: 'publications', component: PublicationPostComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'events', component: EventListComponent },
@@ -28,9 +33,9 @@ export const routes: Routes = [
   { path: 'events/:id', component: EventDetailComponent },
 
   {path: 'createClub ',component:CreateClubComponent },
-//il faut  avec id 
- //  {path: 'espaceClub/:id',component:EspaceClubComponent },
-  {path: 'espaceClub',component:EspaceClubComponent },
+//il faut  avec id
+  {path: 'espaceClub/:id',component:EspaceClubComponent },
+  // {path: 'espaceClub',component:EspaceClubComponent },
 
   {path: 'participation-forms', component: ParticipationFormsComponent}
 

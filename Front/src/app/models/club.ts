@@ -1,9 +1,11 @@
 import { Etudiant } from './etudiant';
 
 export class Club {
-                 
+
   nom!: string;
   description!: string;
+    activites?: string[];  // dessin, art, sport, musique...
+
   imageProfil!: string;
   imageFond!: string;
   dateCreation!: Date;
@@ -15,6 +17,7 @@ export class Club {
     facebook?: string;
     instagram?: string;
   };
+   actif?: boolean;     // statut du club
   manager!: Etudiant | string;            // référence à un étudiant
   membres?: Etudiant[];
    _id?: string;           // tableau d'étudiants
