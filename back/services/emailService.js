@@ -17,6 +17,27 @@ if (!process.env.EMAIL_HOST || !process.env.EMAIL_USER || !process.env.EMAIL_PAS
         },
     });
 }
+//email de date d'entretien 
+
+async function sendEmailDate({ to, subject, html, from }) {
+    if (!transporter) {
+        console.warn('Cannot send email: transporter is not configured.');
+        return;
+    }
+    const mailOptions = {
+        from: from || `"Vie Iset" <${process.env.EMAIL_USER}>`,
+        to,
+        subject,
+        html,
+    };
+    try {
+        await transporter.sendMail(mailOptions);
+    } catch (err) {
+        console.error('Failed to send email:', err);
+        throw err;
+    }
+}
+
 
 /**
  * Send an email using the configured transporter.
@@ -49,5 +70,5 @@ async function sendEmail({ to, subject, html, from }) {
 }
 
 module.exports = {
-    sendEmail,
+    sendEmail,sendEmailDate
 };

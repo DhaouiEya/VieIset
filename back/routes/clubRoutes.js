@@ -10,6 +10,7 @@ router.post("/", clubController.createClub);
 router.get("/clubManager/:id", clubController.getClubByManager);
 router.get("/", clubController.getAllClubs);
 
+
 // GET club + posts
 router.get('/:id', authMiddleware,clubController.getClubById);
 // //securiser la route avec authMiddleware si role clubManager
@@ -44,6 +45,7 @@ router.get('/:id', authMiddleware,clubController.getClubById);
 //     res.status(500).json({ message: 'Erreur serveur', error: error.message });
 //   }
 // });
+
 
 
 

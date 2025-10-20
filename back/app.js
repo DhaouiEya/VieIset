@@ -1,6 +1,6 @@
 require('dotenv').config(); // Charge les variables d'environnement
 const express = require('express');
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { errorMiddleware } = require('./middlewares/errorHandler');
 const cors = require('cors'); //pour gérer les requêtes cross-origin (CORS)
 const bodyParser = require('body-parser');
@@ -11,13 +11,14 @@ const credentialsPath = path.join(__dirname, 'credentials.json');
 const routes = require('./routes');
 const sheetRoutes = require('./routes/sheetRoutes');
 
+
 const app = express();
 
 // Middleware pour parser les requêtes JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use(express.static('public'))
 // Configuration CORS
 const corsOptions = {
   origin: '*', // mettre l’URL du front Angular en prod
@@ -37,7 +38,6 @@ app.use(
 
 // Servir les fichiers statiques (images, etc.)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 app.use('/api', routes);
 // Utilisez les routes
 app.use('/api/sheet', sheetRoutes); // Toutes les routes de sheetRoutes seront préfixées par /api/sheet
@@ -48,7 +48,7 @@ app.use(errorMiddleware);
 
 
 // Connexion MongoDB + démarrage du serveur
-const PORT = process.env.PORT || 5000;
+const PORT =  9000;
 // console.log("MONGO_URL:", process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
