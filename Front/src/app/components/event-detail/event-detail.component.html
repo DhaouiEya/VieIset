@@ -1,501 +1,296 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Détails de l'événement</title>
-  <style>
-    /* Variables CSS pour une maintenance facile */
-    :root {
-      --primary: #4361ee;
-      --primary-dark: #3a56d4;
-      --primary-light: #4895ef;
-      --secondary: #7209b7;
-      --success: #4cc9f0;
-      --danger: #e63946;
-      --warning: #f4a261;
-      --light: #f8f9fa;
-      --dark: #212529;
-      --gray: #6c757d;
-      --light-gray: #e9ecef;
-      --border-radius: 12px;
-      --border-radius-sm: 8px;
-      --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-      --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
-    }
+<div class="event-detail-container">
+  <!-- Navigation -->
+  <nav class="breadcrumb-nav">
+    <a routerLink="/events" class="breadcrumb-link">
+      <i class="breadcrumb-icon">←</i>
+      Retour aux événements
+    </a>
+  </nav>
 
-    /* Reset et styles de base */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      color: var(--dark);
-      line-height: 1.6;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      animation: fadeIn 0.6s ease-out;
-    }
-
-    .py-4 {
-      padding-top: 2rem;
-      padding-bottom: 2rem;
-    }
-
-    /* Animation d'entrée */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Bouton de retour */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      text-decoration: none;
-      border: none;
-      border-radius: var(--border-radius-sm);
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-link {
-      background: transparent;
-      color: var(--gray);
-      border: 2px solid var(--light-gray);
-      padding: calc(0.75rem - 2px) calc(1.5rem - 2px);
-      margin-bottom: 1.5rem;
-    }
-
-    .btn-link:hover {
-      color: var(--primary);
-      border-color: var(--primary);
-      background: rgba(67, 97, 238, 0.05);
-      transform: translateX(-5px);
-    }
-
-    .mb-2 {
-      margin-bottom: 1rem;
-    }
-
-    /* Indicateur de chargement */
-    .loading {
-      text-align: center;
-      padding: 3rem;
-      color: var(--gray);
-      font-size: 1.1rem;
-    }
-
-    .loading::after {
-      content: '';
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--gray);
-      border-top: 2px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-left: 10px;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Alertes */
-    .alert {
-      padding: 1.25rem 1.5rem;
-      border-radius: var(--border-radius-sm);
-      margin-bottom: 1.5rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      animation: slideIn 0.3s ease-out;
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    .alert-danger {
-      background: linear-gradient(135deg, rgba(230, 57, 70, 0.08) 0%, rgba(230, 57, 70, 0.12) 100%);
-      color: var(--danger);
-      border-left: 4px solid var(--danger);
-      border: 1px solid rgba(230, 57, 70, 0.2);
-    }
-
-    .alert-success {
-      background: linear-gradient(135deg, rgba(76, 201, 240, 0.08) 0%, rgba(76, 201, 240, 0.12) 100%);
-      color: #38b000;
-      border-left: 4px solid #38b000;
-      border: 1px solid rgba(56, 176, 0, 0.2);
-    }
-
-    .alert-danger::before {
-      content: '⚠';
-      font-size: 1.2rem;
-    }
-
-    .alert-success::before {
-      content: '✓';
-      font-size: 1.2rem;
-    }
-
-    /* Carte de l'événement */
-    .event-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      padding: 2.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      margin-bottom: 2rem;
-      transition: var(--transition);
-    }
-
-    .event-card:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-2px);
-    }
-
-    .event-header h3 {
-      font-size: 2rem;
-      font-weight: 800;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 1rem;
-      letter-spacing: -0.5px;
-    }
-
-    .event-description {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: var(--dark);
-      margin-bottom: 1.5rem;
-    }
-
-    .event-details {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .event-detail {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-    }
-
-    .event-detail strong {
-      color: var(--primary);
-      min-width: 80px;
-    }
-
-    .event-detail span {
-      color: var(--dark);
-    }
-
-    hr {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--light-gray), transparent);
-      margin: 2rem 0;
-    }
-
-    /* Formulaire d'inscription */
-    .register-section h5 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 1.5rem;
-      position: relative;
-      padding-bottom: 0.5rem;
-    }
-
-    .register-section h5::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 60px;
-      height: 3px;
-      background: var(--gradient);
-      border-radius: 2px;
-    }
-
-    .register-form {
-      background: rgba(248, 249, 250, 0.7);
-      border-radius: var(--border-radius-sm);
-      padding: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: var(--dark);
-      font-size: 1rem;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 1rem 1.25rem;
-      font-size: 1rem;
-      border: 2px solid var(--light-gray);
-      border-radius: var(--border-radius-sm);
-      transition: var(--transition);
-      background: white;
-      font-family: inherit;
-    }
-
-    .form-control::placeholder {
-      color: #a0a0a0;
-      font-weight: 400;
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
-      transform: translateY(-1px);
-    }
-
-    /* .btn-primary {
-      background: var(--gradient);
-      color: white;
-      box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
-    } */
-
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
-    }
-
-    .btn-primary:disabled {
-      background: var(--gray);
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-      opacity: 0.6;
-    }
-
-    /* Badge de capacité */
-    .capacity-badge {
-      display: inline-flex;
-      align-items: center;
-      background: linear-gradient(135deg, var(--light-gray) 0%, #dde1e7 100%);
-      color: var(--gray);
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-weight: 500;
-      border: 1px solid #e1e5e9;
-      margin-top: 0.5rem;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      body {
-        padding: 15px;
-      }
-
-      .event-card {
-        padding: 2rem 1.5rem;
-      }
-
-      .event-header h3 {
-        font-size: 1.75rem;
-      }
-
-      .event-details {
-        grid-template-columns: 1fr;
-      }
-
-      .register-form {
-        padding: 1.5rem;
-      }
-
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .event-card {
-        padding: 1.5rem 1rem;
-      }
-
-      .event-header h3 {
-        font-size: 1.5rem;
-      }
-
-      .register-form {
-        padding: 1rem;
-      }
-
-      .form-control {
-        padding: 0.875rem 1rem;
-      }
-    }
-
-    /* Améliorations d'accessibilité */
-    .form-control:focus-visible {
-      outline: 2px solid var(--primary);
-      outline-offset: 2px;
-    }
-
-    .btn:focus-visible {
-      outline: 2px solid var(--primary);
-      outline-offset: 2px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container py-4">
-    <a href="#" class="btn btn-link">← Retour à la liste</a>
-
-    <!-- État de chargement -->
-    <div class="loading">Chargement...</div>
-
-    <!-- Message d'erreur -->
-    <div class="alert alert-danger" style="display: none;">Exemple de message d'erreur</div>
-
-    <!-- Détails de l'événement -->
-    <div class="event-card">
-      <div class="event-header">
-        <h3>Titre de l'événement</h3>
+  <!-- État de chargement -->
+  @if (!event) {
+    <div class="loading-state">
+      <div class="spinner-container">
+        <div class="spinner"></div>
       </div>
-
-      <p class="event-description">
-        Description détaillée de l'événement. Cette section décrit tout ce que les participants
-        doivent savoir sur l'événement, les activités prévues, et toute information importante.
-      </p>
-
-      <div class="event-details">
-        <div class="event-detail">
-          <strong>Lieu :</strong>
-          <span>Nom du lieu, Adresse complète</span>
-        </div>
-
-        <div class="event-detail">
-          <strong>Date :</strong>
-          <span>Lundi 15 janvier 2024 à 14:30</span>
-        </div>
-
-        <div class="event-detail">
-          <strong>Inscrits :</strong>
-          <span>
-            15 / 50
-            <div class="capacity-badge">Places disponibles</div>
-          </span>
-        </div>
-      </div>
-
-      <hr />
-
-      <div class="register-section">
-        <h5>S'inscrire</h5>
-
-        <!-- Message de succès -->
-        <div class="alert alert-success" style="display: none;">Exemple de message de succès</div>
-
-        <div class="register-form">
-          <form>
-            <div class="form-group">
-              <label class="form-label">ID Étudiant</label>
-              <input class="form-control" placeholder="Votre numéro d'étudiant" />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Nom</label>
-              <input class="form-control" placeholder="Votre nom complet" />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" placeholder="votre.email@exemple.com" />
-            </div>
-
-            <button class="btn btn-primary" type="submit">S'inscrire</button>
-          </form>
-        </div>
-      </div>
+      <h3>Chargement de l'événement</h3>
+      <p>Préparation des détails...</p>
     </div>
+  }
+
+  <!-- Contenu principal de l'événement -->
+  @if (event) {
+    <div class="event-layout">
+      <!-- Colonne principale -->
+      <div class="event-main">
+        <!-- En-tête de l'événement -->
+        <header class="event-header">
+
+
+          <h1 class="event-title">{{ event.title }}</h1>
+        @if (event.lienImage) {
+    <img
+      [src]="'http://localhost:9000' + event.lienImage"
+      alt="{{ event.title }}"
+      class="event-image" />
+  }
+
+          <div class="event-meta-grid">
+            <div class="meta-item">
+              <div class="meta-icon">📅</div>
+              <div class="meta-content">
+                <span class="meta-label">Date de début</span>
+                <span class="meta-value">{{ event.startDate | date:'fullDate' }}</span>
+                <span class="meta-subvalue">{{ event.startDate | date:'HH:mm' }}</span>
+              </div>
+            </div>
+
+            <div class="meta-item">
+              <div class="meta-icon">🏁</div>
+              <div class="meta-content">
+                <span class="meta-label">Date de fin</span>
+                <span class="meta-value">{{ event.endDate | date:'fullDate' }}</span>
+                <span class="meta-subvalue">{{ event.endDate | date:'HH:mm' }}</span>
+              </div>
+            </div>
+
+            <div class="meta-item">
+              <div class="meta-icon">📍</div>
+              <div class="meta-content">
+                <span class="meta-label">Lieu  </span>
+                <span class="meta-value">{{    event.localisation }}</span>
+
+              </div>
+            </div>
+
+            <div class="meta-item">
+              <div class="meta-icon">👥</div>
+              <div class="meta-content">
+                <span class="meta-label">Participants</span>
+                <span class="meta-value">{{ event.attendees?.length || 0 }} / {{ event.capacity || '∞' }}</span>
+                <div class="capacity-progress">
+                  <div class="progress-bar">
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Description détaillée -->
+        <section class="event-description-section">
+          <h2 class="section-title">À propos de cet événement</h2>
+          <div class="description-content">
+            <p>{{ event.description }}</p>
+            <p>{{event.localisation}}</p>
+            <p>{{event.endDate}}</p>
+            <p>{{event.startDate}}</p>
+          </div>
+
+          <!-- Tags et catégories -->
+
+        </section>
+
+        <!-- Section participants -->
+        <section class="participants-section">
+          <div class="section-header">
+            <h2 class="section-title">Participants ({{ event.attendees?.length || 0 }})</h2>
+            <div class="section-actions">
+
+            </div>
+          </div>
+
+          @if (event.attendees && event.attendees.length > 0) {
+            <div class="attendees-grid">
+              @for (attendee of event.attendees; track attendee.studentId) {
+                <div class="attendee-card">
+                  <div class="attendee-avatar">
+
+                  </div>
+
+                  <div class="attendee-actions">
+
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="empty-attendees">
+              <i class="empty-icon">👥</i>
+              <h3>Aucun participant pour l'instant</h3>
+              <p>Soyez le premier à vous inscrire !</p>
+            </div>
+          }
+        </section>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="event-sidebar">
+        <!-- Carte d'inscription -->
+        <!-- Carte d'inscription -->
+<!-- Carte d'inscription -->
+<div class="registration-card">
+  <div class="card-header">
+    <h3 class="card-title">Rejoindre l'événement</h3>
   </div>
 
-  <script>
-    // Script pour démontrer les fonctionnalités
-    document.addEventListener('DOMContentLoaded', function() {
-      // Simuler le chargement
-      setTimeout(() => {
-        document.querySelector('.loading').style.display = 'none';
-      }, 1500);
+  @if (alreadyRegistered) {
+    <div class="already-registered">
+      <p class="info-text">✅ Vous êtes déjà inscrit à cet événement.</p>
+    </div>
+  } @else {
+    <form #registrationForm="ngForm" class="registration-form" (ngSubmit)="register()" novalidate>
 
-      // Gestion du formulaire
-      document.querySelector('form').addEventListener('submit', function(e) {
-        e.preventDefault();
+      <!-- Champ Email -->
+      <div class="form-group">
+        <label for="studentEmail" class="form-label">
+          <i class="label-icon">📧</i>
+          Email
+        </label>
+        <input
+          id="studentEmail"
+          type="email"
+          name="email"
+          [(ngModel)]="student.studentId"
+          #emailCtrl="ngModel"
+          required
+          email
+          placeholder="exemple@domaine.com"
+          class="form-input"
+        />
 
-        const submitBtn = this.querySelector('.btn-primary');
-        const originalText = submitBtn.innerHTML;
+        <!-- Erreurs de validation -->
+        @if (emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)) {
+          <div class="error-message">
+            @if (emailCtrl.errors?.['required']) {
+              <p>L'email est obligatoire.</p>
+            }
+            @if (emailCtrl.errors?.['email']) {
+              <p>Format d'email invalide</p>
+            }
+          </div>
+        }
+      </div>
 
-        // Simuler l'envoi
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = 'Inscription en cours...';
+      <!-- Champ Nom -->
+      <div class="form-group">
+        <label for="studentName" class="form-label">
+          <i class="label-icon">👤</i>
+          Nom complet
+        </label>
+        <input
+          id="studentName"
+          type="text"
+          name="name"
+          [(ngModel)]="student.name"
+          #nameCtrl="ngModel"
+          required
+          placeholder="Votre nom et prénom"
+          class="form-input"
+        />
 
-        setTimeout(() => {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
+        @if (nameCtrl.invalid && (nameCtrl.dirty || nameCtrl.touched)) {
+          <div class="error-message">
+            <p>Le nom complet est obligatoire.</p>
+          </div>
+        }
+      </div>
 
-          // Afficher le message de succès
-          const successAlert = document.querySelector('.alert-success');
-          successAlert.textContent = 'Inscription réussie ! Vous êtes maintenant inscrit à cet événement.';
-          successAlert.style.display = 'flex';
-        }, 2000);
-      });
-    });
-  </script>
-</body>
-</html>
+      <!-- Bouton d'inscription -->
+      <button
+        type="submit"
+        class="register-btn"
+        [disabled]="registrationForm.invalid"
+      >
+        S'inscrire
+      </button>
+
+      <div class="form-footer">
+        <p class="form-note">
+          <i class="note-icon">ℹ️</i>
+          Vous recevrez une confirmation par email
+        </p>
+      </div>
+    </form>
+  }
+</div>
+
+
+        <!-- ************* -->
+        <!-- Actions rapides -->
+        <!-- <div class="action-card">
+          <h3 class="card-title">Partager</h3>
+          <div class="action-buttons">
+            <button class="social-btn whatsapp" (click)="shareOnWhatsApp()">
+              <i class="social-icon">💚</i>
+              WhatsApp
+            </button>
+            <button class="social-btn linkedin" (click)="shareOnLinkedIn()">
+              <i class="social-icon">💼</i>
+              LinkedIn
+            </button>
+            <button class="social-btn twitter" (click)="shareOnTwitter()">
+              <i class="social-icon">🐦</i>
+              Twitter
+            </button>
+            <button class="social-btn copy" (click)="copyEventLink()">
+              <i class="social-icon">📋</i>
+              Copier le lien
+            </button>
+          </div>
+        </div> -->
+
+        <!-- Statistiques -->
+        <!-- <div class="stats-card">
+          <h3 class="card-title">Statistiques</h3>
+          <div class="stats-list">
+            <div class="stat-item">
+              <span class="stat-label">Taux d'inscription</span>
+              <span class="stat-value">{{ getAttendancePercentage(event) }}%</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Places restantes</span>
+              <span class="stat-value">{{ getRemainingSpots(event) }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Date de création</span>
+              <span class="stat-value">{{ event.createdAt | date:'shortDate' }}</span>
+            </div>
+          </div>
+        </div> -->
+      </aside>
+    </div>
+
+    <!-- Messages de statut -->
+    @if (successMessage) {
+      <div class="status-message success">
+        <div class="message-content">
+          <i class="message-icon">🎉</i>
+          <div class="message-text">
+            <h4>Inscription réussie !</h4>
+            <p>{{ successMessage }}</p>
+          </div>
+        </div>
+        <button class="message-close" (click)="successMessage = ''">×</button>
+      </div>
+    }
+
+    @if (errorMessage) {
+      <div class="status-message error">
+        <div class="message-content">
+          <i class="message-icon">⚠️</i>
+          <div class="message-text">
+            <h4>Erreur d'inscription</h4>
+            <p>{{ errorMessage }}</p>
+          </div>
+        </div>
+        <button class="message-close" (click)="errorMessage = ''">×</button>
+      </div>
+    }
+
+    <!-- Événements similaires -->
+
+  }
+</div>

@@ -1,11 +1,13 @@
+// src/app/models/event.model.ts
+import { Attendee } from './attendee.model';
 export interface Event {
-  id?: number;
+  id?: string;          // correspond à _id du backend
   title: string;
-  description?: string;
-  location?: string;
-  startDate: string;
-  endDate?: string;
+  description: string;
+  localisation: string;
+  startDate: string;    // ou Date si tu convertis côté front
+  endDate: string;      // ou Date
   capacity?: number;
-  attendeesCount?: number;
-  createdBy?: string;
+  lienImage:string;
+  attendees?: Attendee[];
 }
