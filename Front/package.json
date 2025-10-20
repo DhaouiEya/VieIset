@@ -20,11 +20,17 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "@react-oauth/google": "^0.12.2",
+    "@zxcvbn-ts/core": "^3.0.0",
+    "@zxcvbn-ts/language-en": "^3.0.0",
+    "angular-password-strength-meter": "^12.0.0",
+    "angularx-social-login": "^4.1.0",
     "bootstrap": "^5.3.8",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.26.3",
     "tslib": "^2.3.0",
-    "zone.js": "~0.15.0"
+    "zone.js": "~0.15.0",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.18",

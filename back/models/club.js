@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Etudiant = require("../models/etudiant");
 const club=new mongoose.Schema({
     nom:{type:String,required:true},
+    activites: [{ type: String ,required:true}],
     description:{type:String,required:true},
     imageProfil:{type:String,required:true},
     imageFond:{type:String,required:true},
@@ -22,7 +23,8 @@ const club=new mongoose.Schema({
     membres: [{ 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Etudiant'
-    }]
+    }],
+    actif:{type:Boolean,default:true}
 },{timestamps:true});
 
 module.exports=mongoose.model('Club',club);

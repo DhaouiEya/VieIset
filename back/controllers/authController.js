@@ -1,5 +1,5 @@
 const User = require('../models/etudiant');
-const validateRequiredFields=require("../utils/validators")
+const {validateRequiredFields}=require("../utils/validators")
 const { sendEmail } = require('../services/emailService');
 const { OAuth2Client } = require('google-auth-library');
 const bcrypt = require('bcryptjs');
@@ -9,6 +9,10 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const jwt = require('jsonwebtoken');
 
 
+function generateToken() {
+    // Génère un token aléatoire de 32 octets, puis le convertit en chaîne hexadécimale
+    return crypto.randomBytes(32).toString('hex');
+}
 exports.register = async (req, res, next) => {
     try {
         const {
@@ -60,7 +64,7 @@ exports.register = async (req, res, next) => {
             lastName,
             email: email.toLowerCase(),
             password: hashedPassword,
-            role: 'memebre',
+            role: 'membre',
             emailVerificationToken,
             emailVerificationExpires: tokenExpiry,
         });
@@ -71,17 +75,17 @@ exports.register = async (req, res, next) => {
 
 
 
-        // // Generate JWT token for immediate login if needed
-        // const authToken = jwt.sign(
-        //     { _id: user._id, role: user.role },
-        //     process.env.JWT_SECRET,
-        //     { expiresIn: '7d' }
-        // );
+        // Generate JWT token for immediate login if needed
+        const authToken = jwt.sign(
+            { _id: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        );
 
         res.status(201).json({
             success: true,
             message: 'Registration successful. Verification email link  sent.',
-            // authToken
+            authToken
         });
 
     } catch (error) {
@@ -206,7 +210,7 @@ exports.resendVerificationEmail = async (req, res, next) => {
         if (user.emailVerified) {
             return res.status(400).json({
                 success: false,
-                message: 'Email already verified.'
+                message: 'Email déjà vérifié'
             });
         }
 
@@ -268,7 +272,7 @@ exports.googleLogin = async (req, res, next) => {
             } else {
                 // Create new user
                 user = new User({
-                    role: 'memebre',
+                    role: 'membre',
                     googleId,
                     email,
                     firstName: name?.split(' ')[0] || '',
