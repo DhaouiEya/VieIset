@@ -24,6 +24,7 @@ export const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
    { path: 'dashboard', component: ResponsableDashboardComponent },
   { path: 'publications', component: PublicationPostComponent },
+  { path: 'createClub', component: CreateClubComponent },
   // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '', redirectTo: '/register', pathMatch: 'full' },
   { path: 'send-verification-email', component: EmailVerificationComponent },
