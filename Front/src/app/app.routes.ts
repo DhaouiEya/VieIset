@@ -1,5 +1,6 @@
 import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { Routes } from '@angular/router';
+ 
 // import { PublicationPostComponent } from './responsible-club/publication-post/publication-post.component';
 import { EventCreateComponent } from './components/event-create/event-create.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
@@ -13,18 +14,24 @@ import { EspaceClubComponent } from './components/clubs/espace-club/espace-club.
 import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
 import { ClubsListComponent } from './components/clubs/clubs-list/clubs-list.component';
 
+
 import { EmailVerificationComponent } from './components/auth/email-verification/email-verification.component';
+
+import { ParticipationFormsComponent } from './components/responsable-club/participation-forms/participation-forms.component';
 import { ResponsableDashboardComponent } from './components/responsable-club/responsable-dashboard/responsable-dashboard.component';
 import { PublicationPostComponent } from './components/responsable-club/publication-post/publication-post.component';
-import { ParticipationFormsComponent } from './components/responsable-club/participation-forms/participation-forms.component';
 
 
 export const routes: Routes = [
+  { path: '', redirectTo: '/register', pathMatch: 'full' },
+   { path: 'dashboard', component: ResponsableDashboardComponent },
+  { path: 'publications', component: PublicationPostComponent },
+  { path: 'createClub', component: CreateClubComponent },
   // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '', redirectTo: '/register', pathMatch: 'full' },
   { path: 'send-verification-email', component: EmailVerificationComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
-  { path: 'dashboard', component: ResponsableDashboardComponent },
+  // { path: 'dashboard', component: ResponsableDashboardComponent },
   // { path: 'publications', component: PublicationPostComponent },
 
   { path: 'clubs', component: ClubsListComponent },

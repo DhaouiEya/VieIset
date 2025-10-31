@@ -1,3 +1,4 @@
+import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -17,18 +18,25 @@ import {
 } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
+<<<<<<< HEAD
 import { PasswordStrengthMeterComponent} from 'angular-password-strength-meter';
 //import { PasswordStrengthMeterComponent } from '../../password-strength-meter/password-strength-meter.component';
 
+=======
+>>>>>>> 7be2a255456d4497e09e9e42304ed197c1c2e62f
 
 
 @Component({
   selector: 'app-registration',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
+<<<<<<< HEAD
     PasswordStrengthMeterComponent,
+=======
+    CommonModule,
+   PasswordStrengthMeterComponent,
+>>>>>>> 7be2a255456d4497e09e9e42304ed197c1c2e62f
   ],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],

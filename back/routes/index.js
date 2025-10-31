@@ -11,7 +11,11 @@ router.use('/postes', posteRoutes);
 router.use('/auth', authRoutes);
 router.use('/clubs', clubRoutes);
 router.use('/demandeAdhesion', demandeAdhesionRoutes);
+
 router.use('/sheet', sheetRoutes); 
+
+router.use('/events', require('./eventRoutes'));
+
 
 module.exports=router;
 
