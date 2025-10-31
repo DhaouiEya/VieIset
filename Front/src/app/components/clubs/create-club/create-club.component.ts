@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Club } from '../../../models/club';
 import { ClubService } from '../../../services/club.service';
+
+
 @Component({
   selector: 'app-create-club',
   imports: [
@@ -23,12 +25,13 @@ import { ClubService } from '../../../services/club.service';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    
   ],
   templateUrl: './create-club.component.html',
   styleUrl: './create-club.component.css'
 })
 export class CreateClubComponent implements OnInit{
-
+  
   private fb = inject(FormBuilder);
   private readonly clubService : ClubService = inject(ClubService);
   //private router = inject(Router);
@@ -47,8 +50,8 @@ export class CreateClubComponent implements OnInit{
     adresse: ['', Validators.required],
     telephone: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    facebook: ['',Validators.required],
-    instagram: ['', Validators.required],
+    facebook: [''],
+    instagram: [''],
   });
   console.log('Formulaire initialisé :', this.clubForm);
   }

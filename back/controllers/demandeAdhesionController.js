@@ -28,6 +28,7 @@ exports.createDemande = async (req, res) => {
 };
 exports.envoyerDates = async (req, res)=> {
     try {
+      
         const { id } = req.params;
         const { dates } = req.body; // attend un tableau de strings ISO
 
@@ -59,8 +60,7 @@ exports.envoyerDates = async (req, res)=> {
             <ul>
                ${liensHTML}
             </ul>
-            <p>Après votre sélection, la date sera confirmée et le statut changera en <strong>acceptée</strong>.</p>
-            <p>Si le lien ne fonctionne pas, copiez-collez cette URL dans votre navigateur.</p>
+            
         `;
 
         // envoi d'email via votre service central

@@ -17,9 +17,10 @@ import {
 } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
-//import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
+import { PasswordStrengthMeterComponent} from 'angular-password-strength-meter';
+//import { PasswordStrengthMeterComponent } from '../../password-strength-meter/password-strength-meter.component';
 
-declare const google: any;
+
 
 @Component({
   selector: 'app-registration',
@@ -27,7 +28,7 @@ declare const google: any;
   imports: [
     CommonModule,
     ReactiveFormsModule,
-   // PasswordStrengthMeterComponent,
+    PasswordStrengthMeterComponent,
   ],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],
@@ -36,6 +37,7 @@ export class RegistrationComponent {
   registrationForm!: FormGroup;
   hasError!: boolean;
   message: string = 'The registration details are incorrect';
+  google: any;
 
   // private fields
   private unsubscribe: Subscription[] = [];
@@ -165,7 +167,7 @@ export class RegistrationComponent {
   // }
 
   initializeGoogleSignIn() {
-    google.accounts.id.initialize({
+    this.google.accounts.id.initialize({
       client_id:
         '83197880105-fhf7bp7mugj0js4ecjp15c9tcojh45nv.apps.googleusercontent.com',
       callback: this.handleCredentialResponse.bind(this),
@@ -179,13 +181,13 @@ export class RegistrationComponent {
 
   triggerGoogleSignIn() {
   // Affiche le prompt Google One Tap
-  google.accounts.id.prompt((notification: any) => {
+  this.google.accounts.id.prompt((notification: any) => {
     // Si le prompt n'a pas été affiché ou a été ignoré
     if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
       // Rendu manuel du bouton Google sur ton élément existant
       const button = document.getElementById('googleLoginButton');
       if (button) {
-        google.accounts.id.renderButton(button, {
+        this.google.accounts.id.renderButton(button, {
           theme: 'outline',
           size: 'large',
           text: 'continue_with',

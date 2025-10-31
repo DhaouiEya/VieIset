@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PosteService, Poste } from '../../services/poste.service';
+
 import { CommonModule, DatePipe } from '@angular/common';
 import { Validators, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ResponsableMenuComponent } from '../responsable-menu/responsable-menu.component';
+import { Poste, PosteService } from '../../../services/poste.service';
 
 @Component({
   selector: 'app-publication-post',
