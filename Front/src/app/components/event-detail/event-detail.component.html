@@ -1,43 +1,49 @@
 <div class="event-detail-container">
   <!-- Navigation -->
-  <nav class="breadcrumb-nav">
+  <nav class="breadcrumb-nav" aria-label="Fil d'Ariane">
     <a routerLink="/events" class="breadcrumb-link">
-      <i class="breadcrumb-icon">←</i>
+      <i class="breadcrumb-icon fas fa-arrow-left"></i>
       Retour aux événements
     </a>
   </nav>
 
   <!-- État de chargement -->
   @if (!event) {
-    <div class="loading-state">
+    <div class="loading-state" aria-live="polite" aria-label="Chargement en cours">
       <div class="spinner-container">
-        <div class="spinner"></div>
+        <div class="spinner" role="status">
+          <span class="sr-only">Chargement...</span>
+        </div>
       </div>
       <h3>Chargement de l'événement</h3>
       <p>Préparation des détails...</p>
     </div>
   }
 
-  <!-- Contenu principal de l'événement -->
+  <!-- Contenu principal -->
   @if (event) {
     <div class="event-layout">
       <!-- Colonne principale -->
-      <div class="event-main">
-        <!-- En-tête de l'événement -->
+      <main class="event-main">
         <header class="event-header">
-
-
           <h1 class="event-title">{{ event.title }}</h1>
-        @if (event.lienImage) {
-    <img
-      [src]="'http://localhost:9000' + event.lienImage"
-      alt="{{ event.title }}"
-      class="event-image" />
-  }
+
+          @if (event.lienImage) {
+            <figure class="event-image-container">
+              <img
+                [src]="'http://localhost:9000' + event.lienImage"
+                alt="{{ event.title }}"
+                class="event-image"
+                loading="lazy"
+              />
+            </figure>
+          }
 
           <div class="event-meta-grid">
             <div class="meta-item">
-              <div class="meta-icon">📅</div>
+              <div class="meta-icon">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
               <div class="meta-content">
                 <span class="meta-label">Date de début</span>
                 <span class="meta-value">{{ event.startDate | date:'fullDate' }}</span>
@@ -46,7 +52,9 @@
             </div>
 
             <div class="meta-item">
-              <div class="meta-icon">🏁</div>
+              <div class="meta-icon">
+                <i class="fas fa-flag-checkered"></i>
+              </div>
               <div class="meta-content">
                 <span class="meta-label">Date de fin</span>
                 <span class="meta-value">{{ event.endDate | date:'fullDate' }}</span>
@@ -55,242 +63,104 @@
             </div>
 
             <div class="meta-item">
-              <div class="meta-icon">📍</div>
+              <div class="meta-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
               <div class="meta-content">
-                <span class="meta-label">Lieu  </span>
-                <span class="meta-value">{{    event.localisation }}</span>
-
+                <span class="meta-label">Lieu</span>
+                <span class="meta-value">{{ event.localisation }}</span>
               </div>
             </div>
 
             <div class="meta-item">
-              <div class="meta-icon">👥</div>
+              <div class="meta-icon">
+                <i class="fas fa-users"></i>
+              </div>
               <div class="meta-content">
                 <span class="meta-label">Participants</span>
-                <span class="meta-value">{{ event.attendees?.length || 0 }} / {{ event.capacity || '∞' }}</span>
-                <div class="capacity-progress">
-                  <div class="progress-bar">
+                <span class="meta-value">{{ participantCount }} / {{ event.capacity}}</span>
+                @if (event.capacity && event.attendees?.length) {
+                  <div class="capacity-progress">
+                    <div class="progress-bar">
 
+                    </div>
                   </div>
-
-                </div>
+                }
               </div>
             </div>
           </div>
         </header>
 
-        <!-- Description détaillée -->
-        <section class="event-description-section">
-          <h2 class="section-title">À propos de cet événement</h2>
+        <!-- Description -->
+        <section class="event-description-section" aria-labelledby="description-title">
+          <h2 id="description-title" class="section-title">À propos de cet événement</h2>
           <div class="description-content">
             <p>{{ event.description }}</p>
-            <p>{{event.localisation}}</p>
-            <p>{{event.endDate}}</p>
-            <p>{{event.startDate}}</p>
           </div>
-
-          <!-- Tags et catégories -->
-
         </section>
 
-        <!-- Section participants -->
-        <section class="participants-section">
-          <div class="section-header">
-            <h2 class="section-title">Participants ({{ event.attendees?.length || 0 }})</h2>
-            <div class="section-actions">
-
-            </div>
-          </div>
-
-          @if (event.attendees && event.attendees.length > 0) {
-            <div class="attendees-grid">
-              @for (attendee of event.attendees; track attendee.studentId) {
-                <div class="attendee-card">
-                  <div class="attendee-avatar">
-
-                  </div>
-
-                  <div class="attendee-actions">
-
-                  </div>
-                </div>
-              }
-            </div>
-          } @else {
-            <div class="empty-attendees">
-              <i class="empty-icon">👥</i>
-              <h3>Aucun participant pour l'instant</h3>
-              <p>Soyez le premier à vous inscrire !</p>
-            </div>
-          }
-        </section>
-      </div>
-
+      </main>
       <!-- Sidebar -->
-      <aside class="event-sidebar">
-        <!-- Carte d'inscription -->
-        <!-- Carte d'inscription -->
-<!-- Carte d'inscription -->
-<div class="registration-card">
-  <div class="card-header">
-    <h3 class="card-title">Rejoindre l'événement</h3>
-  </div>
+      <aside class="event-sidebar" aria-labelledby="registration-title">
+        <div class="registration-card">
+          <div class="card-header">
+            <h3 id="registration-title" class="card-title">Rejoindre l'événement</h3>
+          </div>
 
-  @if (alreadyRegistered) {
-    <div class="already-registered">
-      <p class="info-text">✅ Vous êtes déjà inscrit à cet événement.</p>
-    </div>
-  } @else {
-    <form #registrationForm="ngForm" class="registration-form" (ngSubmit)="register()" novalidate>
-
-      <!-- Champ Email -->
-      <div class="form-group">
-        <label for="studentEmail" class="form-label">
-          <i class="label-icon">📧</i>
-          Email
-        </label>
-        <input
-          id="studentEmail"
-          type="email"
-          name="email"
-          [(ngModel)]="student.studentId"
-          #emailCtrl="ngModel"
-          required
-          email
-          placeholder="exemple@domaine.com"
-          class="form-input"
-        />
-
-        <!-- Erreurs de validation -->
-        @if (emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)) {
-          <div class="error-message">
-            @if (emailCtrl.errors?.['required']) {
-              <p>L'email est obligatoire.</p>
+          <div class="card-body">
+            @if (alreadyRegistered) {
+              <div class="already-registered">
+                <i class="fas fa-check-circle"></i>
+                <p class="info-text">Vous êtes déjà inscrit à cet événement.</p>
+              </div>
+            } @else {
+              <div class="registration-button">
+                <button
+                  (click)="inscrire()"
+                  class="btn-inscrire"
+                  [disabled]="alreadyRegistered "
+                  aria-label="S'inscrire à cet événement">
+                  S'inscrire
+                </button>
+              </div>
             }
-            @if (emailCtrl.errors?.['email']) {
-              <p>Format d'email invalide</p>
+
+            @if (event.capacity && event.attendees && event.attendees.length >= event.capacity) {
+              <div class="capacity-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Capacité maximale atteinte</p>
+              </div>
             }
           </div>
-        }
-      </div>
-
-      <!-- Champ Nom -->
-      <div class="form-group">
-        <label for="studentName" class="form-label">
-          <i class="label-icon">👤</i>
-          Nom complet
-        </label>
-        <input
-          id="studentName"
-          type="text"
-          name="name"
-          [(ngModel)]="student.name"
-          #nameCtrl="ngModel"
-          required
-          placeholder="Votre nom et prénom"
-          class="form-input"
-        />
-
-        @if (nameCtrl.invalid && (nameCtrl.dirty || nameCtrl.touched)) {
-          <div class="error-message">
-            <p>Le nom complet est obligatoire.</p>
-          </div>
-        }
-      </div>
-
-      <!-- Bouton d'inscription -->
-      <button
-        type="submit"
-        class="register-btn"
-        [disabled]="registrationForm.invalid"
-      >
-        S'inscrire
-      </button>
-
-      <div class="form-footer">
-        <p class="form-note">
-          <i class="note-icon">ℹ️</i>
-          Vous recevrez une confirmation par email
-        </p>
-      </div>
-    </form>
-  }
-</div>
-
-
-        <!-- ************* -->
-        <!-- Actions rapides -->
-        <!-- <div class="action-card">
-          <h3 class="card-title">Partager</h3>
-          <div class="action-buttons">
-            <button class="social-btn whatsapp" (click)="shareOnWhatsApp()">
-              <i class="social-icon">💚</i>
-              WhatsApp
-            </button>
-            <button class="social-btn linkedin" (click)="shareOnLinkedIn()">
-              <i class="social-icon">💼</i>
-              LinkedIn
-            </button>
-            <button class="social-btn twitter" (click)="shareOnTwitter()">
-              <i class="social-icon">🐦</i>
-              Twitter
-            </button>
-            <button class="social-btn copy" (click)="copyEventLink()">
-              <i class="social-icon">📋</i>
-              Copier le lien
-            </button>
-          </div>
-        </div> -->
-
-        <!-- Statistiques -->
-        <!-- <div class="stats-card">
-          <h3 class="card-title">Statistiques</h3>
-          <div class="stats-list">
-            <div class="stat-item">
-              <span class="stat-label">Taux d'inscription</span>
-              <span class="stat-value">{{ getAttendancePercentage(event) }}%</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Places restantes</span>
-              <span class="stat-value">{{ getRemainingSpots(event) }}</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Date de création</span>
-              <span class="stat-value">{{ event.createdAt | date:'shortDate' }}</span>
-            </div>
-          </div>
-        </div> -->
+        </div>
       </aside>
     </div>
 
-    <!-- Messages de statut -->
+    <!-- Messages -->
     @if (successMessage) {
-      <div class="status-message success">
+      <div class="status-message success" role="alert" aria-live="assertive">
         <div class="message-content">
-          <i class="message-icon">🎉</i>
+          <i class="message-icon fas fa-check-circle"></i>
           <div class="message-text">
             <h4>Inscription réussie !</h4>
             <p>{{ successMessage }}</p>
           </div>
         </div>
-        <button class="message-close" (click)="successMessage = ''">×</button>
+        <button class="message-close" (click)="successMessage = ''" aria-label="Fermer le message">×</button>
       </div>
     }
 
     @if (errorMessage) {
-      <div class="status-message error">
+      <div class="status-message error" role="alert" aria-live="assertive">
         <div class="message-content">
-          <i class="message-icon">⚠️</i>
+          <i class="message-icon fas fa-exclamation-circle"></i>
           <div class="message-text">
             <h4>Erreur d'inscription</h4>
             <p>{{ errorMessage }}</p>
           </div>
         </div>
-        <button class="message-close" (click)="errorMessage = ''">×</button>
+        <button class="message-close" (click)="errorMessage = ''" aria-label="Fermer le message">×</button>
       </div>
     }
-
-    <!-- Événements similaires -->
-
   }
 </div>

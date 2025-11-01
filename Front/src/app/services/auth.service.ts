@@ -177,11 +177,13 @@ updateUserProfile(updates: any): Observable<any> {
     }
   }
 
-  getToken() {
+    getToken() {
     const auth = this.getAuthFromLocalStorage();
     if (!auth || !auth.authToken) {
       return of(undefined);
     }
     return auth.authToken;
   }
+
+
 }
