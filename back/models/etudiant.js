@@ -73,8 +73,8 @@ const etudiantSchema = new Schema({
     lastLogin: { type: Date }, // Store last login time
     
 
- preRegistered: { type: Boolean, default: false }, // Indique si l'utilisateur a rempli les infos pré-inscription
-    role: { type: String, enum: ['membre', ''], default: 'membre' },
+    preRegistered: { type: Boolean, default: false }, // Indique si l'utilisateur a rempli les infos pré-inscription
+    role: { type: String, enum: ['membre', 'clubManager'], default: 'membre' },
 
 
 }, { timestamps: true });

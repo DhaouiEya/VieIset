@@ -1,5 +1,5 @@
 const User = require('../models/etudiant');
-const {validateRequiredFields}=require("../utils/validators")
+const { validateRequiredFields } = require("../utils/validators")
 const { sendEmail } = require('../services/emailService');
 const { OAuth2Client } = require('google-auth-library');
 const bcrypt = require('bcryptjs');
@@ -24,7 +24,7 @@ exports.register = async (req, res, next) => {
         } = req.body;
 
 
-        const requiredFields = ['firstName','lastName','email' , 'password'];
+        const requiredFields = ['firstName', 'lastName', 'email', 'password'];
 
         const validationError = validateRequiredFields(req.body, requiredFields);
         if (validationError) {
@@ -35,7 +35,7 @@ exports.register = async (req, res, next) => {
             });
         }
 
-   
+
 
         // Check if email already exists
         const existingUserEmail = await User.findOne({ email: email.toLowerCase() });
@@ -50,13 +50,13 @@ exports.register = async (req, res, next) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-         // Generate verification tokens
+        // Generate verification tokens
         const emailVerificationToken = generateToken();
         const tokenExpiry = Date.now() + 3600000; // 1 hour
 
-     
 
-    
+
+
 
         // Create user
         const user = await User.create({
@@ -69,7 +69,7 @@ exports.register = async (req, res, next) => {
             emailVerificationExpires: tokenExpiry,
         });
 
-            // Send verification email
+        // Send verification email
         await sendVerificationEmail(user, req, next);
 
 
@@ -172,9 +172,9 @@ exports.verifyEmail = async (req, res, next) => {
                 message: 'Invalid or expired token.'
             });
         }
-       
+
         // Verify the user's email
-        user.isActive=true;
+        user.isActive = true;
         user.emailVerified = true;
         user.emailVerificationToken = undefined;
         user.emailVerificationExpires = undefined;
@@ -186,11 +186,9 @@ exports.verifyEmail = async (req, res, next) => {
         });
     }
     catch (error) {
-        next(error); 
+        next(error);
     }
 };
-
-
 
 
 exports.resendVerificationEmail = async (req, res, next) => {
@@ -199,7 +197,7 @@ exports.resendVerificationEmail = async (req, res, next) => {
 
         const user = await User.findOne({ email });
 
-    
+
         if (!user) {
             return res.status(404).json({
                 success: false,
@@ -283,7 +281,7 @@ exports.googleLogin = async (req, res, next) => {
             }
         }
 
-    
+
         // Generate JWT token
         const authToken = jwt.sign(
             { _id: user._id, role: user.role },
@@ -305,7 +303,7 @@ exports.googleLogin = async (req, res, next) => {
             success: true,
             authToken,
             refreshToken,
-            
+
             etudiant: {
                 _id: user._id,
                 firstName: user.firstName,
@@ -382,6 +380,254 @@ exports.infos = async (req, res, next) => {
         next(error);
     }
 };
+
+
+exports.login = async (req, res, next) => {
+    try {
+        const { email, password, keepmeloggedin } = req.body;
+
+        let user = await User.findOne({ email: email.toLowerCase() });
+
+
+        // Vérifier si l'utilisateur existe
+        if (!user) {
+            return res.status(401).json({ message: "Email ou mot de passe incorrect." });
+        }
+
+        // Vérifier si le compte est actif
+        if (!user.isActive) {
+            return res.status(403).json({ message: "Compte inactif. Veuillez contacter l'administrateur." });
+        }
+
+
+        // Check if user has a password (OAuth users won't have one)
+        const isOAuthUser = user.googleId;
+
+        // If user is an OAuth user, they should use OAuth to login
+        if (isOAuthUser) {
+            return res.status(401).json({
+                success: false,
+                message: `Ce compte utilise l'authentification Google. Veuillez vous connecter avec Google.`,
+                authProvider: 'google'
+            });
+        }
+
+        // For regular users, verify password
+        if (!user.password || !(await bcrypt.compare(password, user.password))) {
+            return res.status(401).json({ success: false, message: 'Login ou mot de passe incorrect' });
+        }
+
+
+        // Set token expiration based on 'keepmeloggedin'
+        const tokenExpiry = keepmeloggedin ? '7d' : '2d';
+        const authToken = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: tokenExpiry });
+
+        // Generate a refresh token
+        const refreshToken = crypto.randomBytes(64).toString('hex');
+
+        user.refreshToken = refreshToken;
+
+        await user.save();
+
+        res.json({
+            success: true,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+                googleId:user.googleId,
+
+            authToken, refreshToken
+        });
+
+    } catch (error) {
+        next(error); // Pass the error to the middleware
+    }
+};
+
+
+
+
+// Step 1 - Request a password reset
+exports.requestPasswordReset = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+
+        const normalizedEmail = email.toLowerCase();
+
+        const user = await User.findOne({ email: normalizedEmail });
+
+        if (!user) {
+            return res.status(404).json({
+                error: 'Utilisateur introuvable'
+            });
+        }
+
+        if (!user.isActive) {
+            return res.status(404).json({ success: false, message: 'Utilisateur introuvable' });
+        }
+
+
+        // Generate a reset token
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour expiration
+
+        await user.save();
+
+        // Send reset password email
+        const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+        await sendResetPasswordEmail(user.email, resetLink);
+
+        return res.json({
+            success: true,
+            message: 'Reset password email sent.'
+        });
+
+    }
+    catch (error) {
+        next(error); // Pass the error to the middleware
+    }
+};
+
+// Step 2 - Reset the password
+exports.resetPassword = async (req, res, next) => {
+    try {
+        const { password, token } = req.body;
+
+        // Find user with the reset token and check expiration
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() }
+        });
+
+        if (!user.isActive) {
+            return res.status(404).json({ success: false, message: 'Utilisateur introuvable' });
+        }
+        if (!user) {
+            return res.status(400).json({
+                message: 'Invalid or expired token.'
+            });
+        }
+
+        // Hash the new password and save it
+        user.password = await bcrypt.hash(password, 10);
+
+        // Clear the reset token and expiration
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        await user.save();
+
+        return res.json({
+            success: true,
+            message: 'Le mot de passe a été réinitialisé avec succès.'
+        });
+
+    }
+    catch (error) {
+        next(error); // Pass the error to the middleware
+    }
+};
+
+// Function to send reset password email
+const sendResetPasswordEmail = (email, resetLink) => {
+    // Shared header & footer
+    const header = `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;
+                padding:20px;text-align:center;background:#f5f5f5;">
+      <img src="${process.env.LOGO_URL}"
+                     alt="Vie Étudiante ISET"
+           style="max-height:60px;">
+    </div>
+  `;
+    const footer = `
+    <footer style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;
+                   padding:20px;text-align:center;color:#666;font-size:12px;">
+      <p>© ${new Date().getFullYear()} Vie Étudiante ISET. 
+         <a href="${process.env.FRONTEND_URL}/login">Se connecter</a>
+      </p>
+    </footer>
+  `;
+
+    // Email body
+    const body = `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;
+                padding:20px;">
+      <h1>Réinitialisation de votre mot de passe</h1>
+      <p>Bonjour,</p>
+      <p>
+        Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le bouton ci-dessous pour procéder :
+      </p>
+      <div style="text-align:center;margin:20px 0;">
+        <a href="${resetLink}"
+           style="display:inline-block;padding:10px 20px;
+                  background:#6935EB;color:#fff;text-decoration:none;
+                  border-radius:5px;">
+          Réinitialiser mon mot de passe
+        </a>
+      </div>
+      <p>
+        Ce lien expirera dans 1 heure. Si vous n'avez pas fait cette demande, vous pouvez ignorer ce message.
+      </p>
+    </div>
+  `;
+
+    // Fire-and-forget sendEmail (errors logged, won't throw)
+    sendEmail({
+        to: email,
+        subject: 'Vie Étudiante ISET : réinitialisation de votre mot de passe',
+        html: header + body + footer
+    }).catch(err => {
+        console.error('Échec de l\'envoi de l\'email de réinitialisation :', err);
+    });
+};
+
+
+exports.updateUserProfile = async (req, res, next) => {
+    try {
+        const userId = req.user._id; // récupéré depuis le middleware d'auth JWT
+        const updates = { ...req.body }; // tous les champs envoyés
+
+        // Chercher l'utilisateur
+        const user = await User.findById(userId);
+        if (!user || !user.isActive) {
+            return res.status(404).json({ success:false,message: 'Utilisateur introuvable ou inactif' });
+        }
+
+        // Gestion du mot de passe séparément
+        if (updates.password && updates.password.trim() !== '') {
+            console.log("eee ",updates.password)
+            // updates.password = await bcrypt.hash(updates.password, 10);
+        }
+
+        // Mettre à jour les autres champs dynamiquement
+        for (let key in updates) {
+            if (updates[key] !== undefined && key !== '_id') {
+                user[key] = updates[key];
+            }
+        }
+
+        await user.save();
+
+        res.status(200).json({
+            success:true,
+            message: 'Profil mis à jour avec succès',
+            user: {
+                id: userId,
+                lastName: user.lastName,
+                firstName: user.firstName,
+                email: user.email,
+                role: user.role,
+                googleId:user.googleId
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erreur serveur, veuillez réessayer.' });
+    }
+};
+
 
 
 exports.me = async (req, res, next) => {
