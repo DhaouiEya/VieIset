@@ -1,7 +1,7 @@
 import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { Routes } from '@angular/router';
- import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
- import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
+import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
+import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
 // import { PublicationPostComponent } from './responsible-club/publication-post/publication-post.component';
 import { EventCreateComponent } from './components/event-create/event-create.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
@@ -18,19 +18,30 @@ import { ClubsListComponent } from './components/clubs/clubs-list/clubs-list.com
 
 import { ParticipationFormsComponent } from './responsable-club/participation-forms/participation-forms.component';
 import { EmailVerificationComponent } from './components/auth/email-verification/email-verification.component';
-
+import { LoginComponent } from './components/auth/login/login.component';
+import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
+import { ProfileComponent } from './components/profile/profile/profile.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/register', pathMatch: 'full' },
-   { path: 'dashboard', component: ResponsableDashboardComponent },
+  { path: '', redirectTo: '/forgot-password', pathMatch: 'full' },
+
+  // { path: '', redirectTo: '/register', pathMatch: 'full' },
+  { path: 'dashboard', component: ResponsableDashboardComponent },
   { path: 'publications', component: PublicationPostComponent },
   { path: 'createClub', component: CreateClubComponent },
+  { path: 'login', component: LoginComponent },
+
   // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: '', redirectTo: '/register', pathMatch: 'full' },
+  // { path: '', redirectTo: '/register', pathMatch: 'full' },
   { path: 'send-verification-email', component: EmailVerificationComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
   // { path: 'dashboard', component: ResponsableDashboardComponent },
   // { path: 'publications', component: PublicationPostComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'profile', component: ProfileComponent },
+
 
   { path: 'clubs', component: ClubsListComponent },
   { path: 'publications', component: PublicationPostComponent },
@@ -39,12 +50,10 @@ export const routes: Routes = [
   { path: 'events/create', component: EventCreateComponent },
   { path: 'events/:id', component: EventDetailComponent },
 
-  {path: 'createClub ',component:CreateClubComponent },
-//il faut  avec id
-  {path: 'espaceClub/:id',component:EspaceClubComponent },
+  { path: 'createClub ', component: CreateClubComponent },
+  //il faut  avec id
+  { path: 'espaceClub/:id', component: EspaceClubComponent },
   // {path: 'espaceClub',component:EspaceClubComponent },
 
-  {path: 'participation-forms', component: ParticipationFormsComponent}
-
-]
-
+  { path: 'participation-forms', component: ParticipationFormsComponent },
+];
