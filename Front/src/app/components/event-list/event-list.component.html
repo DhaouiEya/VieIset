@@ -9,32 +9,18 @@
       <h1 class="page-title">Événements à venir</h1>
       <p class="page-subtitle">Découvrez les prochains événements passionnants et rejoignez la communauté</p>
 
-      <!-- Filtres rapides -->
-      <div class="quick-filters">
-        <button class="filter-btn active">
-          <i class="filter-icon">📅</i>
-          Tous les événements
-        </button>
-        <button class="filter-btn">
-          <i class="filter-icon">⚡</i>
-          Prochainement
-        </button>
-        <button class="filter-btn">
-          <i class="filter-icon">🔥</i>
-          Populaires
-        </button>
-      </div>
+
     </div>
 
-    <a routerLink="/events/create" class="create-btn">
+    <!-- <a routerLink="/events/create" class="create-btn">
       <i class="btn-icon">+</i>
       <span class="btn-text">Publier un événement</span>
-    </a>
+    </a> -->
 </div>
 
 <!-- Conteneur des cartes d'événements -->
 <div class="events-grid">
-  @for (event of events; track event.id) {
+  @for (event of events; track event?.id ?? $index) {
     <div class="event-card" (click)="viewEvent(event)">
 
       <!-- Image de l'événement avec style Bootstrap amélioré -->
@@ -47,10 +33,7 @@
             class="card-img-top"
           />
           <div class="image-overlay">
-            <span class="event-category">Événement</span>
-            <button class="favorite-btn">
-              <i class="heart-icon">❤️</i>
-            </button>
+
           </div>
         </div>
       }
@@ -96,35 +79,7 @@
         <div class="footer-content">
           <div class="capacity-section">
             <div class="progress-container">
-
             </div>
-            <div class="capacity-text">
-              {{ event.attendees?.length || 0 }}/{{ event.capacity || '∞' }} places
-            </div>
-          </div>
-
-          <div class="footer-actions">
-
-            <div class="action-buttons">
-              <button class="btn-share" (click)="$event.stopPropagation()">
-                <i class="share-icon">📤</i>
-              </button>
-              <button class="btn-bookmark" (click)="$event.stopPropagation()">
-                <i class="bookmark-icon">🔖</i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Informations supplémentaires -->
-        <div class="event-stats">
-          <div class="stat-item">
-            <i class="stat-icon">👥</i>
-            <span class="stat-text">{{ event.attendees?.length || 0 }} participants</span>
-          </div>
-          <div class="stat-item">
-            <i class="stat-icon">💬</i>
-            <span class="stat-text">12 commentaires</span>
           </div>
         </div>
       </div>
