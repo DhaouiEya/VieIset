@@ -8,14 +8,7 @@ const eventSchema = new mongoose.Schema({
   endDate: { type: String, required: true },
   capacity: { type: Number, default: 0 },
   lienImage: { type: String, default: null },
-  attendees: [
-    {
-      studentId: String,
-      firstName: String,
-      lastName: String
-     
-    }
-  ]
+  attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'etudiant' }]
 });
 
 module.exports = mongoose.model('Event', eventSchema);

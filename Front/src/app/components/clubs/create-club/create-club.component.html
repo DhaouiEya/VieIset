@@ -1,4 +1,4 @@
-<div class="dialog-container">
+<!-- <div class="dialog-container">
   <div class="d-flex justify-content-between align-items-center pb-4">
     <h2 class="dialog-title">Ajouter un nouveau club</h2>
    
@@ -133,55 +133,38 @@
   
 </div> 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="dialog-container">
   <div class="d-flex justify-content-between align-items-center pb-4">
     <h2 class="dialog-title">Ajouter un nouveau club</h2>
    
+ <div class="dialog-container">
+  <div class="d-flex justify-content-between align-items-center pb-4">
+    <h2 class="dialog-title">Ajouter un nouveau club</h2>
   </div>
 
   <form [formGroup]="clubForm" (ngSubmit)="createClub($event)">
     <div class="container form-bg pb-3">
+
       <div class="row">
         <div class="col">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Nom du club</mat-label>
             <input matInput formControlName="nom" />
           </mat-form-field>
+          @if(clubForm.get('nom')?.hasError('required') && (clubForm.get('nom')?.dirty || clubForm.get('nom')?.touched)) {
+            <mat-error>Le nom est obligatoire</mat-error>
+          }
+          @if(clubForm.get('nom')?.hasError('minlength') && (clubForm.get('nom')?.dirty || clubForm.get('nom')?.touched)) {
+            <mat-error>Minimum 3 caractères requis</mat-error>
+          }
         </div>
         <div class="col">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Département</mat-label>
             <input matInput formControlName="departement" />
           </mat-form-field>
+          @if(clubForm.get('departement')?.hasError('required') && (clubForm.get('departement')?.dirty || clubForm.get('departement')?.touched)) {
+            <mat-error>Le département est obligatoire</mat-error>
+          }
         </div>
       </div>
 
@@ -191,6 +174,12 @@
             <mat-label>Téléphone</mat-label>
             <input matInput formControlName="telephone" type="tel" />
           </mat-form-field>
+          @if(clubForm.get('telephone')?.hasError('required') && (clubForm.get('telephone')?.dirty || clubForm.get('telephone')?.touched)) {
+            <mat-error>Le téléphone est obligatoire</mat-error>
+          }
+          @if(clubForm.get('telephone')?.hasError('pattern') && (clubForm.get('telephone')?.dirty || clubForm.get('telephone')?.touched)) {
+            <mat-error>Numéro invalide (doit contenir entre 8 et 15 chiffres)</mat-error>
+          }
         </div>
         <div class="col">
           <mat-form-field appearance="outline" class="w-100">
@@ -208,6 +197,29 @@
   </div>
 </div>
 
+          @if(  ( clubForm.get('email')?.dirty || clubForm.get('email')?.touched)) {
+            <mat-error>L'email est obligatoire</mat-error>
+          }
+          @if(clubForm.get('email')?.hasError('email') && (clubForm.get('email')?.dirty || clubForm.get('email')?.touched)) {
+            <mat-error>Format d'email invalide</mat-error>
+          }
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" rows="5"></textarea>
+          </mat-form-field>
+          @if(clubForm.get('description')?.hasError('required') && (clubForm.get('description')?.dirty || clubForm.get('description')?.touched)) {
+            <mat-error>La description est obligatoire</mat-error>
+          }
+          @if(clubForm.get('description')?.hasError('minlength') && (clubForm.get('description')?.dirty || clubForm.get('description')?.touched)) {
+            <mat-error>Minimum 10 caractères requis</mat-error>
+          }
+        </div>
+      </div>
 
       <div class="row">
         <div class="col">
@@ -217,6 +229,10 @@
           </mat-form-field>
         </div>
 
+          @if(clubForm.get('adresse')?.hasError('required') && (clubForm.get('adresse')?.dirty || clubForm.get('adresse')?.touched)) {
+            <mat-error>L'adresse est obligatoire</mat-error>
+          }
+        </div>
         <div class="col">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Date de création</mat-label>
@@ -224,6 +240,9 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
+          @if(clubForm.get('dateCreation')?.hasError('required') && (clubForm.get('dateCreation')?.dirty || clubForm.get('dateCreation')?.touched)) {
+            <mat-error>La date de création est obligatoire</mat-error>
+          }
         </div>
       </div>
 
@@ -233,12 +252,18 @@
             <mat-label>Image de profil (URL)</mat-label>
             <input matInput formControlName="imageProfil" />
           </mat-form-field>
+          @if(clubForm.get('imageProfil')?.hasError('pattern') && (clubForm.get('imageProfil')?.dirty || clubForm.get('imageProfil')?.touched)) {
+            <mat-error>Le format de l'URL est invalide</mat-error>
+          }
         </div>
         <div class="col">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Image de fond (URL)</mat-label>
             <input matInput formControlName="imageFond" />
           </mat-form-field>
+          @if(clubForm.get('imageFond')?.hasError('pattern') && (clubForm.get('imageFond')?.dirty || clubForm.get('imageFond')?.touched)) {
+            <mat-error>Le format de l'URL est invalide</mat-error>
+          }
         </div>
       </div>
 
@@ -268,4 +293,31 @@
     
   </form>
   
+</div>  
+            <mat-label>Facebook (URL)</mat-label>
+            <input matInput formControlName="facebook" />
+          </mat-form-field>
+          @if(clubForm.get('facebook')?.hasError('pattern') && (clubForm.get('facebook')?.dirty || clubForm.get('facebook')?.touched)) {
+            <mat-error>Le format de l'URL Facebook est invalide</mat-error>
+          }
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Instagram (URL)</mat-label>
+            <input matInput formControlName="instagram" />
+          </mat-form-field>
+          @if(clubForm.get('instagram')?.hasError('pattern') && (clubForm.get('instagram')?.dirty || clubForm.get('instagram')?.touched)) {
+            <mat-error>Le format de l'URL Instagram est invalide</mat-error>
+          }
+        </div>
+      </div>
+
+      <div class="actions">
+        <button mat-flat-button mat-dialog-close type="button" id="btn">Annuler</button>
+        <button mat-flat-button type="submit" [disabled]="clubForm.invalid" id="btn" class="btn btn-primary">
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </form>
 </div>  -->

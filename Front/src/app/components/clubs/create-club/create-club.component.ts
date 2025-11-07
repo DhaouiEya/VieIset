@@ -32,6 +32,7 @@ import { ClubService } from '../../../services/club.service';
 })
 export class CreateClubComponent implements OnInit{
   
+
   private fb = inject(FormBuilder);
   private readonly clubService : ClubService = inject(ClubService);
   //private router = inject(Router);

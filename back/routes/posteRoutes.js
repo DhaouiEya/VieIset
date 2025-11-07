@@ -31,6 +31,7 @@ const upload = multer({
 });
 
 //  Route POST : création d’un poste avec upload de fichiers
+// ✅ Route POST : création d’un poste avec upload de fichiers
 router.post('/', upload.fields([
   { name: 'image', maxCount: 1 },
   { name: 'video', maxCount: 1 }

@@ -3,7 +3,6 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 
-
 import { provideZxvbnServiceForPSM } from 'angular-password-strength-meter/zxcvbn';
 
 
@@ -12,7 +11,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
-
     provideZxvbnServiceForPSM()
 
 

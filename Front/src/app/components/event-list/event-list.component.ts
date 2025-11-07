@@ -1,79 +1,81 @@
-import { Component, OnInit } from '@angular/core';
-import { EventService } from '../../services/event.service';
+// import { Component, OnInit } from '@angular/core';
+// import { EventService } from '../../services/event.service';
+// import { Event } from '../../models/event.model';
+// import { CommonModule, DatePipe } from '@angular/common';
+// import { RouterModule, Router } from '@angular/router';
+// import { FormsModule } from '@angular/forms';
+// import { Participation } from '../../models/participation.model';
 
-import { CommonModule, DatePipe } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { Event } from '../../models/event';
+// @Component({
+//   selector: 'app-event-list',
+//   standalone: true,
+//   imports: [CommonModule, DatePipe, RouterModule, FormsModule],
+//   templateUrl: './event-list.component.html',
+//   styleUrl: './event-list.component.css' // corrigé
+// })
+// export class EventListComponent implements OnInit {
+//   events: Event[] = [];
+//   loading = false;
+//   error = '';
+//   participations: Participation[] = [];
+// participantCount = 0;
+//   // Pour le formulaire de création (sans id et attendees)
+//   newEvent: Omit<Event, 'id' | 'attendees'> = {
+//     title: '',
+//     startDate: '',
+//     endDate: '',
+//     description: '',
+//     capacity: 0,
+//     localisation: '',
+//     lienImage: ''
+//   };
 
-@Component({
-  selector: 'app-event-list',
-  standalone: true,
-  imports: [CommonModule, DatePipe, RouterModule, FormsModule],
-  templateUrl: './event-list.component.html',
-  styleUrl: './event-list.component.css' // corrigé
-})
-export class EventListComponent implements OnInit {
-  events: Event[] = [];
-  loading = false;
-  error = '';
+//   constructor(private eventSvc: EventService, private router: Router) {}
 
-  // Pour le formulaire de création (sans id et attendees)
-  newEvent: Omit<Event, 'id' | 'attendees'> = {
-    title: '',
-    startDate: '',
-    endDate: '',
-    description: '',
-    capacity: 0,
-    localisation: '',
-    lienImage: ''
-  };
+//   ngOnInit(): void {
+//     this.fetchEvents();
+//   }
 
-  constructor(private eventSvc: EventService, private router: Router) {}
+//   fetchEvents() {
+//     this.loading = true;
+//     this.eventSvc.getEvents().subscribe({
+//       next: (ev) => {
+//         this.events = ev;
+//         this.loading = false;
+//       },
+//       error: (err) => {
+//         this.error = 'Impossible de charger les événements.';
+//         this.loading = false;
+//         console.error(err);
+//       }
+//     });
+//   }
 
-  ngOnInit(): void {
-    this.fetchEvents();
-  }
+//   viewEvent(event: Event) {
+//     console.log('Navigating to event with id:', event.id );
+//     if (!event.id) return;
+//     this.router.navigate(['/events', event.id]);
+//   }
 
-  fetchEvents() {
-    this.loading = true;
-    this.eventSvc.getEvents().subscribe({
-      next: (ev) => {
-        this.events = ev;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Impossible de charger les événements.';
-        this.loading = false;
-        console.error(err);
-      }
-    });
-  }
-
-  viewEvent(event: Event) {
-    if (!event._id) return;
-    this.router.navigate(['/events', event._id]);
-  }
-
-  // Méthode pour créer un événement
-  addEvent() {
-    if (!this.newEvent.title || !this.newEvent.startDate) return;
-    this.eventSvc.createEvent(this.newEvent).subscribe({
-      next: (ev) => {
-        this.events.push(ev); // mettre à jour la liste locale
-        this.newEvent = {
-          title: '',
-          startDate: '',
-          endDate: '',
-          description: '',
-          capacity: 0,
-          localisation: '',
-          lienImage: ''
-        }; // reset formulaire
-      },
-      error: (err) => {
-        console.error('Erreur lors de la création de l’événement', err);
-      }
-    });
-  }
-}
+//   // Méthode pour créer un événement
+//   addEvent() {
+//     if (!this.newEvent.title || !this.newEvent.startDate) return;
+//     this.eventSvc.createEvent(this.newEvent).subscribe({
+//       next: (ev) => {
+//         this.events.push(ev); // mettre à jour la liste locale
+//         this.newEvent = {
+//           title: '',
+//           startDate: '',
+//           endDate: '',
+//           description: '',
+//           capacity: 0,
+//           localisation: '',
+//           lienImage: ''
+//         }; // reset formulaire
+//       },
+//       error: (err) => {
+//         console.error('Erreur lors de la création de l’événement', err);
+//       }
+//     });
+//   }
+// }

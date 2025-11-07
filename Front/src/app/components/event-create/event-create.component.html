@@ -1,4 +1,5 @@
 <div class="container">
+  <app-responsable-menu></app-responsable-menu>
   <h3>Publier un événement</h3>
 
   @if (error) {
@@ -14,12 +15,12 @@
 
     <div class="form-group mb-3">
       <label>Description</label>
-      <textarea [(ngModel)]="newEvent.description" name="description" placeholder="Description" class="form-control"></textarea>
+      <textarea [(ngModel)]="newEvent.description" name="description" placeholder="Description" class="form-control" required></textarea>
     </div>
 
     <div class="form-group mb-3">
       <label>Lieu</label>
-      <input type="text" [(ngModel)]="newEvent.localisation" name="localisation" placeholder="Lieu" class="form-control" />
+      <input type="text" [(ngModel)]="newEvent.localisation" name="localisation" placeholder="Lieu" class="form-control" required />
     </div>
 
     <div class="form-row mb-3">
@@ -29,13 +30,13 @@
       </div>
       <div class="form-col">
         <label>Date & heure de fin</label>
-        <input type="datetime-local" [(ngModel)]="newEvent.endDate" name="endDate" class="form-control" />
+        <input type="datetime-local" [(ngModel)]="newEvent.endDate" name="endDate" class="form-control" required />
       </div>
     </div>
 
     <div class="form-group mb-3">
       <label>Capacité</label>
-      <input type="number" [(ngModel)]="newEvent.capacity" name="capacity" placeholder="Nombre max participants" class="form-control" />
+      <input type="number" [(ngModel)]="newEvent.capacity" name="capacity" placeholder="Nombre max participants" class="form-control" required min="1" />
     </div>
 
     <div class="form-group mb-3">

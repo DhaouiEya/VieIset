@@ -1,13 +1,26 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserModel } from '../models/user.model';
+<<<<<<< HEAD
 import { BehaviorSubject, catchError, finalize, map, Observable, of, Subscription } from 'rxjs';
+=======
+import {
+  BehaviorSubject,
+  catchError,
+  finalize,
+  map,
+  Observable,
+  of,
+  Subscription,
+} from 'rxjs';
+>>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'http://localhost:9000/api/auth';
+<<<<<<< HEAD
     private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
   private authLocalStorageToken = 'authenticationToken';
@@ -18,6 +31,17 @@ export class AuthService {
   currentUserSubject: BehaviorSubject<UserModel | null>;
 
     get currentUserValue(): UserModel | null {
+=======
+  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+
+  private authLocalStorageToken = 'authenticationToken';
+  private temporaryAuth: any | null = null;
+
+  currentUser$: Observable<UserModel | null>;
+  currentUserSubject: BehaviorSubject<UserModel | null>;
+
+  get currentUserValue(): UserModel | null {
+>>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
     return this.currentUserSubject.value;
   }
 
@@ -28,6 +52,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<UserModel | null>(null);
     this.currentUser$ = this.currentUserSubject.asObservable();
+<<<<<<< HEAD
         const subscr = this.getUserByToken().subscribe();
             this.unsubscribe.push(subscr);
 
@@ -37,6 +62,29 @@ export class AuthService {
 
 
 
+=======
+    const subscr = this.getUserByToken().subscribe();
+    this.unsubscribe.push(subscr);
+  }
+
+  login(email: string, password: string, keepMeLoggedIn: boolean): Observable<UserModel> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { email, password, keepMeLoggedIn })
+      .pipe(
+        map(res => {
+          if (res && res.authToken) {
+            // Stocker le token et user
+            this.setAuthFromLocalStorage({ ...res.user, authToken: res.authToken, refreshToken: res.refreshToken });
+            this.currentUserSubject.next(res.user);
+          }
+          return res;
+        }),
+        catchError(err => {
+          console.error('Login error:', err);
+          return of(err);
+        })
+      );
+  }
+>>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
   // Register
   register(data: {
     firstName: string;
@@ -50,10 +98,28 @@ export class AuthService {
         this.setAuthFromLocalStorage(res);
         return res;
       })
+<<<<<<< HEAD
 
     );
   }
 
+=======
+    );
+  }
+
+
+    // Mot de passe oublié
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/request-password-reset`, { email });
+  }
+
+  // Réinitialisation du mot de passe
+  resetPassword(password: string, token: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reset-password`, { password, token });
+  }
+
+
+>>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
   // Verify Email
   verifyEmail(token: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/verify-email/${token}`);
@@ -69,6 +135,7 @@ export class AuthService {
     idToken: string,
     keepmeloggedin: boolean = false
   ): Observable<any> {
+<<<<<<< HEAD
     return this.http.post(`${this.apiUrl}/google-login`, {
       idToken,
       keepmeloggedin,
@@ -86,6 +153,32 @@ export class AuthService {
   }
 
   // Me (need JWT in headers)
+=======
+    return this.http
+      .post(`${this.apiUrl}/google-login`, {
+        idToken,
+        keepmeloggedin,
+      })
+      .pipe(
+        map((res: any) => {
+          this.setAuthFromLocalStorage(res);
+          return res;
+        })
+      );
+  }
+
+
+updateUserProfile(updates: any): Observable<any> {
+  const token = this.getAuthFromLocalStorage()?.authToken;
+  const headers = { Authorization: `Bearer ${token}` };
+
+  return this.http.put<any>(`${this.apiUrl}/update-profile`, updates, { headers });
+}
+
+
+   // Me (need JWT in headers)
+
+>>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
   me(token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.apiUrl}/me`, { headers });
@@ -110,8 +203,12 @@ export class AuthService {
     );
   }
 
+<<<<<<< HEAD
 
     private setAuthFromLocalStorage(auth: UserModel): boolean {
+=======
+  private setAuthFromLocalStorage(auth: UserModel): boolean {
+>>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
 
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {

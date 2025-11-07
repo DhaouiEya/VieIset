@@ -41,10 +41,12 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', routes);
 // Utilisez les routes
 // Toutes les routes de sheetRoutes seront préfixées par /api/sheet
+app.use('/api/sheet', sheetRoutes); // Toutes les routes de sheetRoutes seront préfixées par /api/sheet
 
 
 // Middleware global pour gérer les erreurs
 app.use(errorMiddleware);
+
 
 // Connexion MongoDB + démarrage du serveur
 const PORT =  9000;
