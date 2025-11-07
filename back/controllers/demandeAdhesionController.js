@@ -1,6 +1,6 @@
 
 const DemandeAdhesion = require("../models/demandeAdhesion");
-const { sendEmailDate } = require('../services/emailService');
+//const { sendEmailDate } = require('../services/emailService');
 const BACKEND_BASE = process.env.BACKEND_BASE;
 
 
@@ -60,12 +60,7 @@ exports.envoyerDates = async (req, res)=> {
             <ul>
                ${liensHTML}
             </ul>
-<<<<<<< HEAD
             
-=======
-            <p>Après votre sélection, la date sera confirmée et le statut changera en <strong>acceptée</strong>.</p>
-            <p>Si le lien ne fonctionne pas, copiez-collez cette URL dans votre navigateur.</p>
->>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
         `;
 
         // envoi d'email via votre service central
