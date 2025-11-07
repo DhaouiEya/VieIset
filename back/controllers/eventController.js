@@ -96,12 +96,12 @@ const createEvent = async (req, res) => {
 // POST /events/:id/register
 const registerStudent = async (req, res) => {
   try {
-    const { studentId, name } = req.body;
+    const { studentId, lastName, firstName } = req.body;
     const { id } = req.params;
 
     // Vérification des champs obligatoires
-    if (!studentId || !name) {
-      return res.status(400).json({ message: 'studentId et name sont obligatoires.' });
+    if (!studentId || !lastName || !firstName) {
+      return res.status(400).json({ message: 'studentId ,lastName et firstName sont obligatoires.' });
     }
 
     // Recherche de l'événement
@@ -120,7 +120,7 @@ const registerStudent = async (req, res) => {
     }
 
     // Ajouter l'étudiant à la liste des participants
-    event.attendees.push({ studentId, name });
+    event.attendees.push({ studentId, lastName, firstName });
     await event.save();
 
     res.status(200).json({
@@ -133,7 +133,46 @@ const registerStudent = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur lors de l’inscription.' });
   }
 };
+const deleteEvent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const event = await Event.findByIdAndDelete(id);
+    if (!event) return res.status(404).json({ message: 'Event not found' });
+    res.json({ message: 'Event deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+const updateEvent =  async (req, res) => {
+  try {
+    const updatedEvent = await Event.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true } // Retourne l'objet mis à jour + valide les champs
+    );
+
+    if (!updatedEvent) {
+      return res.status(404).json({ message: "Événement non trouvé" });
+    }
+
+    res.json({ message: "Événement mis à jour avec succès ", event: updatedEvent });
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour :", error);
+    res.status(500).json({ message: "Erreur serveur " });
+  }
+};
+const getAllParticipants=async(req,res)=>{
+  try{
+    const eventId=req.params.id;
+    const event=await Event.findById(eventId).lean();
+    if(!event){
+      return res.status(404).json({message:'Événement introuvable.'});
+    }
+    res.json({participants:event.attendees||[]});
+  }catch(err){
+    res.status(500).json({message:err.message});
+  }
+};
 
 
-
-module.exports = { getEvents, getEvent, createEvent, registerStudent };
+module.exports = { getEvents, getEvent, createEvent, registerStudent ,deleteEvent,updateEvent,getAllParticipants};

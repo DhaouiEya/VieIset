@@ -11,7 +11,9 @@ const eventSchema = new mongoose.Schema({
   attendees: [
     {
       studentId: String,
-      name: String
+      firstName: String,
+      lastName: String
+     
     }
   ]
 });

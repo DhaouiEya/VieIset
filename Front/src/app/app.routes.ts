@@ -20,6 +20,7 @@ import { EmailVerificationComponent } from './components/auth/email-verification
 import { ParticipationFormsComponent } from './components/responsable-club/participation-forms/participation-forms.component';
 import { ResponsableDashboardComponent } from './components/responsable-club/responsable-dashboard/responsable-dashboard.component';
 import { PublicationPostComponent } from './components/responsable-club/publication-post/publication-post.component';
+import { EventsComponent } from './components/responsable-club/events/events.component';
 
 
 export const routes: Routes = [
@@ -40,6 +41,8 @@ export const routes: Routes = [
   { path: 'events', component: EventListComponent },
   { path: 'events/create', component: EventCreateComponent },
   { path: 'events/:id', component: EventDetailComponent },
+  //consulter events par responsable 
+   { path: 'consulter-events', component:EventsComponent},
 
   {path: 'createClub ',component:CreateClubComponent },
 //il faut  avec id

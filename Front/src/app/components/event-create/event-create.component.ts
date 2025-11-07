@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Event } from '../../models/event.model';
+
 import { EventService } from '../../services/event.service';
 import { RouterModule, Router } from '@angular/router';
+import { Event } from '../../models/event';
 
 @Component({
   selector: 'app-event-create',
@@ -42,8 +43,8 @@ submit() {
 
   const formData = new FormData();
   formData.append('title', this.newEvent.title);
-  formData.append('description', this.newEvent.description);
-  formData.append('localisation', this.newEvent.localisation);
+  // formData.append('description', this.newEvent.description);
+  // formData.append('localisation', this.newEvent.localisation);
   formData.append('startDate', this.newEvent.startDate);
   if (this.newEvent.endDate) formData.append('endDate', this.newEvent.endDate);
   formData.append('capacity', this.newEvent.capacity?.toString() || '0');

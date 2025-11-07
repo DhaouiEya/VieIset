@@ -6,7 +6,10 @@ const {
   getEvents,
   getEvent,
   createEvent,
-  registerStudent
+  registerStudent,
+  deleteEvent,
+  updateEvent,
+  getAllParticipants
 } = require('../controllers/eventController');
 
 const storage = multer.diskStorage({
@@ -38,5 +41,7 @@ router.get('/:id', getEvent);                // GET /api/events/:id
 router.post('/', upload.fields([{ name: 'image', maxCount: 1 }]), createEvent);
               // POST /api/events
 router.post('/:id/register', registerStudent); // POST /api/events/:id/register
-
+router.delete('/:id', deleteEvent);
+router.put('/:id', upload.fields([{ name: 'image', maxCount: 1 }]), updateEvent); // PUT /api/events/:i
+router.get('/:id/participants',getAllParticipants);                // GET /api/events/:id
 module.exports = router;

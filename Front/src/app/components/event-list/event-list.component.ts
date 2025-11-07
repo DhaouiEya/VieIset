@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../services/event.service';
-import { Event } from '../../models/event.model';
+
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Event } from '../../models/event';
 
 @Component({
   selector: 'app-event-list',
@@ -50,8 +51,8 @@ export class EventListComponent implements OnInit {
   }
 
   viewEvent(event: Event) {
-    if (!event.id) return;
-    this.router.navigate(['/events', event.id]);
+    if (!event._id) return;
+    this.router.navigate(['/events', event._id]);
   }
 
   // Méthode pour créer un événement

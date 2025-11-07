@@ -34,7 +34,7 @@
 
 <!-- Conteneur des cartes d'événements -->
 <div class="events-grid">
-  @for (event of events; track event.id) {
+  @for (event of events; track event._id) {
     <div class="event-card" (click)="viewEvent(event)">
 
       <!-- Image de l'événement avec style Bootstrap amélioré -->
