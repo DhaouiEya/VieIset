@@ -24,11 +24,7 @@ exports.register = async (req, res, next) => {
         } = req.body;
 
 
-<<<<<<< HEAD
-        const requiredFields = ['firstName','lastName','email' , 'password'];
-=======
         const requiredFields = ['firstName', 'lastName', 'email', 'password'];
->>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
 
         const validationError = validateRequiredFields(req.body, requiredFields);
         if (validationError) {

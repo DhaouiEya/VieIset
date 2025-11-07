@@ -12,7 +12,7 @@ router.post('/process-sheet', sheetController.processSheet);
 module.exports = router;
 // routes/sheetRoutes.js
 const express = require("express");
-const router = express.Router();
+
 const { lireSheet } = require("../services/googleSheetService"); // Importez directement le service
 
 // Route pour récupérer les données Google Sheets

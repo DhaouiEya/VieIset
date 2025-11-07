@@ -19,11 +19,7 @@ console.log('Middleware d\'authentification appelé,authHeader:', authHeader);
   const token = authHeader.replace('Bearer ', '');
 
   try {
-<<<<<<< HEAD
-
-=======
 console.log('Vérification du token JWT :', token);
->>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Charger l'utilisateur depuis la base de données
