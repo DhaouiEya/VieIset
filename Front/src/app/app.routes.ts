@@ -22,6 +22,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { ProfileComponent } from './components/profile/profile/profile.component';
+import { MyClubComponent } from './components/clubs/my-club/my-club.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/forgot-password', pathMatch: 'full' },
@@ -44,6 +45,8 @@ export const routes: Routes = [
 
 
   { path: 'clubs', component: ClubsListComponent },
+    { path: 'club', component: MyClubComponent },
+
   { path: 'publications', component: PublicationPostComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'events', component: EventListComponent },

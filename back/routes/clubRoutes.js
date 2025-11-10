@@ -6,49 +6,28 @@ const authMiddleware = require('../middlewares/authMiddlewares');
 //post
 
 
+// consulter les infos du club (par le responsable)
+router.get('/mon-club', authMiddleware, clubController.consulterClub);
+
+//le responsble de club peut créer un club
 router.post("/", clubController.createClub);
+
 router.get("/clubManager/:id", clubController.getClubByManager);
+
+//afficher tous les clubs pour les étudiants
 router.get("/", clubController.getAllClubs);
 
 
 // GET club + posts
 router.get('/:id', authMiddleware,clubController.getClubById);
-// //securiser la route avec authMiddleware si role clubManager
-// router.post("/", async (req, res) => {
-//     try {
-//         // Assigner automatiquement le manager connecté
-//         // const managerId = req.user._id; // req.user défini par authMiddleware
-//         // const clubData = {
-//         //     ...req.body,
-//         //     manager: managerId
-//         // };
 
-//         const club = new Club(req.body);
-//         await club.save();
-//         res.status(201).json(club);
-//     } catch (error) {
-//         res.status(400).json({ error: error.message });
-//     }
-// });
-// router.get('/clubManager/:id', async (req, res) => {
-//   const managerId = req.params.id;
-//   try {
-//     const club = await Club.findOne({ manager: managerId })
-//                            .populate("manager", "firstName lastName email")
-//                            .populate("membres");
+// modifier les infos du club
+router.put('/mon-club', authMiddleware, clubController.modifierClub);
 
-//     if (!club) return res.status(200).json(null);
+// désactiver le club
+router.put('/mon-club/desactiver', authMiddleware,clubController.desactiverClub);
 
-//     res.status(200).json(club);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Erreur serveur', error: error.message });
-//   }
-// });
-
-
-
-
-
+//activer club
+router.put('/mon-club/activer', authMiddleware,clubController.activerClub)
 
 module.exports = router;

@@ -109,9 +109,9 @@
   <div class="sidebar-section">
 
     <h3>Manager</h3>
-    <!-- <p>{{ club.manager.firstName }} {{ club.manager.lastName }}</p> -->
+    <p>{{ club.manager.firstName }} {{ club.manager.lastName }}</p>
 
-    <p>{{ club.manager }} {{ club.manager }}</p>
+    <!-- <p>{{ club.manager }} {{ club.manager }}</p> -->
 
   </div>
 
@@ -120,7 +120,7 @@
 
   <!-- COLONNE DROITE QUI SCROLL -->
   <div class="club-posts">
-    <h3>Publications récentes</h3>
+    <h3 class="mb-3">Publications récentes</h3>
     @for (post of posts; track $index) {
       <app-post-club [post]="post" [club]="club"></app-post-club>
     }

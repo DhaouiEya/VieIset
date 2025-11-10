@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-11-10T15:50:52.055Z",
+  "method": "PUT",
+  "url": "/api/clubs/mon-club",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "PayloadTooLargeError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "request entity too large",
+  "stack": "PayloadTooLargeError: request entity too large\n    at readStream (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\raw-body\\index.js:163:17)\n    at getRawBody (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\raw-body\\index.js:116:12)\n    at read (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\body-parser\\lib\\read.js:74:3)\n    at jsonParser (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\body-parser\\lib\\types\\json.js:125:5)\n    at Layer.handleRequest (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\lib\\layer.js:152:17)\n    at trimPrefix (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:342:13)\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:297:9\n    at processParams (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:582:12)\n    at next (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:291:5)\n    at Function.handle (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:186:3)"
+},
+{
+  "timestamp": "2025-11-10T16:04:55.589Z",
+  "method": "POST",
+  "url": "/api/auth/google-login",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "ReferenceError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "picture is not defined",
+  "stack": "ReferenceError: picture is not defined\n    at exports.googleLogin (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:261:60)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+},
+{
+  "timestamp": "2025-11-10T16:05:15.352Z",
+  "method": "POST",
+  "url": "/api/auth/google-login",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "ReferenceError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "picture is not defined",
+  "stack": "ReferenceError: picture is not defined\n    at exports.googleLogin (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:261:60)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+},

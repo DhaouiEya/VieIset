@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -19,7 +19,7 @@ declare const google: any;
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   hasError = false;
   message = '';
@@ -31,15 +31,21 @@ export class LoginComponent {
   ) {}
 
   ngOnInit(): void {
-
     this.initForm();
     this.initializeGoogleSignIn(); //initialise le SDK Google pour afficher le popup One Tap
+  }
+
+    ngOnDestroy(): void {
+    // Nettoyage pour éviter les memory leaks
+    if (typeof google !== 'undefined' && google.accounts) {
+      google.accounts.id.cancel();
+    }
   }
 
   initForm() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-  password: ['', [Validators.required, passwordValidator]] , 
+      password: ['', [Validators.required, passwordValidator]],
       keepMeLoggedIn: [false],
     });
   }
@@ -49,31 +55,29 @@ export class LoginComponent {
 
     const { email, password, keepMeLoggedIn } = this.loginForm.value;
 
-this.authService.login(email, password, keepMeLoggedIn).subscribe({
-  next: (res: any) => {
-    console.log("res login ",res)
-    if (res.success) {
-      localStorage.setItem('token', res.token);
+    this.authService.login(email, password, keepMeLoggedIn).subscribe({
+      next: (res: any) => {
+        console.log('res login ', res);
+        if (res.success) {
+          localStorage.setItem('token', res.token);
 
-      // Redirection selon rôle
-      if (res.user?.role === 'clubManager') {
-        this.router.navigateByUrl('/dashboard');
-      } else {
-        this.router.navigateByUrl('/clubs');
-      }
-    } else {
-      console.log("zzz ",res)
-      this.hasError = true;
-      this.message = res.error.message || 'Erreur lors de la connexion';
-    }
-  },
-  error: (err: any) => {
-    console.error('Erreur serveur :', err);
-    this.hasError = true;
-    this.message = err.error?.message || 'Erreur lors de la connexion';
-  }
-});
-
+          // Redirection selon rôle
+          if (res.role === 'clubManager') {
+            this.router.navigateByUrl('/dashboard');
+          } else {
+            this.router.navigateByUrl('/clubs');
+          }
+        } else {
+          this.hasError = true;
+          this.message = res.error.message || 'Erreur lors de la connexion';
+        }
+      },
+      error: (err: any) => {
+        console.error('Erreur serveur :', err);
+        this.hasError = true;
+        this.message = err.error?.message || 'Erreur lors de la connexion';
+      },
+    });
   }
 
   getControlClass(controlName: string): any {

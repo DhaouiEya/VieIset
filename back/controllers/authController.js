@@ -243,7 +243,7 @@ exports.googleLogin = async (req, res, next) => {
         });
 
         const payload = ticket.getPayload();
-        const { sub: googleId, email, email_verified, name } = payload;
+        const { sub: googleId, email, email_verified, name ,picture} = payload;
 
         // First check for existing user with googleId
         let user = await User.findOne({ googleId });
@@ -435,6 +435,7 @@ exports.login = async (req, res, next) => {
             lastName: user.lastName,
             email: user.email,
                 googleId:user.googleId,
+                role:user.role,
 
             authToken, refreshToken
         });

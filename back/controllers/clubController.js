@@ -33,6 +33,7 @@ exports.getClubByManager = async (req, res) => {
   }
 };
 
+// Récupperer tous les clubs active
 exports.getAllClubs = async (req, res) => {
   try {
     const clubs = await Club.find({ actif: true });
@@ -78,3 +79,95 @@ posts.forEach(post => {
   }
 };
 
+
+
+// consulter les infos du club du responsable
+exports.consulterClub = async (req, res) => {
+  try {
+    const manager_id=req.user._id 
+    console.log("mangerId ",manager_id)
+    const club = await Club.findOne({ manager: manager_id }).populate('manager membres');
+    if (!club) 
+      return res.status(404).json({ success:false, message: 'Aucun club trouvé.' });
+
+    res.status(200).json({success:true , data:club});
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+// modifier les infos du club
+exports.modifierClub = async (req, res) => {
+  try {
+    const manager_id = req.user._id;
+
+    // champs autorisés à la modification
+    const allowedFields = ['nom','description','activites','imageProfil','imageFond','dateCreation','adresse','telephone','email','reseaux'];
+
+    // filtrage automatique des champs
+    const updates = Object.fromEntries(
+      Object.entries(req.body).filter(([key]) => allowedFields.includes(key))
+    );
+
+    // mise à jour du club
+    const club = await Club.findOneAndUpdate(
+      { manager: manager_id },
+      { $set: updates },
+      { new: true, runValidators: true }
+    );
+
+    if (!club)
+      return res.status(404).json({ success: false, message: 'Aucun club trouvé.' });
+
+    res.status(200).json({
+      success: true,
+      message: 'Informations du club mises à jour.',
+      data: club
+    });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+// désactiver le club
+exports.desactiverClub = async (req, res) => {
+  try {
+    const manager_id=req.user._id 
+
+    const club = await Club.findOneAndUpdate(
+      { manager: manager_id },
+      { actif: false },
+      { new: true }
+    );
+    if (!club) 
+            return res.status(404).json({ success:false,message: 'Aucun club trouvé.' });
+
+    res.status(200).json({ success:true, message: 'Club désactivé.', club });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+//activer club
+exports.activerClub = async (req, res) => {
+  try {
+    const manager_id = req.user._id;
+
+    const club = await Club.findOneAndUpdate(
+      { manager: manager_id },
+      { actif: true },
+      { new: true }
+    );
+
+    if (!club) 
+      return res.status(404).json({ success: false, message: 'Aucun club trouvé.' });
+
+    res.status(200).json({ success: true, message: 'Club activé.', club });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
