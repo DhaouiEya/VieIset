@@ -77,18 +77,18 @@ exports.deleteEvent = async (req, res) => {
 };
 
 
-exports.getAllParticipants=async(req,res)=>{
-  try{
-    const eventId=req.params.id;
-    const event=await Event.findById(eventId).lean();
-    if(!event){
-      return res.status(404).json({message:'Événement introuvable.'});
-    }
-    res.json({participants:event.attendees||[]});
-  }catch(err){
-    res.status(500).json({message:err.message});
-  }
-};
+// exports.getAllParticipants=async(req,res)=>{
+//   try{
+//     const eventId=req.params.id;
+//     const event=await Event.findById(eventId).lean();
+//     if(!event){
+//       return res.status(404).json({message:'Événement introuvable.'});
+//     }
+//     res.json({participants:event.attendees||[]});
+//   }catch(err){
+//     res.status(500).json({message:err.message});
+//   }
+// };
 
 
 
@@ -173,12 +173,14 @@ exports.registerToEvent = async (req, res) => {
   }
 };
 
-exports.getEventParticipations = async (req, res) => {
+exports.getAllParticipants = async (req, res) => {
   try {
     const eventId = req.params.id;
-    const participations = await Participation.find({ event: eventId }).populate('etudiant', 'name email');
+    const participations = await Participation.find({ event: eventId })
+      .populate('etudiant', 'firstName lastName email'); 
     res.json(participations);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+
