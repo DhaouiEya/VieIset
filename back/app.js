@@ -6,10 +6,10 @@ const cors = require('cors'); //pour gérer les requêtes cross-origin (CORS)
 const bodyParser = require('body-parser');
 const helmet = require('helmet');// Security middleware to set various HTTP headers
 const path = require('path'); //trouver le bon chemin de fichier
-const credentialsPath = path.join(__dirname, 'credentials.json');
+//const credentialsPath = path.join(__dirname, 'config', 'credentials.json');
 
 const routes = require('./routes');
-const sheetRoutes = require('./routes/sheetRoutes');
+
 
 
 const app = express();
@@ -40,15 +40,12 @@ app.use(
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', routes);
 // Utilisez les routes
-// Toutes les routes de sheetRoutes seront préfixées par /api/sheet
-app.use('/api/sheet', sheetRoutes); // Toutes les routes de sheetRoutes seront préfixées par /api/sheet
-
 
 // Middleware global pour gérer les erreurs
 app.use(errorMiddleware);
 
 
-// Connexion MongoDB + démarrage du serveur
+
 const PORT =  9000;
 // console.log("MONGO_URL:", process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)

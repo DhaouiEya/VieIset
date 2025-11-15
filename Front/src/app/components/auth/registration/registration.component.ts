@@ -17,33 +17,22 @@ import {
   tap,
 } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
-<<<<<<< HEAD
 import { CommonModule, NgClass } from '@angular/common';
 
 // import { PasswordStrengthMeterComponent} from 'angular-password-strength-meter';
 //import { PasswordStrengthMeterComponent } from '../../password-strength-meter/password-strength-meter.component';
 
 
-=======
-import { CommonModule } from '@angular/common';
-
-declare const google: any;
->>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
 
 @Component({
   selector: 'app-registration',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-<<<<<<< HEAD
 NgClass,
     CommonModule,
    PasswordStrengthMeterComponent,
 
-=======
-    CommonModule,
-   PasswordStrengthMeterComponent,
->>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
   ],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],
@@ -52,10 +41,9 @@ export class RegistrationComponent {
   registrationForm!: FormGroup;
   hasError!: boolean;
   message: string = 'The registration details are incorrect';
-<<<<<<< HEAD
+
   google: any;
-=======
->>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
+
 
   // private fields
   private unsubscribe: Subscription[] = [];
@@ -185,11 +173,7 @@ export class RegistrationComponent {
   // }
 
   initializeGoogleSignIn() {
-<<<<<<< HEAD
     this.google.accounts.id.initialize({
-=======
-    google.accounts.id.initialize({
->>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
       client_id:
         '83197880105-fhf7bp7mugj0js4ecjp15c9tcojh45nv.apps.googleusercontent.com',
       callback: this.handleCredentialResponse.bind(this),
@@ -203,21 +187,13 @@ export class RegistrationComponent {
 
   triggerGoogleSignIn() {
   // Affiche le prompt Google One Tap
-<<<<<<< HEAD
   this.google.accounts.id.prompt((notification: any) => {
-=======
-  google.accounts.id.prompt((notification: any) => {
->>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
     // Si le prompt n'a pas été affiché ou a été ignoré
     if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
       // Rendu manuel du bouton Google sur ton élément existant
       const button = document.getElementById('googleLoginButton');
       if (button) {
-<<<<<<< HEAD
         this.google.accounts.id.renderButton(button, {
-=======
-        google.accounts.id.renderButton(button, {
->>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
           theme: 'outline',
           size: 'large',
           text: 'continue_with',

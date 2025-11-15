@@ -1,100 +1,32 @@
 const Event = require('../models/Event');
-
-// GET /events
-const getEvents = async (req, res) => {
+const Etudiant = require('../models/etudiant'); 
+exports.updateEvent = async (req, res) => {
   try {
-    const events = await Event.find().lean();
-    const formatted = events.map(e => ({
-      ...e,
-      id: e._id,
-      attendeesCount: e.attendees?.length || 0
-    }));
-    res.json(formatted);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    const updateData = { ...req.body };
 
-// GET /events/:id
-const getEvent = async (req, res) => {
-  try {
-    const event = await Event.findById(req.params.id).lean();
-    if (!event) return res.status(404).json({ message: 'Event not found' });
-    res.json({ ...event, id: event._id });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-const createEvent = async (req, res) => {
-  try {
-    console.log('Request body:', req.body);
-    console.log('Request files:', req.files);
-
-    // Extraction des champs du body
-    const { title, description, localisation, startDate, endDate, capacity } = req.body;
-
-    if (!title || !description || !localisation || !startDate || !endDate) {
-      return res.status(400).json({ message: 'Tous les champs obligatoires doivent être remplis.' });
+    // Mettre à jour l'image seulement si un fichier est uploadé
+    if (req.file) {
+        updateData.lienImage = `/uploads/${req.file.filename}`;
     }
 
-    // Extraction du fichier image
-    const imageFile = req.files?.image ? req.files.image[0] : null;
-    const lienImage = imageFile ? `/uploads/${imageFile.filename}` : null;
+    const updatedEvent = await Event.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true, runValidators: true }
+    );
 
-    // Créer l'événement
-    const event = new Event({
-      title,
-      description,
-      localisation,
-      startDate,
-      endDate,
-      capacity: capacity || 0,
-      lienImage,
-      attendees: []
-    });
-
-    await event.save();
-    res.status(201).json({ ...event.toObject(), id: event._id });
-
-  } catch (err) {
-    console.error('Erreur lors de la création de l’événement:', err);
-    res.status(500).json({ message: err.message });
-  }
-};
-
-
-// POST /events
-/*
-const createEvent = async (req, res) => {
-  try {
-    const { title, description, localisation, startDate, endDate, capacity, attendees } = req.body;
-
-    if (!title || !description || !localisation || !startDate || !endDate) {
-      return res.status(400).json({ message: 'Tous les champs obligatoires doivent être remplis.' });
+    if (!updatedEvent) {
+      return res.status(404).json({ message: "Événement non trouvé" });
     }
 
-    const event = new Event({
-      title,
-      description,
-      localisation,
-      startDate,
-      endDate,
-      capacity: capacity || 0,
-      attendees: attendees || []
-    });
-
-    await event.save();
-    res.status(201).json({ ...event.toObject(), id: event._id });
-    
+    res.json({ message: "Événement mis à jour avec succès", event: updatedEvent });
   } catch (error) {
-    console.error('Erreur lors de la création de l\'événement :', error.message);
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Erreur serveur" });
   }
 };
-*/
-// POST /events/:id/register
-// POST /events/:id/register
-const registerStudent = async (req, res) => {
+
+exports.registerStudent = async (req, res) => {
   try {
     const { studentId, lastName, firstName } = req.body;
     const { id } = req.params;
@@ -133,7 +65,7 @@ const registerStudent = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur lors de l’inscription.' });
   }
 };
-const deleteEvent = async (req, res) => {
+exports.deleteEvent = async (req, res) => {
   try {
     const { id } = req.params;
     const event = await Event.findByIdAndDelete(id);
@@ -143,25 +75,9 @@ const deleteEvent = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-const updateEvent =  async (req, res) => {
-  try {
-    const updatedEvent = await Event.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true } // Retourne l'objet mis à jour + valide les champs
-    );
 
-    if (!updatedEvent) {
-      return res.status(404).json({ message: "Événement non trouvé" });
-    }
 
-    res.json({ message: "Événement mis à jour avec succès ", event: updatedEvent });
-  } catch (error) {
-    console.error("Erreur lors de la mise à jour :", error);
-    res.status(500).json({ message: "Erreur serveur " });
-  }
-};
-const getAllParticipants=async(req,res)=>{
+exports.getAllParticipants=async(req,res)=>{
   try{
     const eventId=req.params.id;
     const event=await Event.findById(eventId).lean();
@@ -175,7 +91,7 @@ const getAllParticipants=async(req,res)=>{
 };
 
 
-module.exports = { getEvents, getEvent, createEvent, registerStudent ,deleteEvent,updateEvent,getAllParticipants};
+
 
 const Participation = require('../models/participation');
 
@@ -183,6 +99,7 @@ const Participation = require('../models/participation');
 exports.getEvents = async (req, res) => {
   try {
     const events = await Event.find();
+
     res.json(events);
   } catch (err) {
     console.error('Erreur lors de la récupération des événements :', err);

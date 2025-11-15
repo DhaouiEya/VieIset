@@ -21,6 +21,9 @@ import { ParticipationFormsComponent } from './components/responsable-club/parti
 import { ResponsableDashboardComponent } from './components/responsable-club/responsable-dashboard/responsable-dashboard.component';
 import { PublicationPostComponent } from './components/responsable-club/publication-post/publication-post.component';
 import { EventsComponent } from './components/responsable-club/events/events.component';
+import { ResSideBarComponent } from './components/responsable-club/res-side-bar/res-side-bar.component';
+import { DashboardComponent } from './components/clubManager/dashboard/dashboard.component';
+import { UpdateEventComponent } from './components/responsable-club/update-event/update-event.component';
 
 
 export const routes: Routes = [
@@ -36,7 +39,7 @@ export const routes: Routes = [
   // { path: 'publications', component: PublicationPostComponent },
 
   { path: 'clubs', component: ClubsListComponent },
-  { path: 'publications', component: PublicationPostComponent },
+ 
   { path: 'register', component: RegistrationComponent },
 //  { path: 'events', component: EventListComponent },
   { path: 'events/create', component: EventCreateComponent },
@@ -49,7 +52,20 @@ export const routes: Routes = [
   {path: 'espaceClub/:id',component:EspaceClubComponent },
   // {path: 'espaceClub',component:EspaceClubComponent },
 
-  {path: 'participation-forms', component: ParticipationFormsComponent}
+  
+  {path:"res_club", component:ResSideBarComponent,children:
+  [
+    {path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    {path: 'dashboard', component: ResponsableDashboardComponent },
+    { path: 'consulter-events', component:EventsComponent},
+    { path: 'publications', component: PublicationPostComponent },
+    {path:'createClub',component:CreateClubComponent},
+    {path:"updateEvent/:id",component:UpdateEventComponent},
+    {path: 'participation-forms', component: ParticipationFormsComponent},
+
+
+  ],
+  }
 
 ]
 

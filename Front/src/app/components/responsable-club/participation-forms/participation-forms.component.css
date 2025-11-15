@@ -5,7 +5,7 @@
 
 .main-content {
   flex: 1;
-  margin-left: 250px; /* Width of the sidebar */
+ 
   padding: 20px;
   background-color: #f5f5f5;
 }
@@ -53,7 +53,7 @@
   gap: 7px;
   margin-top: 15px;
   
-  background-color: #4a90e2;
+  background-color: #1E3A5F;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -65,7 +65,7 @@
 }
 
 .btn-primary:hover {
-  background-color: #0e7567;
+  opacity: 0.8;
 
 }
 
@@ -86,7 +86,7 @@
 
 .help-header h3 {
   margin: 0;
-  color: #0d6efd;
+  color: #1E3A5F;
   font-size: 1em;
   display: flex;
   align-items: center;
@@ -110,7 +110,7 @@
 }
 
 .step-number {
-  background: #0d6efd;
+  background: #1E3A5F;
   color: white;
   border-radius: 50%;
   width: 20px;
@@ -126,7 +126,7 @@
 }
 
 .step strong {
-  color: #0d6efd;
+  color:#1E3A5F;
   font-weight: 600;
 }
 
@@ -237,7 +237,7 @@
   font-size: 12px;
   font-weight: 500;
   background-color: #e0f2fe;
-  color: #0369a1;
+  color: #1E3A5F;
 }
 
 .club-badge.no-club {
@@ -246,7 +246,7 @@
 }
 
 .btn-action {
-  background-color: #10b981;
+  background-color: #1E3A5F;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -260,7 +260,7 @@
 }
 
 .btn-action:hover {
-  background-color: #0da271;
+  opacity: 0.8;
 }
 
 .pagination {
@@ -370,10 +370,10 @@
   text-align: center;
 }
 @keyframes slideDown { to { transform: translateY(0); } }
-.btn-primary { background: #0d9488; transition: all 0.3s; }
+/* .btn-primary { background: #0d9488; transition: all 0.3s; } */
 /* .btn-primary:hover { background: #0f766e; transform: scale(1.05); } */
 .btn-action { display: flex; align-items: center; gap: 5px; transition: 0.3s; }
-.btn-action:hover { background-color: #059669; transform: translateY(-2px); }
+.btn-action:hover { opacity: 0.8; transform: translateY(-2px); }
 
 .date-row {
   display: flex;
@@ -410,12 +410,111 @@
   background-color: #6c757d;
   color: white;
 }
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.modal-overlay {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+}
+
+
+.filter-buttons .filter-btn {
+  background: none;        /* transparent */
+  border: none;            /* pas de bordure */
+  color: #1E3A5F;             /* texte noir */
+  padding: 5px 10px;       /* optionnel pour l’espace */
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  font-size: 18px;
+}
+
+.filter-buttons .filter-btn:hover {
+  text-decoration: underline; /* souligné au survol */
+  text-decoration-color: #1E3A5F; /* bleu bootstrap */
+  text-underline-offset: 3px; /* espace sous le texte */
+}
+
+.statut {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.attente {
+  background: #ffc107;
+  color: #212529;
+}
+
+.acceptee {
+  background: #28a745;
+  color: #fff;
+}
+
+.refusee {
+  background: #dc3545;
+  color: #fff;
+}
+
+.btn-remove {
+  background: #ff4d4d;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 
 .modal-actions {
   display: flex;
-  justify-content: space-between;
+  gap: 12px;
   margin-top: 20px;
 }
+
+.btn-primary,
+.btn-secondary {
+  flex: 1;                   /* même largeur */
+  height: 45px;              /* même hauteur */
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* centrer le texte */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-secondary {
+ 
+margin-top: 15px;
+}
+.btn-primary {
+  background: #1E3A5F;
+  color: white;
+}
+
+
+
 
 
 

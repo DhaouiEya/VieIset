@@ -1,0 +1,76 @@
+/* Conteneur du dialog */
+.dialog-container {
+  padding: 20px;
+  width: 100%;
+  max-height:600px;
+  
+}
+
+/* Titre du dialog */
+.dialog-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #f89811;
+}
+
+/* Formulaire */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Lignes de formulaire */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Champs full-col */
+.full-col {
+  flex: 1 1 100%;
+}
+
+/* Input et textarea */
+mat-form-field.full-col {
+  width: 100%;
+}
+
+/* Preview image */
+.preview-img {
+  margin-top: 8px;
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Boutons d'actions */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Bouton bleu personnalisé */
+.bleuf {
+  background-color: #1E3A5F; /* bleu material */
+  color: white;
+}
+
+.bleuf:hover {
+  opacity: 0.8;
+}
+.preview-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+

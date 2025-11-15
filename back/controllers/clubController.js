@@ -1,22 +1,32 @@
 const Club = require("../models/club");
-const Poste = require("../models/Poste");
-
-// Ajouter un nouveau club
-exports.createClub = async (req, res) => {
-  try {
-    // Exemple si tu veux lier automatiquement le manager connecté :
-    // const managerId = req.user._id;
-    // const clubData = { ...req.body, manager: managerId };
-
-    const club = new Club(req.body);
-    await club.save();
-    res.status(201).json(club);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
+ const Poste = require("../models/Poste"); 
+const clubService = require('../services/clubService'); 
 // Récupérer un club par l'ID du manager
+
+exports.createClub = async (req, res) => { 
+  try { 
+   const imageProfil = req.files?.imageProfil?.[0];
+   const imageFond = req.files?.imageFond?.[0];
+
+    const clubData = { 
+      nom: req.body.nom,
+       description: req.body.description, 
+       imageProfil: imageProfil?.filename || null,
+      imageFond: imageFond?.filename || null,
+
+       dateCreation: req.body.dateCreation,
+        departement: req.body.departement, 
+        adresse: req.body.adresse,
+         telephone: req.body.telephone,
+          email: req.body.email, 
+          facebook: req.body.facebook,
+           instagram: req.body.instagram,
+            manager: req.body.manager, };
+             const club = await clubService.createClub(clubData);
+              res.status(201).json(club); } 
+              catch (err) {
+                 console.error(err); res.status(500).json({ message: err.message }); 
+                } };
 exports.getClubByManager = async (req, res) => {
   const managerId = req.params.id;
   try {

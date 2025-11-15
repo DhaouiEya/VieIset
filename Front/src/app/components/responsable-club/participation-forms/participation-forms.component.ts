@@ -1,9 +1,9 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnDestroy, OnInit } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { Subscription, interval } from 'rxjs';
-import { ResponsableMenuComponent } from '../responsable-menu/responsable-menu.component';
+
 import { FormulairesService } from '../../../services/formulaires.service';
 import { DemandeAdhesionService } from '../../../services/demande-adhesion.service';
 import { DemandeAdhesion } from '../../../models/demande-adhesion';
@@ -14,12 +14,16 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-participation-forms',
-  imports: [FormsModule, CommonModule, ResponsableMenuComponent],
+  imports: [FormsModule, CommonModule,NgClass],
   templateUrl: './participation-forms.component.html',
   styleUrl: './participation-forms.component.css',
    schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
 export class ParticipationFormsComponent implements OnInit, OnDestroy{
+  
+showStatutModal: boolean = false;
+modalTitle: string = '';
+modalDemandes: any[] = [];
   ngOnDestroy(): void {
     this.pollingSubscription?.unsubscribe();
   }
@@ -209,6 +213,36 @@ chargerDemandesExistantes() {
     return this.demandes;
   }
   return this.demandes.filter(d => d.statut === this.filterStatus);
+}
+
+showAll() {
+  this.filterStatus = 'all';
+  this.showStatutModal = false; // juste afficher le tableau complet
+}
+
+showAcceptes() {
+  this.filterStatus = 'acceptée';
+  this.modalDemandes = this.demandes.filter(d => d.statut === 'acceptée');
+  this.modalTitle = 'Étudiants Acceptés';
+  this.showStatutModal = true;
+}
+
+showRefusees() {
+  this.filterStatus = 'refusée';
+  this.modalDemandes = this.demandes.filter(d => d.statut === 'refusée');
+  this.modalTitle = 'Étudiants Refusés';
+  this.showStatutModal = true;
+}
+
+closeStatutModal() {
+  this.showStatutModal = false;
+}
+
+showEncours() {
+  this.filterStatus = 'en cours';
+  this.modalDemandes = this.demandes.filter(d => d.statut === 'en cours');
+   this.modalTitle = 'Demandes en cours';
+  this.showStatutModal = true;
 }
 
 }

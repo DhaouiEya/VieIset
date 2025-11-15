@@ -7,6 +7,7 @@ import { DetailsParticipantsComponent } from '../details-participants/details-pa
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2';
+import { UpdateEventComponent } from '../update-event/update-event.component';
 
 
 @Component({
@@ -20,20 +21,40 @@ export class EventsComponent implements OnInit {
   events: Event[] = [];
   showModal = false;
   selectedEvent: Event | null = null;
-
   readonly eventService = inject(EventService);
   readonly dialog = inject(MatDialog);
+  shownewmodal=false;
+
+
+
+
 
   ngOnInit(): void {
     this.loadEvents();
   }
 
-  loadEvents() {
-    this.eventService.getEvents().subscribe({
-      next: (data) => this.events = data,
-      error: (err) => console.error(err)
-    });
+ // Ouvre le modal et définit l'événement sélectionné
+  opennewModal(event: any) {
+    this.selectedEvent = event;
+    this.shownewmodal = true;
   }
+
+  // Ferme le modal
+  closenewModal() {
+    this.shownewmodal = false;
+    this.selectedEvent = null;
+  }
+loadEvents() {
+  this.eventService.getEvents().subscribe({
+    next: (data) => {
+      console.log(" EVENTS REÇUS :", data);  // <-- AJOUTE ÇA
+      this.events = data;
+    },
+    error: (err) => console.error(err)
+  });
+}
+
+
 
 
 
@@ -75,8 +96,21 @@ export class EventsComponent implements OnInit {
     }
   });
 }
-openAddEventDialog(event?:Event){}
+openUpdateEventDialog(event?: Event) {
+  const dialogRef = this.dialog.open(UpdateEventComponent, {
+    width: '600px',
+    height: '600px',
+    data: event ? { ...event } : null // si tu passes un event, c'est pour éditer
+  });
 
+   dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.loadEvents(); // recharge la liste automatiquement
+    }
+  });
+}
+ // Quand le modal se ferme, on recharge les événements si update réussi
+ 
   viewAttendees(event?: Event) {
     const dialogRef = this.dialog.open(DetailsParticipantsComponent, {
       width: '400px',
@@ -88,4 +122,15 @@ openAddEventDialog(event?:Event){}
       if (result) this.loadEvents();
     });
   }
+//     openImageModal(event: any) {
+//   this.selectedEvent = event;
+//  // this.selectedEventImage = 'http://localhost:9000' + event.lienImage; 
+//   this.showImageModal = true;
+//    console.log('Modal ouvert pour:', event.title);
+// }
+
+// closeImageModal() {
+//   this.showImageModal = false;
+//  // this.selectedEventImage = null;
+// }
 }
