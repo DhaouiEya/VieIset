@@ -1,8 +1,8 @@
-//const User = require('../models/etudiant');
+const User = require('../models/etudiant');
 const {validateRequiredFields}=require("../utils/validators")
 const { sendEmail } = require('../services/emailService');
-//const { OAuth2Client } = require('google-auth-library');
-//const bcrypt = require('bcryptjs');
+const { OAuth2Client } = require('google-auth-library');
+const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
