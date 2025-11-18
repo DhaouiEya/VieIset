@@ -3,8 +3,8 @@
   <!-- Bande jaune avec bouton + -->
   <div class="header-bar">
     <h2>Liste des Événements</h2>
-    <button mat-icon-button color="primary" >
-      <mat-icon>add</mat-icon>
+    <button mat-icon-button class="bleuf">
+      <mat-icon >add</mat-icon>
     </button>
   </div>
 
@@ -15,9 +15,11 @@
         <th>Titre</th>
         <th>Description</th>
         <th>Localisation</th>
-        <th>Dates</th>
+        <th>Date début</th>
+        <th>Date fin</th>
         <th>Capacité</th>
         <th>Participants</th>
+        <th>Image</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -26,23 +28,33 @@
       @for (event of events; track $index) {
         <tr>
           <td>{{ event.title }}</td>
-          <td>{{ event.description }}</td>
+          <td class="truncate">{{ event.description }}</td>
+
           <td>{{ event.localisation }}</td>
-          <td>{{ event.startDate | date: 'short' }} - {{ event.endDate | date: 'short' }}</td>
+          <td>{{ event.startDate | date: 'short' }} </td>
+          <td>{{ event.endDate | date: 'short' }}</td>
           <td>{{ event.capacity || 0 }}</td>
-          <td>
-            <button mat-stroked-button color="primary" (click)="viewAttendees(event)" >
-              👁️ Voir ({{ event.attendees?.length || 0 }})
+         
+          <td class="td-padding">
+            <button mat-stroked-button class="view-btn" (click)="viewAttendees(event)" >
+               <span class="btn-icon">👁️</span>
+  <span style="font-size: 12px;">voir({{ event.attendees?.length || 0 }})</span>  
             </button>
           </td>
-          <td>
-            <button mat-icon-button color="accent" (click)="openAddEventDialog(event)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="deleteEvent(event)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
+            <td class="td-padding">
+          <button mat-stroked-button class="view-btn" (click)="opennewModal(event)" >
+            🖼️ Voir
+          </button>
+        </td>
+        <td class="action-buttons">
+  <button mat-icon-button class="edit-btn" (click)="openUpdateEventDialog(event)">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-icon-button color="warn" (click)="deleteEvent(event)">
+    <mat-icon>delete</mat-icon>
+  </button>
+</td>
+
         </tr>
       }
     </tbody>
@@ -62,5 +74,25 @@
       </div>
     </div>
   }
+@if(shownewmodal){
+  <div class="modal-overlay" (click)="closenewModal()">
+    <div class="image-modal" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closenewModal()">✕</button>
+      <img [src]="'http://localhost:9000' + selectedEvent?.lienImage" 
+           alt="{{selectedEvent?.title}}" class="event-image-preview">
+    </div>
+  </div>
+}
+
 </div>
-</div>
+</div> 
+
+
+
+
+
+
+
+
+
+v

@@ -3,47 +3,14 @@ const { google } = require("googleapis");
 const Etudiant = require("../models/etudiant");       // ton modèle étudiant
 const Club = require("../models/club");               // ton modèle club
 const DemandeAdhesion = require("../models/demandeAdhesion"); // modèle demande
+const path = require('path');
 
 
-
-// Lire Google Sheet et créer les demandes automatiquement
-async function lireSheet(spreadsheetId) {
-  const auth = new google.auth.GoogleAuth({
-    keyFile: "credentials.json",
-    scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
-  });
-  const client = await auth.getClient();
-  const sheets = google.sheets({ version: "v4", auth: client });
-
-  const res = await sheets.spreadsheets.values.get({
-    spreadsheetId,
-    range: "A1:Z1000",
-  });
-
-let rows = res.data.values || [];  // <--- changer const -> let
-console.log("Nombre de lignes lues (avant suppression titres):", rows.length);
-console.log("Premières lignes:", rows.slice(0, 5));
-
-const headerIndex = rows.findIndex(r => r.some(cell => cell.toString().toLowerCase() === 'nom'));
-if (headerIndex !== -1) {
-  rows = rows.slice(headerIndex + 1); // maintenant c'est ok, rows est un let
-}
-
-console.log("Nombre de lignes lues (après suppression titres):", rows.length);
-console.log("Premières lignes:", rows.slice(0, 5));
-
-return rows;
-
-}
-
-
-// services/googleSheetService.js - VERSION AVEC DÉTECTION AUTOMATIQUE
-const { google } = require("googleapis");
 
 async function lireSheet(spreadsheetId) {
   try {
     const auth = new google.auth.GoogleAuth({
-      keyFile: "credentials.json",
+       keyFile: path.join(__dirname, '../credentials.json'),
       scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
     });
 
@@ -219,7 +186,6 @@ function nettoyerTexte(str) {
     .trim();
 }
 
-// Traiter les lignes et créer les demandes
 
 async function traiterSheet(rows) {
   console.log("rows asser a traitement:", rows);
@@ -293,4 +259,4 @@ return demandesAvecPopulate;
 }
 
 module.exports = { lireSheet, traiterSheet, estEmailValide };
-module.exports = { lireSheet };
+

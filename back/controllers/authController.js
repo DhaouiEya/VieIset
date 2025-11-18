@@ -1,5 +1,5 @@
 const User = require('../models/etudiant');
-const {validateRequiredFields}=require("../utils/validators")
+const { validateRequiredFields } = require("../utils/validators")
 const { sendEmail } = require('../services/emailService');
 const { OAuth2Client } = require('google-auth-library');
 const bcrypt = require('bcryptjs');
@@ -35,7 +35,7 @@ exports.register = async (req, res, next) => {
             });
         }
 
-   
+
 
 
         // Check if email already exists
@@ -51,11 +51,10 @@ exports.register = async (req, res, next) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-         // Generate verification tokens
+        // Generate verification tokens
         const emailVerificationToken = generateToken();
         const tokenExpiry = Date.now() + 3600000; // 1 hour
 
-     
 
     
        
@@ -179,9 +178,9 @@ exports.verifyEmail = async (req, res, next) => {
                 message: 'Invalid or expired token.'
             });
         }
-       
+
         // Verify the user's email
-        user.isActive=true;
+        user.isActive = true;
         user.emailVerified = true;
         user.emailVerificationToken = undefined;
         user.emailVerificationExpires = undefined;
@@ -193,11 +192,9 @@ exports.verifyEmail = async (req, res, next) => {
         });
     }
     catch (error) {
-        next(error); 
+        next(error);
     }
 };
-
-
 
 
 exports.resendVerificationEmail = async (req, res, next) => {
@@ -206,7 +203,7 @@ exports.resendVerificationEmail = async (req, res, next) => {
 
         const user = await User.findOne({ email });
 
-    
+
         if (!user) {
             return res.status(404).json({
                 success: false,
@@ -290,7 +287,7 @@ exports.googleLogin = async (req, res, next) => {
             }
         }
 
-    
+
         // Generate JWT token
         const authToken = jwt.sign(
             { _id: user._id, role: user.role },
@@ -312,7 +309,7 @@ exports.googleLogin = async (req, res, next) => {
             success: true,
             authToken,
             refreshToken,
-            
+
             etudiant: {
                 _id: user._id,
                 firstName: user.firstName,

@@ -46,8 +46,6 @@ exports.processSheet = async (req, res) => {
     const { spreadsheetId } = req.body;
     if (!spreadsheetId) 
       return res.status(400).json({ error: 'SPREADSHEET_ID requis' });
-
-    // Lire les lignes depuis Google Sheets
     const rows = await lireSheet(spreadsheetId);
     console.log("Rows lues:", rows);
 
@@ -69,11 +67,11 @@ exports.processSheet = async (req, res) => {
   }
 };
 
-// controllers/sheetController.js
-const { lireSheet } = require("../services/googleSheetService");
+
+
 
 exports.getSheetData = async (req, res) => {
-  const { spreadsheetId } = req.body; // récupéré depuis Angular
+  const { spreadsheetId } = req.body; 
   if (!spreadsheetId) return res.status(400).json({ message: "SPREADSHEET_ID manquant !" });
 
   try {

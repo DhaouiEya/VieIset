@@ -16,7 +16,33 @@ exports.createClub = async (req, res) => {
   }
 };
 
+const clubService = require('../services/clubService'); 
 // Récupérer un club par l'ID du manager
+
+exports.createClub = async (req, res) => { 
+  try { 
+   const imageProfil = req.files?.imageProfil?.[0];
+   const imageFond = req.files?.imageFond?.[0];
+
+    const clubData = { 
+      nom: req.body.nom,
+       description: req.body.description, 
+       imageProfil: imageProfil?.filename || null,
+      imageFond: imageFond?.filename || null,
+
+       dateCreation: req.body.dateCreation,
+        departement: req.body.departement, 
+        adresse: req.body.adresse,
+         telephone: req.body.telephone,
+          email: req.body.email, 
+          facebook: req.body.facebook,
+           instagram: req.body.instagram,
+            manager: req.body.manager, };
+             const club = await clubService.createClub(clubData);
+              res.status(201).json(club); } 
+              catch (err) {
+                 console.error(err); res.status(500).json({ message: err.message }); 
+                } };
 exports.getClubByManager = async (req, res) => {
   const managerId = req.params.id;
   try {

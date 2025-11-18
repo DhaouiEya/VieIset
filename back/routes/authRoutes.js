@@ -14,5 +14,12 @@ router.post('/request-password-reset', authController.requestPasswordReset);
 router.post('/reset-password', authController.resetPassword);
 router.put('/update-profile',authMiddleware, authController.updateUserProfile);
 
+router.post('/login', authController.login);
+
+router.post('/request-password-reset', authController.requestPasswordReset);
+router.post('/reset-password', authController.resetPassword);
+router.put('/update-profile',authMiddleware, authController.updateUserProfile);
+
+
 router.get('/me',authMiddleware,authController.me); 
 module.exports = router;

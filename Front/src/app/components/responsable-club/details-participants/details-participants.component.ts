@@ -26,7 +26,7 @@ export class DetailsParticipantsComponent implements OnInit {
   ngOnInit() {
     this.events = this.data || [];
     this.participants = this.data.attendees || [];
-    console.log('events:', this.events);
+    console.log('events:', this.participants );
   }
 
   close() {

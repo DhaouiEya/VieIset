@@ -65,13 +65,13 @@ mat-label {
   transition: all 0.3s ease;
 }
 
-#btn.btn-primary {
-  background-color: #1a237e !important;
+.btn {
+  background-color: #1E3A5F !important;
   color: white !important;
 }
 
-#btn.btn-primary:hover {
-  background-color: #303f9f !important;
+.btn:hover {
+  opacity: 0.9 !important;
 }
 
 button[mat-dialog-close] {
@@ -106,4 +106,22 @@ button[mat-dialog-close]:hover {
     flex-direction: column-reverse;
     align-items: stretch;
   }
+}
+
+
+/* Aperçu des images */
+.preview-img {
+  display: block;
+  max-width: 120px;   /* largeur maximale de l'image */
+  max-height: 120px;  /* hauteur maximale de l'image */
+  object-fit: cover;  /* garde le ratio et découpe si nécessaire */
+  border-radius: 8px; /* coins arrondis */
+  margin-top: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.form-control-file{
+  margin-top: 10px;
+  margin-bottom: 8px;
+
 }

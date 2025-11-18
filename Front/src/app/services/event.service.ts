@@ -1,11 +1,14 @@
 
  const URL = 'http://localhost:9000/api/events';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Event } from '../models/event.model';
 import { Attendee } from '../models/attendee.model';
 
-import { Injectable } from '@angular/core';
+
+
+import { Participation } from '../models/participation';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +43,20 @@ export class EventService {
   deleteEvent(eventId: string): Observable<Event> {
     return this.http.delete<any>(`${URL}/${eventId}`);
   }
-  updateEvent(eventId: string, event: Event): Observable<Event> {
+  updateEvent(eventId: string, event: any): Observable<Event> {
     return this.http.put<Event>(`${URL}/${eventId}`, event);
   }
+    
+//   register(eventId: string): Observable<any> {
+//    const token = JSON.parse(localStorage.getItem('authenticationToken') || '{}').authToken;
+//  // JWT stocké après login
+
+//     const headers = new HttpHeaders({
+//       'Authorization': `Bearer ${token}`,
+//       'Content-Type': 'application/json'
+//     });
+//     console.log("Registering for event with ID:", eventId);
+//     return this.http.post(`${this.apiUrl}/${eventId}/inscrire`, {}, { headers });
+//   }
+
 }

@@ -1,14 +1,17 @@
-<!-- 
+
 <div class="events-header">
     <div class="header-content">
-      
+
       <h1 class="page-title">Événements à venir</h1>
       <p class="page-subtitle">Découvrez les prochains événements passionnants et rejoignez la communauté</p>
 
 
     </div>
 
-   
+    <!-- <a routerLink="/events/create" class="create-btn">
+      <i class="btn-icon">+</i>
+      <span class="btn-text">Publier un événement</span>
+    </a> -->
 </div>
 
 
@@ -16,7 +19,7 @@
   @for (event of events; track event?.id ?? $index) {
     <div class="event-card" (click)="viewEvent(event)">
 
-     
+
       @if (event.lienImage) {
         <div class="card-image-wrapper">
           <img
@@ -32,7 +35,7 @@
 
 
 
-    
+
       <div class="card-header">
         <div class="date-section">
           <div class="date-badge">
@@ -54,11 +57,11 @@
         </div>
       </div>
 
-     
+
       <div class="card-body">
         <p class="event-description">{{ event.description }}</p>
 
-      
+
         <div class="event-tags">
           <span class="event-tag">#Tech</span>
           <span class="event-tag">#Networking</span>
@@ -66,7 +69,7 @@
         </div>
       </div>
 
-   
+
       <div class="card-footer">
         <div class="footer-content">
           <div class="capacity-section">
@@ -76,7 +79,7 @@
         </div>
       </div>
 
-    
+
       <div class="card-overlay">
         <div class="overlay-content">
           <i class="overlay-icon">👁️</i>
@@ -126,4 +129,4 @@
   <div class="footer-bottom">
     <p>&copy; 2024 Events Platform. Tous droits réservés.</p>
   </div>
-</footer> -->
+</footer>

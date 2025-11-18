@@ -8,14 +8,8 @@ const {
   getEvents,
   getEvent,
   createEvent,
-  registerStudent,
-  deleteEvent,
-  updateEvent,
-  getAllParticipants
+  registerToEvent
 } = require('../controllers/eventController');
-
-  registerStudent
- = require('../controllers/eventController');
 
 const authMiddleware = require('../middlewares/authMiddlewares');
 
@@ -43,14 +37,6 @@ const upload = multer({
   }
 });
 
-router.get('/', getEvents);                  // GET /api/events
-router.get('/:id', getEvent);                // GET /api/events/:id
-router.post('/', upload.fields([{ name: 'image', maxCount: 1 }]), createEvent);
-              // POST /api/events
-router.post('/:id/register', registerStudent); // POST /api/events/:id/register
-router.delete('/:id', deleteEvent);
-router.put('/:id', upload.fields([{ name: 'image', maxCount: 1 }]), updateEvent); // PUT /api/events/:i
-router.get('/:id/participants',getAllParticipants);                // GET /api/events/:id
 router.post('/:eventId/inscrire', authMiddleware, registerToEvent);
         
 router.post('/', upload.fields([{ name: 'image', maxCount: 1 }]), createEvent);

@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-11-09T15:22:24.295Z",
+  "method": "POST",
+  "url": "/api/club",
+  "ip": "::1",
+  "language": "en-US,en;q=0.9",
+  "errorName": "Error",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorCode": "ENOENT",
+  "errorMessage": "ENOENT: no such file or directory, open 'C:\\Users\\islem\\Desktop\\vieIsetch\\back\\uploads\\clubs\\1762701744289-258515169.jpeg'",
+  "stack": "Error: ENOENT: no such file or directory, open 'C:\\Users\\islem\\Desktop\\vieIsetch\\back\\uploads\\clubs\\1762701744289-258515169.jpeg'"
+},
+{
+  "timestamp": "2025-11-09T15:25:30.743Z",
+  "method": "POST",
+  "url": "/api/club",
+  "ip": "::1",
+  "language": "en-US,en;q=0.9",
+  "errorName": "Error",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorCode": "ENOENT",
+  "errorMessage": "ENOENT: no such file or directory, open 'C:\\Users\\islem\\Desktop\\vieIsetch\\back\\uploads\\clubs\\1762701930741-766545450.jpeg'",
+  "stack": "Error: ENOENT: no such file or directory, open 'C:\\Users\\islem\\Desktop\\vieIsetch\\back\\uploads\\clubs\\1762701930741-766545450.jpeg'"
+},

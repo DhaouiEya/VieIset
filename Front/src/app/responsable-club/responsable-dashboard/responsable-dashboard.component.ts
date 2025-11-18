@@ -5,7 +5,8 @@ import { HomeReponsableComponent } from "../home-reponsable/home-reponsable.comp
 
 @Component({
   selector: 'app-responsable-dashboard',
-  imports: [ResponsableMenuComponent, RouterOutlet,],
+  //imports: [ResponsableMenuComponent, RouterOutlet,],
+  imports: [ResponsableMenuComponent, RouterOutlet, HomeReponsableComponent],
   templateUrl: './responsable-dashboard.component.html',
   styleUrl: './responsable-dashboard.component.css'
 })

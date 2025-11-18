@@ -1,6 +1,6 @@
-<!-- 
+
 <div class="event-detail-container">
- 
+  <!-- Navigation -->
   <nav class="breadcrumb-nav" aria-label="Fil d'Ariane">
     <a routerLink="/events" class="breadcrumb-link">
       <i class="breadcrumb-icon fas fa-arrow-left"></i>
@@ -20,9 +20,10 @@
     </div>
   }
 
+  <!-- Contenu principal -->
   @if (event) {
     <div class="event-layout">
-    
+      <!-- Colonne principale -->
       <main class="event-main">
         <header class="event-header">
           <h1 class="event-title">{{ event.title }}</h1>
@@ -90,7 +91,7 @@
           </div>
         </header>
 
-      
+        <!-- Description -->
         <section class="event-description-section" aria-labelledby="description-title">
           <h2 id="description-title" class="section-title">À propos de cet événement</h2>
           <div class="description-content">
@@ -99,7 +100,7 @@
         </section>
 
       </main>
-  
+      <!-- Sidebar -->
       <aside class="event-sidebar" aria-labelledby="registration-title">
         <div class="registration-card">
           <div class="card-header">
@@ -135,7 +136,7 @@
       </aside>
     </div>
 
-
+    <!-- Messages -->
     @if (successMessage) {
       <div class="status-message success" role="alert" aria-live="assertive">
         <div class="message-content">
@@ -162,4 +163,5 @@
       </div>
     }
   }
-</div> -->
+</div>
+

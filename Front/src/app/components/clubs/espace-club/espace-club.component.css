@@ -1,9 +1,8 @@
 .club-container {
   max-width: 1200px;
-  margin: 20px auto;
+  margin: auto auto;
   border-radius: 16px;
   background: #fff;
-  overflow: hidden;
 }
 
 .cover-photo img {
@@ -96,11 +95,7 @@
 
 /* Style pour le bouton au survol */
 /* .club-nav button:hover {
-<<<<<<< HEAD
-  color: #ff5722; 
-=======
   color: #ff5722;
->>>>>>> c56cb58786912246bf60b446e11a300ca5a11c95
   border-bottom: 3px solid #ff5722;
   border-radius: 0;
 } */
@@ -226,7 +221,6 @@ lord-icon:hover {
 .club-posts {
   flex: 1;
   overflow-y: auto;
-  /* overflow-y: auto; */
   padding-right: 10px;
 }
 
