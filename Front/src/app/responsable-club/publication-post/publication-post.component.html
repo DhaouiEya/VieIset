@@ -1,5 +1,8 @@
 <div class="publications-container">
+  <aside class="sidebar">
   <app-responsable-menu></app-responsable-menu>
+  </aside>
+
   <div class="main-content">
     <div class="post-editor-container">
       <div class="post-card" [formGroup]="posteForm">
@@ -81,6 +84,14 @@
                 (click)="cloturerPoste(poste)">
                   {{ poste.etat === 'cloturé' ? 'cloturé' : 'Clôturer' }}
                 </button>
+
+
+    <!-- Bouton Modifier -->
+    <button class="btn btn"  (click)="openModal(poste)"
+            title="Voir le poste" >
+      <i class="bi bi-eye-fill"></i>
+      Voir
+    </button>
               </td>
             </tr>
           }

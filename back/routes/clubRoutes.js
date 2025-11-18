@@ -27,4 +27,5 @@ router.get('/:id', authMiddleware,clubController.getClubById);
 
 
 
+
 module.exports = router;

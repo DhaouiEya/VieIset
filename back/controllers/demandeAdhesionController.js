@@ -78,7 +78,6 @@ exports.envoyerDates = async (req, res)=> {
     }
 }
 
-
 exports.getDatesChoisies = async (req, res) => {
   try {
     const { id } = req.params;

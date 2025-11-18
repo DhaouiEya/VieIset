@@ -1,12 +1,20 @@
 const posteService = require('../services/posteService');
 const Poste = require('../models/Poste');
-// Contrôleur pour créer un poste
+const mongoose = require('mongoose');
+
+// création d'un poste
 const createPoste = async (req, res) => {
   try {
     console.log('Request body:', req.body);
     console.log('Request files:', req.files);
+    console.log('Utilisateur connecté:', req.user);
 
-    // Extraire les fichiers uploadés
+    if (!req.user || !req.user._id) {
+      return res.status(400).json({ message: 'Utilisateur non trouvé dans la requête.' });
+    }
+
+    const clubManagerId = new mongoose.Types.ObjectId(req.user._id);
+   // Extraire les fichiers uploadés
     const imageFile = req.files?.image ? req.files.image[0] : null;
     const videoFile = req.files?.video ? req.files.video[0] : null;
 
@@ -14,24 +22,29 @@ const createPoste = async (req, res) => {
     const lienImage = imageFile ? `/uploads/${imageFile.filename}` : null;
     const lienVideo = videoFile ? `/uploads/${videoFile.filename}` : null;
 
-    // Combiner les données du body avec les liens des fichiers
     const posteData = {
       titre: req.body.titre,
       description: req.body.description,
-      partager: req.body.partager === 'true',
       lienImage,
-      lienVideo
+      lienVideo,
+      clubManager: clubManagerId
     };
 
     console.log('Poste data to save:', posteData);
 
-    const poste = await posteService.createPoste(posteData);
-    res.status(201).json(poste);
-  } catch (err) {
-    console.error('Error in createPoste:', err);
-    res.status(400).json({ message: err.message });
+    const newPoste = new Poste(posteData);
+    const savedPoste = await newPoste.save();
+
+    res.status(201).json(savedPoste);
+  } catch (error) {
+    console.error('Error in createPoste:', error);
+    res.status(500).json({ message: 'Erreur serveur', error });
   }
 };
+
+
+
+
 
 // Contrôleur pour récupérer tous les postes
 const getAllPostes = async (req, res) => {
@@ -95,11 +108,48 @@ const reactToPost = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
+// SUPPRIMER
+const removePoste = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const poste = await Poste.findByIdAndDelete(id);
+    if (!poste) return res.status(404).json({ message: 'Poste non trouvé' });
+    res.json({ message: 'Poste supprimé', poste });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
+// MODIFIER
+const editPoste = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { titre, description } = req.body;
+
+    const updateData = { titre, description };
+
+    if (req.files?.image) {
+      updateData.lienImage = `${req.protocol}://${req.get('host')}/uploads/${req.files.image[0].filename}`;
+    }
+    if (req.files?.video) {
+      updateData.lienVideo = `${req.protocol}://${req.get('host')}/uploads/${req.files.video[0].filename}`;
+    }
+
+    const poste = await Poste.findByIdAndUpdate(id, updateData, { new: true });
+    if (!poste) return res.status(404).json({ message: 'Poste non trouvé' });
+
+    res.json(poste);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 module.exports = {
   createPoste,
   getAllPostes,
   updatePosteEtat,
-  reactToPost
+  reactToPost,
+  removePoste,
+  editPoste // ✅ ajouter ici
+
 };

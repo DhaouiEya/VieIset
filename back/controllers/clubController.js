@@ -1,5 +1,21 @@
 const Club = require("../models/club");
- const Poste = require("../models/Poste"); 
+const Poste = require("../models/Poste");
+
+// Ajouter un nouveau club
+exports.createClub = async (req, res) => {
+  try {
+    // Exemple si tu veux lier automatiquement le manager connecté :
+    // const managerId = req.user._id;
+    // const clubData = { ...req.body, manager: managerId };
+
+    const club = new Club(req.body);
+    await club.save();
+    res.status(201).json(club);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const clubService = require('../services/clubService'); 
 // Récupérer un club par l'ID du manager
 

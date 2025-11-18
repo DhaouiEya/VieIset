@@ -5,11 +5,13 @@
 
 .main-content {
   flex: 1;
-  margin-left: 250px; /* Width of the sidebar */
   padding: 20px;
   background-color: #f5f5f5;
   overflow-y: auto;
+  /* Retirer margin-left qui crée l'espace vide */
+  margin-left: 0;
 }
+
 
 .post-editor-container {
   max-width: 1000px;
@@ -224,4 +226,12 @@
   border-color: #007bff;
 }
 
-
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: white;
+  flex-shrink: 0; /* empêche le sidebar de rétrécir */
+  /* si tu veux qu'il soit fixe sur tout l'écran */
+  /* position: fixed;
+     height: 100vh; */
+}

@@ -17,11 +17,7 @@ import {
   tap,
 } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
-import { CommonModule, NgClass } from '@angular/common';
-
-// import { PasswordStrengthMeterComponent} from 'angular-password-strength-meter';
-//import { PasswordStrengthMeterComponent } from '../../password-strength-meter/password-strength-meter.component';
-
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -29,10 +25,8 @@ import { CommonModule, NgClass } from '@angular/common';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-NgClass,
     CommonModule,
    PasswordStrengthMeterComponent,
-
   ],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],

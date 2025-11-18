@@ -9,6 +9,7 @@ const path = require('path'); //trouver le bon chemin de fichier
 //const credentialsPath = path.join(__dirname, 'config', 'credentials.json');
 
 const routes = require('./routes');
+const sheetRoutes = require('./routes/sheetRoutes');
 
 
 
@@ -45,6 +46,7 @@ app.use('/api', routes);
 app.use(errorMiddleware);
 
 
+// Connexion MongoDB + démarrage du serveur
 
 const PORT =  9000;
 // console.log("MONGO_URL:", process.env.MONGO_URI);

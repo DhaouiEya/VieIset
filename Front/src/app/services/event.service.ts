@@ -1,34 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { map, Observable } from 'rxjs';
+import { Event } from '../models/event.model';
 import { Attendee } from '../models/attendee.model';
-import { Event } from '../models/event';
+import { Participation } from '../models/participation';
 
- const URL = 'http://localhost:9000/api/events';
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
- // <- corrige l’URL
+  private apiUrl = 'http://localhost:9000/api/events'; // <- corrige l’URL
 
   constructor(private http: HttpClient) {}
 
-  getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(URL);
-  }
+ getEvents(): Observable<Event[]> {
+  return this.http.get<Event[]>(this.apiUrl).pipe(
+    map(events => events.map(e => ({ ...e, id: (e as any)._id })))
+  );
+}
+getEventParticipations(eventId: string): Observable<Participation[]> {
+  return this.http.get<Participation[]>(`${this.apiUrl}/${eventId}/participations`);
+}
 
   getEvent(id: string): Observable<Event> {
-    return this.http.get<Event>(`${URL}/${id}`);
+  return this.http.get<Event>(`${this.apiUrl}/${id}`).pipe(
+    map(e => ({ ...e, id: (e as any)._id }))
+  );
   }
 
   createEvent(event: Omit<Event, 'id' | 'attendees'>): Observable<Event> {
-    return this.http.post<Event>(URL, event);
+    return this.http.post<Event>(this.apiUrl, event);
   }
-  updateEvent(id: string, eventData: any) {  // <- 'any' ou FormData
-  return this.http.put(`${URL}/${id}`, eventData);
-}
-
 
 
 
@@ -36,6 +38,10 @@ export class EventService {
     deleteEvent(id: string): Observable<void> {
     return this.http.delete<void>(`${URL}/${id}`);
   }
+    // Créer un poste avec fichiers (FormData)
+    createEventWithFiles(formData: FormData): Observable<Event> {
+      return this.http.post<Event>(this.apiUrl, formData);
+    }
 
   register(eventId: string): Observable<any> {
    const token = JSON.parse(localStorage.getItem('authenticationToken') || '{}').authToken;
@@ -46,7 +52,7 @@ export class EventService {
       'Content-Type': 'application/json'
     });
     console.log("Registering for event with ID:", eventId);
-    return this.http.post(`${URL}/${eventId}/inscrire`, {}, { headers });
+    return this.http.post(`${this.apiUrl}/${eventId}/inscrire`, {}, { headers });
   }
    // 🔹 Récupérer tous les participants d'un événement
   getEventParticipants(eventId: string): Observable<any> {

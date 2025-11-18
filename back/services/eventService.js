@@ -1,5 +1,5 @@
 // Service pour créer un poste
-const Event = require('../models/Event');
+const Event = require('../models/event');
 const createEvent = async (data) => {
   const {  title,
       description,

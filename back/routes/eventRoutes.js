@@ -1,70 +1,55 @@
 const express = require('express');
 const router = express.Router();
-const upload = require('../middlewares/uploadEvent');
+const multer = require('multer');
+const path = require('path');
+const Participation = require('../models/participation'); // chemin correct vers ton modèle Participation
+
 const {
   getEvents,
   getEvent,
   createEvent,
-  registerStudent,
-  deleteEvent,
-  updateEvent,
-  getAllParticipants,
   registerToEvent
 } = require('../controllers/eventController');
 
 const authMiddleware = require('../middlewares/authMiddlewares');
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../uploads'));
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'uploads/');
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, `${Date.now()}-${file.originalname}`);
-//   }
-// });
-// const upload = multer({ storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 50 * 1024 * 1024 // 50MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image and video files are allowed!'), false);
+    }
+  }
+});
 
-
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, path.join(__dirname, '../uploads'));
-//   },
-//   filename: (req, file, cb) => {
-//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-//     cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-//   }
-// });
-
-// const upload = multer({
-//   storage: storage,
-//   limits: {
-//     fileSize: 50 * 1024 * 1024 // 50MB limit
-//   },
-//   fileFilter: (req, file, cb) => {
-//     if (file.mimetype.startsWith('image/')) {
-//       cb(null, true);
-//     } else {
-//       cb(new Error('Only image and video files are allowed!'), false);
-//     }
-//   }
-// });
-
-router.get('/', getEvents);                  // GET /api/events
-router.get('/:id', getEvent);                // GET /api/events/:id
-router.post('/', upload.fields([{ name: 'image', maxCount: 1 }]), createEvent);
-              // POST /api/events
-router.post('/:id/register', registerStudent); // POST /api/events/:id/register
-router.delete('/:id', deleteEvent);
-//router.put('/:id', upload.fields([{ name: 'lienImage', maxCount: 1 }]), updateEvent);
-
-// PUT avec upload d'image
-router.put('/:id', upload.single('lienImage'), updateEvent);
-router.get('/:id/participants',getAllParticipants);                
 router.post('/:eventId/inscrire', authMiddleware, registerToEvent);
         
+router.post('/', upload.fields([{ name: 'image', maxCount: 1 }]), createEvent);
 
-
-
-
+router.get('/:eventId/participations', async (req, res) => {
+  try {
+    const participations = await Participation.find({ event: req.params.eventId });
+    res.json(participations);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Impossible de récupérer les participations.' });
+  }
+});
+router.get('/', getEvents);     
+router.get('/:id', getEvent); 
 module.exports = router;

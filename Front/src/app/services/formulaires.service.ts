@@ -1,21 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DemandeAdhesion } from '../models/demande-adhesion';
-const URL = 'http://localhost:9000/api/sheet';
+
 @Injectable({
   providedIn: 'root'
 })
 export class FormulairesService {
-
- // private mailUrl = 'http://localhost:5000/api/mail/send';
+ private sheetUrl = 'http://localhost:5000/api/sheet/get-data';
+  private mailUrl = 'http://localhost:5000/api/mail/send';
 
   constructor(private http: HttpClient) {}
 
-  getDemandeBySheet(spreadsheetId: string) {
-    return this.http.post<{ success: boolean; message: string; data: DemandeAdhesion[] }>(URL+'/process-sheet', { spreadsheetId });
+  getSheetData(spreadsheetId: string) {
+    return this.http.post<any[]>(this.sheetUrl, { spreadsheetId });
   }
 
-  // sendMail(data: { email: string; sujet: string; message: string }) {
-  //   return this.http.post(this.mailUrl, data);
-  // }
+  sendMail(data: { email: string; sujet: string; message: string }) {
+    return this.http.post(this.mailUrl, data);
+  }
 }

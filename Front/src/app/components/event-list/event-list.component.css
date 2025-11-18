@@ -22,7 +22,8 @@
 .page-title {
   font-size: 3rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #3a86ff, #8338ec);
+  background: linear-gradient(135deg, #103166, #200349);
+  text-align: center;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -31,8 +32,9 @@
 
 .page-subtitle {
   font-size: 1.2rem;
-  color: #6c757d;
+  color: #0d0d0d;
   font-weight: 400;
+  text-align: center;
 }
 
 .create-btn {
