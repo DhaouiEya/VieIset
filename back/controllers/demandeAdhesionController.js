@@ -123,18 +123,19 @@ exports.getDemandesAdhesion = async (req, res) => {
 }
 exports.getDemandesByEtudiant = async (req, res) => {
     try {
-      //si authetifié apres 
-      // const studentId = req.user._id;
-        const { etudiantId } = req.params;  
-        console.log("Fetching demandes for etudiantId:", etudiantId);
-        const demandes = await DemandeAdhesion.find({ etudiant: etudiantId })
+        const studentId = req.user._id; // récupéré depuis le token JWT
+        console.log("Fetching demandes for studentId:", studentId);
+
+        const demandes = await DemandeAdhesion.find({ etudiant: studentId })
             .populate('etudiant')
             .populate('club')
             .sort({ createdAt: -1 });
+
         return res.json(demandes);
     } catch (err) {
         console.error('getDemandesByEtudiant error:', err);
         return res.status(500).json({ message: 'Erreur serveur.' });
     }
 }
+
 

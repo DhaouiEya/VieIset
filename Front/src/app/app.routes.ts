@@ -24,6 +24,7 @@ import { EventsComponent } from './components/responsable-club/events/events.com
 import { ResSideBarComponent } from './components/responsable-club/res-side-bar/res-side-bar.component';
 import { DashboardComponent } from './components/clubManager/dashboard/dashboard.component';
 import { UpdateEventComponent } from './components/responsable-club/update-event/update-event.component';
+import { ConsulterDemandesAdhesionComponent } from './components/consulter-demandes-adhesion/consulter-demandes-adhesion.component';
 
 
 export const routes: Routes = [
@@ -65,7 +66,8 @@ export const routes: Routes = [
 
 
   ],
-  }
+  },
+  {path:"consulter-demandes", component:ConsulterDemandesAdhesionComponent},
 
 ]
 

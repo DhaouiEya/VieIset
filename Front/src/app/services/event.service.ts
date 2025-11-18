@@ -32,10 +32,7 @@ export class EventService {
 
 
 
-    // Créer un poste avec fichiers (FormData)
-    // createEventWithFiles(formData: FormData): Observable<Event> {
-    //   return this.http.post<Event>(this.apiUrl, formData);
-    // }
+  
     deleteEvent(id: string): Observable<void> {
     return this.http.delete<void>(`${URL}/${id}`);
   }
@@ -50,6 +47,10 @@ export class EventService {
     });
     console.log("Registering for event with ID:", eventId);
     return this.http.post(`${URL}/${eventId}/inscrire`, {}, { headers });
+  }
+   // 🔹 Récupérer tous les participants d'un événement
+  getEventParticipants(eventId: string): Observable<any> {
+    return this.http.get<any>(`${URL}/${eventId}/participations`);
   }
 
 }
