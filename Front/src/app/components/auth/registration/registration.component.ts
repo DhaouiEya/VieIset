@@ -18,6 +18,7 @@ import {
 } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { passwordValidator } from '../../validators/password.validator';
 
 declare const google: any;
 
@@ -73,9 +74,7 @@ export class RegistrationComponent {
         password: [
           '',
           [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(100),
+            Validators.required, passwordValidator
           ],
         ],
         cPassword: [
@@ -140,6 +139,7 @@ export class RegistrationComponent {
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
+
 
   getControlClass(controlName: string): any {
     const control = this.registrationForm.get(controlName);

@@ -13,7 +13,7 @@ const posteSchema = new mongoose.Schema({
   },
    reactions: [
     {
-      userId: { type: Schema.Types.ObjectId, ref: 'User' },
+      userId: { type: Schema.Types.ObjectId, ref: 'Etudiant' },
       type: { type: String, enum: ['jaime', 'jaimePas'] }
     }
   ],
@@ -28,11 +28,11 @@ const posteSchema = new mongoose.Schema({
    // Ajout de la référence au clubManager
   clubManager: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Etudiant',
     required: true,
     validate: {
       validator: async function(value) {
-        const etudiant = mongoose.model('User');
+        const etudiant = mongoose.model('Etudiant');
         const etu = await etudiant.findById(value);
         return etu && etu.role === 'clubManager';
       },

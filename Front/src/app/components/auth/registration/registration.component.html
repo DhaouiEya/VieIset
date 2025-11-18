@@ -105,23 +105,17 @@
                                      [enableFeedback]="false">
             </password-strength-meter>
 
-            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-              validation: 'required',
-              message: 'Mot de passe est obligatoire',
-              control: registrationForm.controls['password']
-            }"></ng-container>
-
-            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-              validation: 'minlength',
-              message: 'Le mot de passe doit faire au moins 6 caractères',
-              control: registrationForm.controls['password']
-            }"></ng-container>
-
-            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-              validation: 'maxlength',
-              message: 'Le mot de passe ne peut pas dépasser 100 caractères',
-              control: registrationForm.controls['password']
-            }"></ng-container>
+     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          message:
+            (registrationForm.controls['password'].errors?.['required'] && 'Mot de passe est obligatoire') ||
+            (registrationForm.controls['password'].errors?.['minlength'] && 'Minimum 6 caractères requis') ||
+            (registrationForm.controls['password'].errors?.['uppercase'] && 'Doit contenir une majuscule') ||
+            (registrationForm.controls['password'].errors?.['lowercase'] && 'Doit contenir une minuscule') ||
+            (registrationForm.controls['password'].errors?.['digit'] && 'Doit contenir un chiffre') ||
+            (registrationForm.controls['password'].errors?.['special'] && 'Doit contenir un caractère spécial') ||
+            (registrationForm.controls['password'].errors?.['space'] && 'Les espaces ne sont pas autorisés'),
+          control: registrationForm.controls['password']
+        }"></ng-container>
           </div>
         </div>
 
@@ -166,14 +160,17 @@
 
 
 
+
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">
-  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
-    <div class="fv-plugins-message-container">
+  @if (
+    (validation && control.hasError(validation) && (control.dirty || control.touched)) ||
+    (!validation && control.invalid && (control.dirty || control.touched))
+  ) {
+    <div class="fv-plugins-message-container m-2">
       <div class="fv-help-block">
-        <span role="alert">
-          {{ message }}
-        </span>
+        <span role="alert">{{ message }}</span>
       </div>
     </div>
-  </ng-container>
+  }
 </ng-template>
+

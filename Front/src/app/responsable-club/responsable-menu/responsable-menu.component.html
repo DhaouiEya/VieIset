@@ -1,37 +1,62 @@
 <div class="sidebar">
-  <div class="sidebar-header">
-    <h2>Menu Responsable</h2>
-  </div>
-  <nav class="sidebar-nav">
+
+
+  <!-- Navigation -->
+  <div class="sidebar-nav">
     <ul>
-      <li class="nav-item"  routerLink="/dashboard">
-        <span class="icon">📊</span>
-        <span class="label">Dashboard</span>
+      <li class="nav-item active" >
+        <i class="fas fa-th-large icon"></i>
+        <span>Tableau de bord</span>
       </li>
-      <li class="nav-item" routerLink="/club">
-        <span class="icon">🏛️</span>
-        <span class="label">Mon club</span>
+
+      <li class="nav-item dropdown" routerLink="/publications">
+        <div class="dropdown-header">
+          <i class="fas fa-user-graduate icon"></i>
+          <span>Publications</span>
+
+        </div>
+
       </li>
-      <li class="nav-item" routerLink="/publications">
-        <span class="icon">📝</span>
-        <span class="label">Publications</span>
+
+        <li class="nav-item dropdown" routerLink="/mon-club">
+        <div class="dropdown-header">
+          <i class="fas fa-user-graduate icon"></i>
+          <span>Mon-club</span>
+
+        </div>
+
       </li>
-      <li class="nav-item" routerLink="/participation-forms">
-        <span class="icon">📈</span>
-        <span class="label">Formulaires</span>
+
+      <li class="nav-item dropdown"  routerLink="/events">
+        <div class="dropdown-header">
+          <i class="fas fa-heart icon"></i>
+          <span>Evenements</span>
+        </div>
+
       </li>
-      <li class="nav-item">
-        <span class="icon">👥</span>
-        <span class="label">Membres</span>
+
+
+
+      <li class="nav-item" routerLink="/statistiques">
+        <i class="fas fa-chart-bar icon"></i>
+        <span>Statistiques</span>
       </li>
-      <li class="nav-item">
-        <span class="icon">📅</span>
-        <span class="label">Événements</span>
-      </li>
-      <li class="nav-item">
-        <span class="icon">⚙️</span>
-        <span class="label">Paramètres</span>
+
+      <li class="nav-item" routerLink="/parametres">
+        <i class="fas fa-cog icon"></i>
+        <span>Paramètres</span>
       </li>
     </ul>
-  </nav>
+  </div>
+
+  <!-- Profil bas -->
+  <div class="sidebar-footer">
+    <div class="profile">
+      <div class="avatar">AD</div>
+      <div class="info">
+        <p class="name">Responsable club</p>
+
+      </div>
+    </div>
+  </div>
 </div>

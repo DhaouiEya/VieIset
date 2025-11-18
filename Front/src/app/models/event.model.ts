@@ -8,6 +8,6 @@ export interface Event {
   startDate: string;    // ou Date si tu convertis côté front
   endDate: string;      // ou Date
   capacity?: number;
-  lienImage:string;
+  lienImage?:File |string | null  ;
   attendees?: Attendee[];
 }

@@ -2,12 +2,16 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const Participation = require('../models/participation'); // chemin correct vers ton modèle Participation
+
 const {
   getEvents,
   getEvent,
   createEvent,
-  registerStudent
+  registerToEvent
 } = require('../controllers/eventController');
+
+const authMiddleware = require('../middlewares/authMiddlewares');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -33,10 +37,19 @@ const upload = multer({
   }
 });
 
-router.get('/', getEvents);                  // GET /api/events
-router.get('/:id', getEvent);                // GET /api/events/:id
+router.post('/:eventId/inscrire', authMiddleware, registerToEvent);
+        
 router.post('/', upload.fields([{ name: 'image', maxCount: 1 }]), createEvent);
-              // POST /api/events
-router.post('/:id/register', registerStudent); // POST /api/events/:id/register
 
+router.get('/:eventId/participations', async (req, res) => {
+  try {
+    const participations = await Participation.find({ event: req.params.eventId });
+    res.json(participations);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Impossible de récupérer les participations.' });
+  }
+});
+router.get('/', getEvents);     
+router.get('/:id', getEvent); 
 module.exports = router;

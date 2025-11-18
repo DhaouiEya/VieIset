@@ -17,6 +17,37 @@ exports.createClub = async (req, res) => {
 };
 
 // Récupérer un club par l'ID du manager
+const clubService = require('../services/clubService');
+// Récupérer un club par l'ID du manager
+
+exports.createClub = async (req, res) => {
+  try {
+    const imageProfil = req.files?.imageProfil?.[0];
+    const imageFond = req.files?.imageFond?.[0];
+
+    const clubData = {
+      nom: req.body.nom,
+      description: req.body.description,
+      imageProfil: imageProfil?.filename || null,
+      imageFond: imageFond?.filename || null,
+
+      dateCreation: req.body.dateCreation,
+      departement: req.body.departement,
+      adresse: req.body.adresse,
+      telephone: req.body.telephone,
+      email: req.body.email,
+      facebook: req.body.facebook,
+      instagram: req.body.instagram,
+      manager: req.body.manager,
+    };
+    const club = await clubService.createClub(clubData);
+    res.status(201).json(club);
+  }
+  catch (err) {
+    console.error(err); res.status(500).json({ message: err.message });
+  }
+};
+
 exports.getClubByManager = async (req, res) => {
   const managerId = req.params.id;
   try {
@@ -64,11 +95,11 @@ exports.getClubById = async (req, res) => {
     // Récupérer les posts liés au manager du club (ou tu peux créer un champ clubId si tu veux)
     // Exemple pour inclure la réaction actuelle de l'utilisateur
     const posts = await Poste.find({ clubManager: club.manager._id }).sort({ dateCreation: -1 }).lean();
-posts.forEach(post => {
-  const reactions = post.reactions || []; // si undefined, on utilise un tableau vide
-  const userReaction = reactions.find(r => r.userId.toString() === req.user._id.toString());
-  post.userReaction = userReaction ? userReaction.type : null;
-});
+    posts.forEach(post => {
+      const reactions = post.reactions || []; // si undefined, on utilise un tableau vide
+      const userReaction = reactions.find(r => r.userId.toString() === req.user._id.toString());
+      post.userReaction = userReaction ? userReaction.type : null;
+    });
 
     // Réponse
     res.json({ data: { club, posts } });
@@ -84,13 +115,13 @@ posts.forEach(post => {
 // consulter les infos du club du responsable
 exports.consulterClub = async (req, res) => {
   try {
-    const manager_id=req.user._id 
-    console.log("mangerId ",manager_id)
+    const manager_id = req.user._id
+    console.log("mangerId ", manager_id)
     const club = await Club.findOne({ manager: manager_id }).populate('manager membres');
-    if (!club) 
-      return res.status(404).json({ success:false, message: 'Aucun club trouvé.' });
+    if (!club)
+      return res.status(404).json({ success: false, message: 'Aucun club trouvé.' });
 
-    res.status(200).json({success:true , data:club});
+    res.status(200).json({ success: true, data: club });
 
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -104,7 +135,7 @@ exports.modifierClub = async (req, res) => {
     const manager_id = req.user._id;
 
     // champs autorisés à la modification
-    const allowedFields = ['nom','description','activites','imageProfil','imageFond','dateCreation','adresse','telephone','email','reseaux'];
+    const allowedFields = ['nom', 'description', 'activites', 'imageProfil', 'imageFond', 'dateCreation', 'adresse', 'telephone', 'email', 'reseaux'];
 
     // filtrage automatique des champs
     const updates = Object.fromEntries(
@@ -136,17 +167,17 @@ exports.modifierClub = async (req, res) => {
 // désactiver le club
 exports.desactiverClub = async (req, res) => {
   try {
-    const manager_id=req.user._id 
+    const manager_id = req.user._id
 
     const club = await Club.findOneAndUpdate(
       { manager: manager_id },
       { actif: false },
       { new: true }
     );
-    if (!club) 
-            return res.status(404).json({ success:false,message: 'Aucun club trouvé.' });
+    if (!club)
+      return res.status(404).json({ success: false, message: 'Aucun club trouvé.' });
 
-    res.status(200).json({ success:true, message: 'Club désactivé.', club });
+    res.status(200).json({ success: true, message: 'Club désactivé.', club });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -163,7 +194,7 @@ exports.activerClub = async (req, res) => {
       { new: true }
     );
 
-    if (!club) 
+    if (!club)
       return res.status(404).json({ success: false, message: 'Aucun club trouvé.' });
 
     res.status(200).json({ success: true, message: 'Club activé.', club });

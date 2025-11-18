@@ -1,0 +1,49 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.app-logo {
+  height: 80px;       /* ← augmente la hauteur ici */
+  width: auto;
+  margin-right: 12px;
+  object-fit: contain; /* garde une bonne proportion */
+}
+
+
+.app-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e3fa9;
+}
+
+.topbar-right .welcome-text {
+  font-size: 15px;
+  color: #444;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .app-title {
+    display: none;
+  }
+  .welcome-text {
+    font-size: 14px;
+  }
+}

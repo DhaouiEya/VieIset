@@ -31,7 +31,7 @@ const upload = multer({
 });
 
 // ✅ Route POST : création d’un poste avec upload de fichiers
-router.post('/', upload.fields([
+router.post('/', authMiddleware, upload.fields([
   { name: 'image', maxCount: 1 },
   { name: 'video', maxCount: 1 }
 ]), posteController.createPoste);
@@ -43,5 +43,24 @@ router.get('/', posteController.getAllPostes);
 router.put('/:id/etat', posteController.updatePosteEtat);
 
 router.put('/react/:postId', authMiddleware, posteController.reactToPost);
+// 5. Supprimer un poste
+router.delete('/:id', posteController.removePoste);
+
+// 6. Modifier un poste (titre, description, image, vidéo)
+// 6. Modifier un poste (titre, description, image, vidéo)
+// Wrapper pour multer
+const uploadFiles = upload.fields([
+  { name: 'image', maxCount: 1 },
+  { name: 'video', maxCount: 1 }
+]);
+
+router.put('/:id', authMiddleware, (req, res, next) => {
+  uploadFiles(req, res, function(err) {
+    if (err) return next(err);
+    posteController.editPoste(req, res, next);
+  });
+});
+
+
 
 module.exports = router;

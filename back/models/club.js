@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Etudiant = require("./user");
+const Etudiant = require("../models/etudiant");
 const club=new mongoose.Schema({
     nom:{type:String,required:true},
     activites: [{ type: String ,required:true}],
@@ -17,12 +17,12 @@ const club=new mongoose.Schema({
     },
    manager: { 
          type: mongoose.Schema.Types.ObjectId, 
-         ref: 'User',
+         ref: 'Etudiant',
         required: true
     },
     membres: [{ 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User'
+        ref: 'Etudiant'
     }],
     actif:{type:Boolean,default:true}
 },{timestamps:true});

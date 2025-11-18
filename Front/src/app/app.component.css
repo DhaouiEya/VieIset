@@ -9,3 +9,7 @@
 .tagify.form-control {
   height: unset;
 }
+/* Espace sous la barre du haut */
+.page-content {
+  margin-top: 100px; /* un peu plus que la hauteur de ta barre */
+}

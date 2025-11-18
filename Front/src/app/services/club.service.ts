@@ -16,9 +16,9 @@ export class ClubService {
   getClubByResponsable(responsableClubId: string) {
     return this.http.get<Club>(`${URL}/Responsable/${responsableClubId}`);
   }
-  createClub(club: Club) {
-    return this.http.post<Club>(URL, club);
-  }
+ createClub(formData: FormData) {
+  return this.http.post<Club>(URL + '/create', formData);
+}
 
   getClubs(): Observable<{ success: boolean; data: Club[] }> {
     return this.http.get<{ success: boolean; data: Club[] }>(URL);

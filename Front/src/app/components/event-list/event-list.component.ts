@@ -4,6 +4,7 @@ import { Event } from '../../models/event.model';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Participation } from '../../models/participation';
 
 @Component({
   selector: 'app-event-list',
@@ -16,7 +17,8 @@ export class EventListComponent implements OnInit {
   events: Event[] = [];
   loading = false;
   error = '';
-
+  participations: Participation[] = [];
+participantCount = 0;
   // Pour le formulaire de création (sans id et attendees)
   newEvent: Omit<Event, 'id' | 'attendees'> = {
     title: '',
@@ -50,6 +52,7 @@ export class EventListComponent implements OnInit {
   }
 
   viewEvent(event: Event) {
+    console.log('Navigating to event with id:', event.id );
     if (!event.id) return;
     this.router.navigate(['/events', event.id]);
   }

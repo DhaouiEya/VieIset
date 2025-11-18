@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/etudiant');
 const { validateRequiredFields } = require("../utils/validators")
 const { sendEmail } = require('../services/emailService');
 const { OAuth2Client } = require('google-auth-library');
@@ -37,6 +37,7 @@ exports.register = async (req, res, next) => {
 
 
 
+
         // Check if email already exists
         const existingUserEmail = await User.findOne({ email: email.toLowerCase() });
         if (existingUserEmail) {
@@ -55,6 +56,10 @@ exports.register = async (req, res, next) => {
         const tokenExpiry = Date.now() + 3600000; // 1 hour
 
 
+    
+       
+
+
 
 
 
@@ -69,6 +74,7 @@ exports.register = async (req, res, next) => {
             emailVerificationExpires: tokenExpiry,
         });
 
+            // Send verification email
         // Send verification email
         await sendVerificationEmail(user, req, next);
 
@@ -393,6 +399,8 @@ exports.login = async (req, res, next) => {
 
 
        console.log("user ",user)
+
+
         // Vérifier si l'utilisateur existe
         if (!user) {
             return res.status(401).json({ message: "Email ou mot de passe incorrect." });

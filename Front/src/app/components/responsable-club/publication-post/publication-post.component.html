@@ -1,0 +1,102 @@
+<div class="publications-container">
+  <app-responsable-menu></app-responsable-menu>
+  <div class="main-content">
+    <div class="post-editor-container">
+      <div class="post-card" [formGroup]="posteForm">
+        <h2 class="editor-title">Créer une publication</h2>
+
+        <input
+          type="text"
+          placeholder="Titre de la publication"
+          class="post-title-input"
+          maxlength="150"
+          formControlName="titre"
+        />
+
+        <textarea
+          placeholder="Partagez vos idées, vos projets, vos réflexions..."
+          class="post-textarea"
+          maxlength="1000"
+          formControlName="description"
+        ></textarea>
+
+        <div class="upload-section">
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/*"
+            class="file-input"
+            (change)="onImageSelected($event)"
+          />
+          <label for="imageInput" class="upload-btn">
+            <span>🖼️</span> Ajouter une image
+            <span *ngIf="selectedImage"> ({{ selectedImage.name }})</span>
+          </label>
+
+          <input
+            type="file"
+            id="videoInput"
+            accept="video/*"
+            class="file-input"
+            (change)="onVideoSelected($event)"
+          />
+          <label for="videoInput" class="upload-btn">
+            <span>🎥</span> Ajouter une vidéo
+            <span *ngIf="selectedVideo"> ({{ selectedVideo.name }})</span>
+          </label>
+        </div>
+
+        <button class="share-btn" (click)="partagerPoste()">
+          <span>📢</span> Partager
+        </button>
+      </div>
+    </div>
+
+    <!-- Historique -->
+    <div class="post-history">
+      <h2>Historique des publications</h2>
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Titre du post</th>
+            <th>Réactions</th>
+            <th>Date de publication</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (poste of paginatedPostes; track poste._id) {
+            <tr>
+              <td>{{ poste.titre }}</td>
+              <td>
+                <table class="sub-table">
+                  <tr><td>❤️ J'adore :</td><td>{{ poste.nbReactions?.jadore || 0 }}</td></tr>
+                  <tr><td>👍 J'aime :</td><td>{{ poste.nbReactions?.jaime || 0 }}</td></tr>
+                  <tr><td>👎 J'aime pas :</td><td>{{ poste.nbReactions?.jaimePas || 0 }}</td></tr>
+                </table>
+              </td>
+              <td>{{ poste.dateCreation | date:'dd/MM/yyyy' }}</td>
+              <td>
+                <button class="close-btn" [ngClass]="{'open': poste.etat !== 'cloturé', 'closed': poste.etat === 'cloturé'}" [disabled]="poste.etat === 'cloturé'"
+                (click)="cloturerPoste(poste)">
+                  {{ poste.etat === 'cloturé' ? 'cloturé' : 'Clôturer' }}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <!-- Pagination Controls -->
+      <div class="pagination" *ngIf="totalPages > 1">
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 1">Précédent</button>
+        <span *ngFor="let page of [].constructor(totalPages); let i = index">
+          <button class="page-btn" [class.active]="currentPage === i + 1" (click)="goToPage(i + 1)">
+            {{ i + 1 }}
+          </button>
+        </span>
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Suivant</button>
+      </div>
+    </div>
+  </div>
+</div>

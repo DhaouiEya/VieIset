@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, passwordValidator]],
-      role: ['etudiant', Validators.required], // par défaut Étudiant
+      // role: ['etudiant', Validators.required], // par défaut Étudiant
 
       keepMeLoggedIn: [false],
     });
@@ -66,28 +66,50 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     const { email, password, role, keepMeLoggedIn } = this.loginForm.value;
 
-    this.authService.login(email, password, role, keepMeLoggedIn).subscribe({
+    this.authService.login(email, password, keepMeLoggedIn).subscribe({
       next: (res: any) => {
         console.log('res login ', res);
         if (res.success) {
           localStorage.setItem('token', res.token);
 
           // Vérifier que le rôle choisi fait partie des rôles de l'utilisateur
-          if (
-            this.selectedRole === 'etudiant' &&
-            res.user.role.includes('etudiant')
+          // if (
+          //   this.selectedRole === 'etudiant' &&
+          //   res.user.role.includes('etudiant')
+          // ) {
+          //   this.router.navigateByUrl('/clubs');
+          // } else if (
+          //   this.selectedRole === 'clubManager' &&
+          //   res.user.role.includes('clubManager')
+          // ) {
+          //   this.router.navigateByUrl('/dashboard');
+          // } else if (
+          //   this.selectedRole === 'admin' &&
+          //   res.user.role.includes('admin')
+          // ) {
+          //   this.router.navigateByUrl('/admin-dashboard');
+          // } else {
+          //   // Cas où le rôle choisi n'est pas autorisé pour l'utilisateur
+          //   this.hasError = true;
+          //   this.message =
+          //     'Vous n’avez pas accès à cet espace avec le rôle choisi';
+          // }
+
+             if (
+
+            res.role.includes('membre')
           ) {
             this.router.navigateByUrl('/clubs');
           } else if (
-            this.selectedRole === 'clubManager' &&
-            res.user.role.includes('clubManager')
+
+            res.role.includes('clubManager')
           ) {
             this.router.navigateByUrl('/dashboard');
           } else if (
-            this.selectedRole === 'admin' &&
-            res.user.role.includes('admin')
+
+            res.role.includes('admin')
           ) {
-            this.router.navigateByUrl('/admin-dashboard');
+            this.router.navigateByUrl('/admindashboard');
           } else {
             // Cas où le rôle choisi n'est pas autorisé pour l'utilisateur
             this.hasError = true;
@@ -119,7 +141,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       google.accounts.id.initialize({
         client_id:
-          '83197880105-fhf7bp7mugj0js4ecjp15c9tcojh45nv.apps.googleusercontent.com',
+         '83197880105-fhf7bp7mugj0js4ecjp15c9tcojh45nv.apps.googleusercontent.com',
 
         callback: this.handleCredentialResponse.bind(this),
         cancel_on_tap_outside: false,

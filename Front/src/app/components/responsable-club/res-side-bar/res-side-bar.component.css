@@ -1,0 +1,191 @@
+.app-title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.first-letter {
+  font-size: 36px; /* lettre grande */
+  font-weight: bold;
+  color: #1E3A5F; /* orange */
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* léger effet décoratif */
+  transform: rotate(-5deg); /* légère rotation pour effet “décoré” */
+}
+
+.rest-letters {
+  font-size: 24px;
+  color:#f89811; /* bleu ciel */
+  letter-spacing: 3px; 
+  font-weight: bold;
+  font-style: italic;
+}
+
+mat-sidenav{  
+  /* //  background-image: url('/studentDash/bgimg.png'); */
+    background-size: cover;
+    background-color:#87CEEB;
+    border-radius: 0%; 
+}
+mat-sidenav-container{
+    height:calc(100vh) ;
+    
+}
+  .logo{
+  width: 150px;
+  height: 70px;
+  margin-top: 15px;
+}
+.sidenav-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 30px;
+    color:#1E3A5F;
+}
+.sidenav-header mat-icon{
+    color: #1E3A5F;
+   
+}
+
+mat-toolbar{
+    display: flex;
+    justify-content: end;
+    gap:20px,
+    
+   
+}
+
+.white-nav-list {
+   margin-top: 90px;
+    color: #1E3A5F;
+   
+
+}
+
+.white-nav-list mat-icon {
+    color: #1E3A5F;
+     font-size: 25px;
+    font-weight: 500;
+    margin-right: 32px;
+    
+}
+.white-nav-list span{
+    color: #1E3A5F;
+    font-size: 22px;
+    font-weight: 500;
+   
+}
+
+
+.content {
+    padding: 16px;
+   
+  }
+
+.blue-icon {
+  color: white;
+  background: #0d3374;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+.title{
+  margin: 40px;
+  font-size: 35px;
+  color: #87CEEB;
+  font-weight: 600px;
+  /* text-decoration: underline; */
+}
+mat-toolbar{
+  height: 110px;
+}
+
+
+
+.avatar {
+  width: 75px;
+  height: 68px;
+  border-radius: 50%;
+  margin-right: 28px;
+}
+
+.user-btn {
+
+  display: flex;
+   align-items: center;
+   color: inherit;
+   font-size: 24px;
+  
+
+}
+
+/* button notif */
+
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 3px 5px;
+  border-radius: 12px;
+  background-color: #87CEEB; /* bleu ciel */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+ 
+}
+
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+  color: #1E3A5F; /* bleu foncé */
+  font-size: 14px;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #FFA500; /* orange pour le rôle */
+}
+
+.arrow-icon {
+  margin-left: auto;
+  color: #1E3A5F; /* bleu foncé */
+}
+
+
+.menu-item {
+  border-radius: 8px;
+  margin: 18px 24px;
+   color: #e0e0e0; 
+  
+}
+.menu-item:hover{
+  background-color: #fff !important;
+ 
+}
+.menu-item:hover mat-icon{
+  background-color: #fff !important;
+  color: #EF7C2B !important; /* ton orange */
+}
+.menu-item:hover span{
+  background-color: #fff !important;
+  color: #EF7C2B !important; /* ton orange */
+}
+/* menu */
+/* .mat-menu-item .mat-icon{
+  color: #FFA500 !important;
+} */
+
+.colOrg {
+  color: #EF7C2B !important; /* force la couleur personnalisée */
+}
+
+
+
+

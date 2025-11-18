@@ -17,12 +17,13 @@
 
       <!-- Connexion Google -->
       <div>
-        <button type="button" (click)="triggerGoogleSignIn()"
+        <button type="button" (click)="triggerGoogleSignIn()" id="googleLoginButton"
                 class="flex items-center justify-center w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
           <img src="google-icon.svg" alt="Google" class="h-5 w-5 mr-3">
           Connectez-vous avec Google
         </button>
       </div>
+      <!-- Ajoute ceci pour que google.renderButton ait un parent -->
 
       <!-- Séparateur -->
       <div class="flex items-center my-4">
@@ -64,7 +65,7 @@
         <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           message:
             (loginForm.controls['password'].errors?.['required'] && 'Mot de passe est obligatoire') ||
-            (loginForm.controls['password'].errors?.['minLength'] && 'Minimum 8 caractères requis') ||
+            (loginForm.controls['password'].errors?.['minlength'] && 'Minimum 6 caractères requis') ||
             (loginForm.controls['password'].errors?.['uppercase'] && 'Doit contenir une majuscule') ||
             (loginForm.controls['password'].errors?.['lowercase'] && 'Doit contenir une minuscule') ||
             (loginForm.controls['password'].errors?.['digit'] && 'Doit contenir un chiffre') ||

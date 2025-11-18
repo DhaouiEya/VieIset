@@ -2,7 +2,8 @@
 
 export interface Attendee {
   studentId: string;
-  name: string;
+  lastName: string;
+  firstName: string
 }
 
 

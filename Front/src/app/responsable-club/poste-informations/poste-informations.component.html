@@ -1,0 +1,170 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      @if (isEditMode) {
+        <i class="icon-edit">✏️</i> Modification du Poste
+      } @else {
+        <i class="icon-view">👁️</i> Détails du Poste
+      }
+    </h5>
+    <button type="button" class="btn-close" (click)="activeModal.close()">
+      <i class="icon-close">×</i>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div [formGroup]="editForm">
+      <!-- Titre -->
+      <div class="form-section">
+        <label class="form-label">
+          <i class="icon-title">📝</i>
+          Titre
+        </label>
+        @if (isEditMode) {
+          <input type="text" class="form-control" formControlName="titre" placeholder="Entrez le titre du poste">
+        } @else {
+          <div class="display-field">{{ poste.titre }}</div>
+        }
+      </div>
+
+      <!-- Description -->
+      <div class="form-section">
+        <label class="form-label">
+          <i class="icon-description">📄</i>
+          Description
+        </label>
+        @if (isEditMode) {
+          <textarea class="form-control" rows="4" formControlName="description" placeholder="Décrivez le contenu du poste"></textarea>
+        } @else {
+          <div class="display-field description-text">{{ poste.description }}</div>
+        }
+      </div>
+
+      <!-- Image -->
+      @if (poste.lienImage || selectedImage) {
+        <div class="form-section">
+          <label class="form-label">
+            <i class="icon-image">🖼️</i>
+            Image
+          </label>
+          @if (isEditMode) {
+            <div class="file-upload-container">
+              <input type="file" accept="image/*" (change)="onImageSelected($event)" class="file-input">
+              <div class="file-info">
+                @if (selectedImage) {
+                  <span class="file-success">
+                    <i class="icon-success">✅</i>
+                    Nouvelle image : {{ selectedImage.name }}
+                  </span>
+                } @else {
+                  <span class="file-hint">Cliquez pour changer l'image</span>
+                }
+              </div>
+            </div>
+          }
+          <div class="media-preview">
+            <img [src]="selectedImage ? getObjectURL(selectedImage) : poste.lienImage"
+                 class="media-image-square" alt="Image du poste">
+          </div>
+        </div>
+      } @else if (isEditMode) {
+        <div class="form-section">
+          <label class="form-label">
+            <i class="icon-image">🖼️</i>
+            Ajouter une image
+          </label>
+          <div class="file-upload-container">
+            <input type="file" accept="image/*" (change)="onImageSelected($event)" class="file-input">
+            <div class="file-hint">Format supporté : JPG, PNG, WebP</div>
+          </div>
+        </div>
+      }
+
+      <!-- Vidéo -->
+      @if (poste.lienVideo || selectedVideo) {
+        <div class="form-section">
+          <label class="form-label">
+            <i class="icon-video">🎥</i>
+            Vidéo
+          </label>
+          @if (isEditMode) {
+            <div class="file-upload-container">
+              <input type="file" accept="video/*" (change)="onVideoSelected($event)" class="file-input">
+              <div class="file-info">
+                @if (selectedVideo) {
+                  <span class="file-success">
+                    <i class="icon-success">✅</i>
+                    Nouvelle vidéo : {{ selectedVideo.name }}
+                  </span>
+                } @else {
+                  <span class="file-hint">Cliquez pour changer la vidéo</span>
+                }
+              </div>
+            </div>
+          }
+          <div class="media-preview">
+            <video controls class="media-video-square">
+              <source [src]="selectedVideo ? getObjectURL(selectedVideo) : poste.lienVideo" type="video/mp4">
+              Votre navigateur ne supporte pas la lecture de vidéos.
+            </video>
+          </div>
+        </div>
+      } @else if (isEditMode) {
+        <div class="form-section">
+          <label class="form-label">
+            <i class="icon-video">🎥</i>
+            Ajouter une vidéo
+          </label>
+          <div class="file-upload-container">
+            <input type="file" accept="video/*" (change)="onVideoSelected($event)" class="file-input">
+            <div class="file-hint">Format supporté : MP4, WebM</div>
+          </div>
+        </div>
+      }
+
+      <!-- État -->
+      <div class="form-section">
+        <label class="form-label">
+          <i class="icon-status">📊</i>
+          État
+        </label>
+        <div class="status-badge-container">
+          <span class="status-badge"
+                [class.status-shared]="poste.etat === 'partagé'"
+                [class.status-closed]="poste.etat === 'cloturé'">
+            <i class="icon-badge" [class.icon-shared]="poste.etat === 'partagé'" [class.icon-closed]="poste.etat === 'cloturé'">
+              {{ poste.etat === 'partagé' ? '🌐' : '🔒' }}
+            </i>
+            {{ poste.etat | titlecase }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    @if (isEditMode) {
+      <button class="btn btn-save" (click)="saveChanges()">
+        <i class="icon-save">💾</i>
+        Sauvegarder
+      </button>
+      <button class="btn btn-cancel" (click)="cancelEdit()">
+        <i class="icon-cancel">↶</i>
+        Annuler
+      </button>
+    } @else {
+      <button class="btn btn-edit" (click)="enableEdit()">
+        <i class="icon-edit">✏️</i>
+        Modifier
+      </button>
+      <button class="btn btn-delete" (click)="deletePoste()">
+        <i class="icon-delete">🗑️</i>
+        Supprimer
+      </button>
+      <button class="btn btn-close-modal" (click)="activeModal.close()">
+        <i class="icon-close">←</i>
+        Fermer
+      </button>
+    }
+  </div>
+</div>

@@ -1,139 +1,89 @@
-const Event = require('../models/Event');
+const Event = require('../models/event');
+const Participation = require('../models/participation');
 
-// GET /events
-const getEvents = async (req, res) => {
+// 🔹 Récupérer tous les événements
+exports.getEvents = async (req, res) => {
   try {
-    const events = await Event.find().lean();
-    const formatted = events.map(e => ({
-      ...e,
-      id: e._id,
-      attendeesCount: e.attendees?.length || 0
-    }));
-    res.json(formatted);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    const events = await Event.find();
+    res.json(events);
+  } catch (err) {
+    console.error('Erreur lors de la récupération des événements :', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 
-// GET /events/:id
-const getEvent = async (req, res) => {
+// 🔹 Récupérer un événement par ID
+exports.getEvent = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id).lean();
-    if (!event) return res.status(404).json({ message: 'Event not found' });
-    res.json({ ...event, id: event._id });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    const event = await Event.findById(req.params.id);
+    if (!event) return res.status(404).json({ message: 'Événement non trouvé.' });
+    res.json(event);
+  } catch (err) {
+    console.error('Erreur lors de la récupération de l’événement :', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
-const createEvent = async (req, res) => {
+
+// 🔹 Créer un événement (si tu veux l’utiliser avec image)
+exports.createEvent = async (req, res) => {
   try {
-    console.log('Request body:', req.body);
-    console.log('Request files:', req.files);
+    const { title, description, startDate, endDate, localisation, capacity } = req.body;
 
-    // Extraction des champs du body
-    const { title, description, localisation, startDate, endDate, capacity } = req.body;
-
-    if (!title || !description || !localisation || !startDate || !endDate) {
-      return res.status(400).json({ message: 'Tous les champs obligatoires doivent être remplis.' });
-    }
-
-    // Extraction du fichier image
-    const imageFile = req.files?.image ? req.files.image[0] : null;
-    const lienImage = imageFile ? `/uploads/${imageFile.filename}` : null;
-
-    // Créer l'événement
-    const event = new Event({
+    const newEvent = new Event({
       title,
       description,
-      localisation,
       startDate,
       endDate,
-      capacity: capacity || 0,
-      lienImage,
-      attendees: []
+      localisation,
+      capacity,
+      lienImage: req.files?.image ? '/uploads/' + req.files.image[0].filename : null
     });
 
-    await event.save();
-    res.status(201).json({ ...event.toObject(), id: event._id });
-
+    await newEvent.save();
+    res.status(201).json(newEvent);
   } catch (err) {
-    console.error('Erreur lors de la création de l’événement:', err);
+    console.error('Erreur lors de la création de l’événement :', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
+  }
+};
+
+// 🔹 Inscrire un étudiant à un événement
+exports.registerToEvent = async (req, res) => {
+  try {
+    const eventId = req.params.eventId;
+    const userId = req.user._id; // injecté par le middleware JWT
+
+    // Vérifie si l'événement existe
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ message: "Événement introuvable." });
+    }
+
+    // Vérifie si l’utilisateur est déjà inscrit
+    const already = await Participation.findOne({ etudiant: userId, event: eventId });
+    if (already) {
+      return res.status(400).json({ message: "Vous êtes déjà inscrit à cet événement." });
+    }
+
+    // Crée une nouvelle participation
+    await Participation.create({
+      etudiant: userId,
+      event: eventId
+    });
+
+    return res.status(200).json({ message: "Inscription réussie à l'événement !" });
+  } catch (err) {
+    console.error("Erreur lors de l'inscription :", err);
+    return res.status(500).json({ message: "Erreur serveur lors de l'inscription." });
+  }
+};
+
+exports.getEventParticipations = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    const participations = await Participation.find({ event: eventId }).populate('etudiant', 'name email');
+    res.json(participations);
+  } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
-
-
-// POST /events
-/*
-const createEvent = async (req, res) => {
-  try {
-    const { title, description, localisation, startDate, endDate, capacity, attendees } = req.body;
-
-    if (!title || !description || !localisation || !startDate || !endDate) {
-      return res.status(400).json({ message: 'Tous les champs obligatoires doivent être remplis.' });
-    }
-
-    const event = new Event({
-      title,
-      description,
-      localisation,
-      startDate,
-      endDate,
-      capacity: capacity || 0,
-      attendees: attendees || []
-    });
-
-    await event.save();
-    res.status(201).json({ ...event.toObject(), id: event._id });
-    
-  } catch (error) {
-    console.error('Erreur lors de la création de l\'événement :', error.message);
-    res.status(500).json({ message: error.message });
-  }
-};
-*/
-// POST /events/:id/register
-// POST /events/:id/register
-const registerStudent = async (req, res) => {
-  try {
-    const { studentId, name } = req.body;
-    const { id } = req.params;
-
-    // Vérification des champs obligatoires
-    if (!studentId || !name) {
-      return res.status(400).json({ message: 'studentId et name sont obligatoires.' });
-    }
-
-    // Recherche de l'événement
-    const event = await Event.findById(id);
-    if (!event) {
-      return res.status(404).json({ message: 'Événement introuvable.' });
-    }
-
-    // Vérifier si l'étudiant est déjà inscrit
-    const alreadyRegistered = event.attendees.some(
-      (a) => a.studentId === studentId
-    );
-
-    if (alreadyRegistered) {
-      return res.status(400).json({ message: 'Cet étudiant est déjà inscrit à cet événement.' });
-    }
-
-    // Ajouter l'étudiant à la liste des participants
-    event.attendees.push({ studentId, name });
-    await event.save();
-
-    res.status(200).json({
-      message: 'Inscription réussie 🎉',
-      eventId: event._id,
-      attendeesCount: event.attendees.length,
-    });
-  } catch (error) {
-    console.error('Erreur lors de l’inscription :', error);
-    res.status(500).json({ message: 'Erreur serveur lors de l’inscription.' });
-  }
-};
-
-
-
-module.exports = { getEvents, getEvent, createEvent, registerStudent };

@@ -32,7 +32,6 @@ import { HeaderComponent } from '../../header/header.component';
 })
 export class EspaceClubComponent implements OnInit {
 
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private clubService: ClubService
