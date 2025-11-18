@@ -21,6 +21,7 @@ import { ParticipationFormsComponent } from './responsable-club/participation-fo
 import { LogementComponent } from './components/logement/logement.component';
 import { AdmindashboardComponent } from './admin/admindashboard/admindashboard.component';
 import { CompagneComponent } from './admin/compagne/compagne.component';
+import { ProfileComponent } from './components/profile/profile/profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -50,5 +51,7 @@ export const routes: Routes = [
   // Other pages
   { path: 'logement', component: LogementComponent },
   { path: 'admindashboard', component: AdmindashboardComponent },
-  { path: 'compagne', component: CompagneComponent }
+  { path: 'compagne', component: CompagneComponent },
+   { path: 'profile', component: ProfileComponent },
+    { path: 'createClub', component: CreateClubComponent },
 ];
