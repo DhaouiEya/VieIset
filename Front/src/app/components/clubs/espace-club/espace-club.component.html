@@ -1,13 +1,15 @@
+<app-header></app-header>
+
 <div class="club-container mat-elevation-z4">
 
   <!-- Image de couverture -->
-  <div class="cover-photo">
+  <div class="cover-photo" >
     <img [src]="club.imageFond" alt="Image de couverture">
   </div>
 
   <!-- Image de profil et infos -->
   <div class="profile-section">
-    <img class="profile-photo" [src]="club.imageProfil" alt="Profil du club">
+    <img class="profile-photo " [src]="club.imageProfil" alt="Profil du club">
     <div class="info-section">
       <h2>{{ club.nom }}</h2>
       <p>{{club.description}}</p>
@@ -129,3 +131,4 @@
 </div>
 
 </div>
+

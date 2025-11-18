@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   catchError,
   first,
@@ -27,7 +27,7 @@ declare const google: any;
   imports: [
     ReactiveFormsModule,
     CommonModule,
-   PasswordStrengthMeterComponent,
+   PasswordStrengthMeterComponent,RouterLink
   ],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],

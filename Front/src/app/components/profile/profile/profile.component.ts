@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
   message = '';
 
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {}
+  constructor(private authService: AuthService, private fb: FormBuilder,private cdr :ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.authService.getUserByToken().subscribe((user) => {
@@ -41,9 +41,8 @@ export class ProfileComponent implements OnInit {
     this.profileForm = this.fb.group({
       firstName: [this.user.firstName || '', Validators.required],
       lastName: [this.user.lastName || '', Validators.required],
-      email: [this.user.email || '', emailValidators],
       address: [this.user.address || ''],
-  password: ['', [Validators.required, passwordValidator]] ,
+  password: ['', [ passwordValidator]] ,
     });
   }
   lastUpdate = new Date();
@@ -62,9 +61,13 @@ export class ProfileComponent implements OnInit {
     if (!updatedData.password) delete updatedData.password;
 
     this.authService.updateUserProfile(updatedData).subscribe({
-      next: () => {
+      next: (res) => {
         this.editable = false;
-        this.originalUser = { ...updatedData };
+        // Mise à jour de l'utilisateur local avec les données renvoyées par le backend
+      this.user = res.user;
+      this.originalUser = { ...this.user };
+      this.cdr.detectChanges()
+
         this.initForm();
         Swal.fire({
           icon: 'success',

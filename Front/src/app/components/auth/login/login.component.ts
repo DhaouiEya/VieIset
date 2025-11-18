@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -27,7 +27,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.initializeGoogleSignIn(); //initialise le SDK Google pour afficher le popup One Tap
   }
 
-    ngOnDestroy(): void {
+  ngOnDestroy(): void {
     // Nettoyage pour éviter les memory leaks
     if (typeof google !== 'undefined' && google.accounts) {
       google.accounts.id.cancel();
@@ -46,26 +47,52 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, passwordValidator]],
+      role: ['etudiant', Validators.required], // par défaut Étudiant
+
       keepMeLoggedIn: [false],
     });
+  }
+
+  get selectedRole(): string {
+    return this.loginForm.get('role')?.value;
+  }
+
+  selectRole(role: string) {
+    this.loginForm.get('role')?.setValue(role);
   }
 
   onLogin() {
     if (this.loginForm.invalid) return;
 
-    const { email, password, keepMeLoggedIn } = this.loginForm.value;
+    const { email, password, role, keepMeLoggedIn } = this.loginForm.value;
 
-    this.authService.login(email, password, keepMeLoggedIn).subscribe({
+    this.authService.login(email, password, role, keepMeLoggedIn).subscribe({
       next: (res: any) => {
         console.log('res login ', res);
         if (res.success) {
           localStorage.setItem('token', res.token);
 
-          // Redirection selon rôle
-          if (res.role === 'clubManager') {
-            this.router.navigateByUrl('/dashboard');
-          } else {
+          // Vérifier que le rôle choisi fait partie des rôles de l'utilisateur
+          if (
+            this.selectedRole === 'etudiant' &&
+            res.user.role.includes('etudiant')
+          ) {
             this.router.navigateByUrl('/clubs');
+          } else if (
+            this.selectedRole === 'clubManager' &&
+            res.user.role.includes('clubManager')
+          ) {
+            this.router.navigateByUrl('/dashboard');
+          } else if (
+            this.selectedRole === 'admin' &&
+            res.user.role.includes('admin')
+          ) {
+            this.router.navigateByUrl('/admin-dashboard');
+          } else {
+            // Cas où le rôle choisi n'est pas autorisé pour l'utilisateur
+            this.hasError = true;
+            this.message =
+              'Vous n’avez pas accès à cet espace avec le rôle choisi';
           }
         } else {
           this.hasError = true;

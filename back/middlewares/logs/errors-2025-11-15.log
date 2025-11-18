@@ -1,0 +1,56 @@
+{
+  "timestamp": "2025-11-15T11:48:12.178Z",
+  "method": "POST",
+  "url": "/api/auth/login",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "TypeError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Cannot read properties of undefined (reading 'toLowerCase')",
+  "stack": "TypeError: Cannot read properties of undefined (reading 'toLowerCase')\n    at exports.login (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:389:54)\n    at Layer.handleRequest (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:295:15\n    at processParams (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:582:12)\n    at next (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:291:5)\n    at Function.handle (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\router\\index.js:186:3)"
+},
+{
+  "timestamp": "2025-11-15T11:51:57.150Z",
+  "method": "POST",
+  "url": "/api/auth/login",
+  "ip": "::1",
+  "errorName": "Error",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Illegal arguments: undefined, string",
+  "stack": "Error: Illegal arguments: undefined, string\n    at _async (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\bcryptjs\\umd\\index.js:305:15)\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\bcryptjs\\umd\\index.js:335:11\n    at new Promise (<anonymous>)\n    at Object.compare (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\bcryptjs\\umd\\index.js:334:16)\n    at exports.login (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:416:46)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+},
+{
+  "timestamp": "2025-11-15T11:53:21.263Z",
+  "method": "POST",
+  "url": "/api/auth/login",
+  "ip": "::1",
+  "errorName": "Error",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Illegal arguments: undefined, string",
+  "stack": "Error: Illegal arguments: undefined, string\n    at _async (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\bcryptjs\\umd\\index.js:305:15)\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\bcryptjs\\umd\\index.js:335:11\n    at new Promise (<anonymous>)\n    at Object.compare (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\bcryptjs\\umd\\index.js:334:16)\n    at exports.login (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:416:46)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+},
+{
+  "timestamp": "2025-11-15T11:56:30.056Z",
+  "method": "POST",
+  "url": "/api/auth/login",
+  "ip": "::1",
+  "errorName": "Error",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Illegal arguments: undefined, string",
+  "stack": "Error: Illegal arguments: undefined, string\n    at _async (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\bcryptjs\\umd\\index.js:305:15)\n    at C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\bcryptjs\\umd\\index.js:335:11\n    at new Promise (<anonymous>)\n    at Object.compare (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\bcryptjs\\umd\\index.js:334:16)\n    at exports.login (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:425:46)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+},
+{
+  "timestamp": "2025-11-15T23:01:56.782Z",
+  "method": "POST",
+  "url": "/api/auth/login",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "MongoServerSelectionError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "read ECONNRESET",
+  "stack": "MongoServerSelectionError: read ECONNRESET\n    at Topology.selectServer (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\sdam\\topology.js:327:38)\n    at async tryOperation (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:196:22)\n    at async executeOperation (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:78:16)\n    at async FindCursor._initialize (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\cursor\\find_cursor.js:62:26)\n    at async FindCursor.cursorInit (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\cursor\\abstract_cursor.js:632:27)\n    at async FindCursor.fetchBatch (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\cursor\\abstract_cursor.js:666:13)\n    at async FindCursor.next (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\cursor\\abstract_cursor.js:342:17)\n    at async Collection.findOne (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\collection.js:313:24)\n    at async model.Query._findOne (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\query.js:2710:15)\n    at async model.Query.exec (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\query.js:4627:63)"
+},

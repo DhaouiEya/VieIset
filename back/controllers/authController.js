@@ -1,4 +1,4 @@
-const User = require('../models/etudiant');
+const User = require('../models/user');
 const { validateRequiredFields } = require("../utils/validators")
 const { sendEmail } = require('../services/emailService');
 const { OAuth2Client } = require('google-auth-library');
@@ -387,12 +387,17 @@ exports.login = async (req, res, next) => {
         const { email, password, keepmeloggedin } = req.body;
 
         let user = await User.findOne({ email: email.toLowerCase() });
+        console.log("email :",email);
+                console.log("password :",password)
+        // console.log("email :",email)
 
 
+       console.log("user ",user)
         // Vérifier si l'utilisateur existe
         if (!user) {
             return res.status(401).json({ message: "Email ou mot de passe incorrect." });
         }
+       console.log("user Activer ",user.isActive)
 
         // Vérifier si le compte est actif
         if (!user.isActive) {
@@ -402,6 +407,7 @@ exports.login = async (req, res, next) => {
 
         // Check if user has a password (OAuth users won't have one)
         const isOAuthUser = user.googleId;
+        console.log("authGoogle ",isOAuthUser)
 
         // If user is an OAuth user, they should use OAuth to login
         if (isOAuthUser) {
@@ -411,6 +417,9 @@ exports.login = async (req, res, next) => {
                 authProvider: 'google'
             });
         }
+
+        console.log("password ",password)
+                console.log("user.password ",user.password)
 
         // For regular users, verify password
         if (!user.password || !(await bcrypt.compare(password, user.password))) {
@@ -598,7 +607,7 @@ exports.updateUserProfile = async (req, res, next) => {
         // Gestion du mot de passe séparément
         if (updates.password && updates.password.trim() !== '') {
             console.log("eee ",updates.password)
-            // updates.password = await bcrypt.hash(updates.password, 10);
+            updates.password = await bcrypt.hash(updates.password, 10);
         }
 
         // Mettre à jour les autres champs dynamiquement
@@ -619,7 +628,7 @@ exports.updateUserProfile = async (req, res, next) => {
                 firstName: user.firstName,
                 email: user.email,
                 role: user.role,
-                googleId:user.googleId
+                googleId:user?.googleId
             }
         });
 

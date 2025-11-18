@@ -1,124 +1,134 @@
-<div class="container-fluid vh-100">
-  <div class="row h-100">
-
-    <!-- Image à gauche -->
-    <div class="col-md-6 d-none d-md-block p-0">
-      <img src="bg1.jpg" alt="Image login" class="img-fluid h-100 w-100 object-fit-cover">
-    </div>
-
-    <!-- Formulaire à droite -->
-    <div class="col-md-6 d-flex align-items-center justify-content-center">
-      <div class="w-100 px-4" style="max-width: 450px;">
-        <form class="form w-100" [formGroup]="loginForm" (ngSubmit)="onLogin()">
-
-          <!-- Titre -->
-          <div class="text-center mb-4 ">
-            <h1 class="text-danger fw-bolder mb-2">Bienvenue à ISET Vie Étudiant</h1>
-            <div class="text-gray-500 fw-semibold fs-6">Connectez-vous à votre compte</div>
-          </div>
-
-          <!-- Connexion Google -->
-          <div class="row g-3 mb-3">
-            <div class="col-12">
-              <a id="googleLoginButton" (click)="triggerGoogleSignIn()"
-                class="cursor-pointer btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                <img alt="Logo" src="google-icon.svg" class="h-15px me-3" />
-                Connectez-vous avec Google
-              </a>
-            </div>
-
-
-          </div>
-
-          <!-- Séparateur -->
-          <div class="separator separator-content my-4"></div>
-
-          <!-- Alertes d'erreur -->
-          @if (hasError) {
-          <ng-container>
-            <div class="mb-3 alert alert-danger d-flex align-items-start" role="alert">
-              <i class="bi bi-exclamation-circle-fill me-2 fs-4"></i>
-              <div class="d-flex flex-column">
-                <span><strong>Erreur :</strong> {{ message }}</span>
-              </div>
-            </div>
-          </ng-container>
-          }
-
-          <!-- Email -->
-          <div class="fv-row mb-6">
-            <input type="email" class="form-control bg-transparent" placeholder="Email" formControlName="email"
-              [ngClass]="getControlClass('email')" />
-            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'required',
-        message: 'Email est obligatoire',
-        control: loginForm.controls['email']
-      }"></ng-container>
-            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'email',
-        message: 'Email est invalide',
-        control: loginForm.controls['email']
-      }"></ng-container>
-
-          </div>
-
-    <!-- Mot de passe -->
-<div class="fv-row mb-6">
-  <input
-    type="password"
-    class="form-control bg-transparent"
-    placeholder="Mot de passe"
-    formControlName="password"
-    [ngClass]="getControlClass('password')"
-  />
-
-
-    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-      message:
-        (loginForm.controls['password'].errors?.['required'] && 'Mot de passe est obligatoire') ||
-        (loginForm.controls['password'].errors?.['minLength'] && 'Minimum 8 caractères requis') ||
-        (loginForm.controls['password'].errors?.['uppercase'] && 'Doit contenir une majuscule') ||
-        (loginForm.controls['password'].errors?.['lowercase'] && 'Doit contenir une minuscule') ||
-        (loginForm.controls['password'].errors?.['digit'] && 'Doit contenir un chiffre') ||
-        (loginForm.controls['password'].errors?.['special'] && 'Doit contenir un caractère spécial') ||
-        (loginForm.controls['password'].errors?.['space'] && 'Les espaces ne sont pas autorisés'),
-      control: loginForm.controls['password']
-    }"></ng-container>
-
-</div>
-
-
-
-
-          <div class="fv-row mb-6">
-            <label class="form-check d-flex align-items-center">
-              <input type="checkbox" formControlName="keepMeLoggedIn" class="form-check-input me-2" />
-              <span class="form-check-label fw-semibold text-gray-700">
-                Se souvenir de moi
-              </span>
-            </label>
-          </div>
-
-
-          <div class="fv-row mb-6">
-            <a routerLink="/forgot-password" class="link-primary fw-semibold cursor-pointer">Mot de passe oublié ?</a>
-          </div>
-
-          <div class="d-grid mb-6">
-            <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">Se connecter</button>
-          </div>
-
-          <!-- Lien vers inscription -->
-          <div class="text-center text-gray-500 fw-semibold fs-6 mb-6">
-            Pas de compte ?
-            <a routerLink="/register" class="link-primary fw-semibold cursor-pointer">Créer un compte</a>
-          </div>
-
-        </form>
-      </div>
-    </div>
-
+<div class="min-h-screen flex">
+  <!-- Image à gauche -->
+  <div class="hidden md:flex md:w-7/12">
+    <img src="bg1.jpg" alt="Image d'inscription" class="object-cover w-full h-screen">
   </div>
+
+  <!-- Formulaire à droite -->
+  <div class="flex flex-1 items-center justify-center px-8 py-24"> <!-- py-24 pour plus d'espace vertical -->
+    <div class="w-full max-w-xl">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="space-y-10">
+
+      <!-- Titre -->
+      <div class="text-center">
+        <h1 class="text-blue-600 text-3xl font-bold mb-2">Bienvenue à ISET Vie Étudiant</h1>
+        <p class="text-gray-500 font-medium">Connectez-vous à votre compte</p>
+      </div>
+
+      <!-- Connexion Google -->
+      <div>
+        <button type="button" (click)="triggerGoogleSignIn()"
+                class="flex items-center justify-center w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
+          <img src="google-icon.svg" alt="Google" class="h-5 w-5 mr-3">
+          Connectez-vous avec Google
+        </button>
+      </div>
+
+      <!-- Séparateur -->
+      <div class="flex items-center my-4">
+        <hr class="flex-1 border-gray-300">
+        <span class="px-2 text-gray-400">ou</span>
+        <hr class="flex-1 border-gray-300">
+      </div>
+
+      <!-- Alertes d'erreur -->
+      <ng-container *ngIf="hasError">
+        <div class="flex items-start bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded mb-4">
+          <i class="bi bi-exclamation-circle-fill mr-2 text-lg"></i>
+          <div>{{ message }}</div>
+        </div>
+      </ng-container>
+
+      <!-- Email -->
+      <div class="mb-6">
+        <input type="email" placeholder="Email" formControlName="email"
+               class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+               [ngClass]="getControlClass('email')">
+        <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'Email est obligatoire',
+          control: loginForm.controls['email']
+        }"></ng-container>
+        <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'email',
+          message: 'Email est invalide',
+          control: loginForm.controls['email']
+        }"></ng-container>
+      </div>
+
+      <!-- Mot de passe -->
+      <div class="mb-6">
+        <input type="password" placeholder="Mot de passe" formControlName="password"
+               class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+               [ngClass]="getControlClass('password')">
+        <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          message:
+            (loginForm.controls['password'].errors?.['required'] && 'Mot de passe est obligatoire') ||
+            (loginForm.controls['password'].errors?.['minLength'] && 'Minimum 8 caractères requis') ||
+            (loginForm.controls['password'].errors?.['uppercase'] && 'Doit contenir une majuscule') ||
+            (loginForm.controls['password'].errors?.['lowercase'] && 'Doit contenir une minuscule') ||
+            (loginForm.controls['password'].errors?.['digit'] && 'Doit contenir un chiffre') ||
+            (loginForm.controls['password'].errors?.['special'] && 'Doit contenir un caractère spécial') ||
+            (loginForm.controls['password'].errors?.['space'] && 'Les espaces ne sont pas autorisés'),
+          control: loginForm.controls['password']
+        }"></ng-container>
+      </div>
+
+      <!-- Boutons Rôles -->
+      <div class="flex gap-2 mb-6">
+        <button type="button"
+                class="flex-1 flex items-center justify-center px-4 py-2 rounded font-medium transition-colors focus:outline-none"
+                [ngClass]="selectedRole === 'etudiant' ? 'bg-yellow-400 text-white' : 'bg-gray-200 text-gray-800'"
+                (click)="selectRole('etudiant')">
+          <i class="bi bi-person-fill mr-2" [ngClass]="selectedRole === 'etudiant' ? 'text-white' : 'text-gray-800'"></i>
+          Étudiant
+        </button>
+
+        <button type="button"
+                class="flex-1 flex items-center justify-center px-4 py-2 rounded font-medium transition-colors focus:outline-none"
+                [ngClass]="selectedRole === 'clubManager' ? 'bg-yellow-400 text-white' : 'bg-gray-200 text-gray-800'"
+                (click)="selectRole('clubManager')">
+          <i class="bi bi-people-fill mr-2" [ngClass]="selectedRole === 'clubManager' ? 'text-white' : 'text-gray-800'"></i>
+          Responsable de club
+        </button>
+
+        <button type="button"
+                class="flex-1 flex items-center justify-center px-4 py-2 rounded font-medium transition-colors focus:outline-none"
+                [ngClass]="selectedRole === 'admin' ? 'bg-yellow-400 text-white' : 'bg-gray-200 text-gray-800'"
+                (click)="selectRole('admin')">
+          <i class="bi bi-shield-lock-fill mr-2" [ngClass]="selectedRole === 'admin' ? 'text-white' : 'text-gray-800'"></i>
+          Administrateur
+        </button>
+      </div>
+
+      <!-- Se souvenir de moi -->
+      <div class="flex items-center mb-6">
+        <input type="checkbox" formControlName="keepMeLoggedIn"
+               class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        <label class="text-gray-700 font-medium">Se souvenir de moi</label>
+      </div>
+
+      <!-- Mot de passe oublié -->
+      <div class="text-right mb-6">
+        <a routerLink="/forgot-password" class="text-blue-600 hover:underline font-medium">Mot de passe oublié ?</a>
+      </div>
+
+      <!-- Bouton Se connecter -->
+      <div>
+        <button type="submit"
+                class="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition">
+          Se connecter
+        </button>
+      </div>
+
+      <!-- Lien vers inscription -->
+      <div class="text-center text-gray-500 font-medium mt-4">
+        Pas de compte ? <a routerLink="/register" class="text-blue-600 hover:underline">Créer un compte</a>
+      </div>
+
+    </form>
+  </div>
+</div>
 </div>
 
 <ng-template #formError let-control="control" let-message="message" let-validation="validation">

@@ -1,168 +1,165 @@
-<div class="container-fluid vh-100">
-  <div class="row h-100">
+<div class="min-h-screen flex">
+  <!-- Image à gauche -->
+  <div class="hidden md:flex md:w-7/12">
+    <img src="bg1.jpg" alt="Image d'inscription" class="object-cover w-full h-screen">
+  </div>
 
-    <!-- Image à gauche -->
-    <div class="col-md-7 d-none d-md-block p-0">
-      <img src="bg1.jpg" alt="Image d'inscription" class="img-fluid h-100 w-100 object-fit-cover">
-    </div>
+  <!-- Formulaire à droite -->
+  <div class="flex flex-1 items-center justify-center px-8 py-12">
+    <div class="w-full max-w-xl"> <!-- Agrandi de max-w-md -> max-w-xl -->
+      <form [formGroup]="registrationForm" (ngSubmit)="submit()" class="space-y-10">
 
-    <!-- Formulaire à droite -->
-    <div class="col-md-5 d-flex align-items-center justify-content-center">
-      <div>
-        <form class="form w-100" novalidate id="kt_login_signup_form" [formGroup]="registrationForm"
-          (ngSubmit)="submit()">
+        <!-- Titre -->
+        <div class="text-center">
+          <h1 class="text-blue-600 text-3xl font-bold mb-2">Bienvenue à ISET Vie Étudiant</h1>
+          <p class="text-gray-500 font-medium">Entrez vos informations pour créer votre compte</p>
+        </div>
 
-          <!-- Titre -->
-          <div class="text-center mb-4">
-            <h1 class="text-danger fw-bolder mb-2">Bienvenue à ISET Vie Étudiant</h1>
-            <div class="text-gray-500 fw-semibold fs-6">Entrez vos informations pour créer votre compte</div>
+        <!-- Connexion Google -->
+        <div>
+          <button
+            type="button"
+            (click)="triggerGoogleSignIn()"
+            class="flex items-center justify-center w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
+          >
+            <img src="google-icon.svg" alt="Google" class="h-5 w-5 mr-3">
+            Se connecter avec Google
+          </button>
+        </div>
+
+        <!-- Séparateur -->
+        <div class="flex items-center my-4">
+          <hr class="flex-1 border-gray-300">
+          <span class="px-2 text-gray-400">ou</span>
+          <hr class="flex-1 border-gray-300">
+        </div>
+
+        <!-- Alertes d'erreur -->
+        <ng-container *ngIf="hasError">
+          <div class="flex items-start bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded mb-4">
+            <i class="bi bi-exclamation-circle-fill mr-2 text-lg"></i>
+            <div>{{ message }}</div>
+          </div>
+        </ng-container>
+
+        <!-- Champs du formulaire -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <input type="text" placeholder="Prénom" formControlName="firstName"
+                   class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                   [ngClass]="getControlClass('firstName')">
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Prénom est obligatoire',
+              control: registrationForm.controls['firstName']
+            }"></ng-container>
           </div>
 
-          <!-- Connexion Google -->
-          <div class="row g-3 mb-3">
-            <div class="col-12">
-              <a id="googleLoginButton" (click)="triggerGoogleSignIn()"
-                class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                <img alt="Logo Google" src="google-icon.svg" class="h-15px me-3" />
-                Se connecter avec Google
-              </a>
-            </div>
+          <div>
+            <input type="text" placeholder="Nom" formControlName="lastName"
+                   class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                   [ngClass]="getControlClass('lastName')">
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Nom est obligatoire',
+              control: registrationForm.controls['lastName']
+            }"></ng-container>
           </div>
+        </div>
 
-          <!-- Séparateur -->
-          <div class="separator separator-content my-4"></div>
+        <div class="mb-6">
+          <input type="email" placeholder="Email" formControlName="email"
+                 class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                 [ngClass]="getControlClass('email')">
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'required',
+            message: 'Email est obligatoire',
+            control: registrationForm.controls['email']
+          }"></ng-container>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'email',
+            message: 'Email est invalide',
+            control: registrationForm.controls['email']
+          }"></ng-container>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'minlength',
+            message: 'Email doit contenir au moins 3 caractères',
+            control: registrationForm.controls['email']
+          }"></ng-container>
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'maxLength',
+            message: 'Email doit contenir au maximum 360 caractères',
+            control: registrationForm.controls['email']
+          }"></ng-container>
+        </div>
 
-          <!-- Alertes d'erreur -->
-          <!-- Alertes d'erreur -->
-          <ng-container *ngIf="hasError">
-            <div class="mb-3 alert alert-danger d-flex align-items-start" role="alert">
-              <i class="bi bi-exclamation-circle-fill me-2 fs-4"></i>
-              <div class="d-flex flex-column">
+        <div class="mb-6">
+          <input type="password" placeholder="Mot de passe" formControlName="password"
+                 class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                 [ngClass]="getControlClass('password')">
+          <div class="mt-2">
+            <password-strength-meter [password]="registrationForm.get('password')?.value"
+                                     [minPasswordLength]="6"
+                                     [numberOfProgressBarItems]="4"
+                                     [colors]="['#e74c3c', '#f39c12', '#f1c40f', '#2ecc71']"
+                                     [enableFeedback]="false">
+            </password-strength-meter>
 
-                <span><strong>Erreur :</strong>
-                  {{ message }}</span>
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Mot de passe est obligatoire',
+              control: registrationForm.controls['password']
+            }"></ng-container>
+
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'Le mot de passe doit faire au moins 6 caractères',
+              control: registrationForm.controls['password']
+            }"></ng-container>
+
+            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+              validation: 'maxlength',
+              message: 'Le mot de passe ne peut pas dépasser 100 caractères',
+              control: registrationForm.controls['password']
+            }"></ng-container>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <input type="password" placeholder="Confirmer le mot de passe" formControlName="cPassword"
+                 class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                 [ngClass]="getControlClass('cPassword')">
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'required',
+            message: 'Confirm Password is required',
+            control: registrationForm.controls['cPassword']
+          }"></ng-container>
+
+          <ng-container *ngIf="registrationForm.controls['cPassword'].errors?.['ConfirmPassword']">
+            <div class="fv-plugins-message-container">
+              <div class="fv-help-block">
+                <span role="alert">Les mots de passe ne correspondent pas</span>
               </div>
             </div>
           </ng-container>
+        </div>
 
+        <!-- Bouton d'envoi -->
+        <div>
+          <button type="submit"
+                  class="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition">
+            S'inscrire
+          </button>
+        </div>
 
-          <!-- Champs du formulaire -->
-          <div class="fv-row row mb-6">
-            <div class="col-6">
-              <input type="text" class="form-control bg-transparent" placeholder="Prénom" formControlName="firstName"
-                [ngClass]="getControlClass('firstName')" />
-              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'required',
-          message: 'Prénom est obligatoire',
-          control: registrationForm.controls['firstName']
-        }"></ng-container>
-            </div>
-            <div class="col-6 ">
-              <input type="text" class="form-control bg-transparent" placeholder="Nom" formControlName="lastName"
-                [ngClass]="getControlClass('lastName')" />
-              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'required',
-          message: 'Nom est obligatoire',
-          control: registrationForm.controls['lastName']
-        }"></ng-container>
-            </div>
-          </div>
+        <!-- Lien vers connexion -->
+        <div class="text-center text-gray-500 font-medium">
+          Vous avez déjà un compte ?
+          <a routerLink="/login" class="text-blue-600 hover:underline cursor-pointer">Se connecter</a>
+        </div>
 
-          <div class="fv-row mb-6">
-            <input type="email" class="form-control bg-transparent" placeholder="Email" formControlName="email"
-              [ngClass]="getControlClass('email')" />
-            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'required',
-        message: 'Email est obligatoire',
-        control: registrationForm.controls['email']
-      }"></ng-container>
-            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'email',
-        message: 'Email est invalide',
-        control: registrationForm.controls['email']
-      }"></ng-container>
-            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'minlength',
-        message: 'Email doit contenir au moins 3 caractères',
-        control: registrationForm.controls['email']
-      }"></ng-container>
-            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'maxLength',
-        message: 'Email doit contenir au maximum 360 caractères',
-        control: registrationForm.controls['email']
-      }"></ng-container>
-          </div>
-
-          <div class="fv-row mb-6">
-            <input type="password" class="form-control bg-transparent" placeholder="Mot de passe"
-              formControlName="password" [ngClass]="getControlClass('password')" />
-            <div class="mt-2">
-              <password-strength-meter [password]="registrationForm.get('password')?.value" [minPasswordLength]="6"
-                [numberOfProgressBarItems]="4" [colors]="['#e74c3c', '#f39c12', '#f1c40f', '#2ecc71']"
-                [enableFeedback]="false">
-              </password-strength-meter>
-              <!-- Message d'erreur s’il y a -->
-              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'required',
-        message: 'Mot de passe est obligatoire',
-        control: registrationForm.controls['password']
-      }"></ng-container>
-
-              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-    validation: 'minlength',
-    message: 'Le mot de passe doit faire au moins 6 caractères',
-    control: registrationForm.controls['password']
-  }"></ng-container>
-
-              <!-- Erreur 'maxlength' -->
-              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-    validation: 'maxlength',
-    message: 'Le mot de passe ne peut pas dépasser 100 caractères',
-    control: registrationForm.controls['password']
-  }"></ng-container>
-            </div>
-
-          </div>
-
-          <div class="fv-row mb-6">
-            <input type="password" class="form-control bg-transparent" placeholder="Confirmer le mot de passe"
-              formControlName="cPassword" [ngClass]="getControlClass('cPassword')" />
-            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'required',
-        message: 'Confirm Password is required',
-        control: registrationForm.controls['cPassword']
-      }"></ng-container>
-            <ng-container *ngIf="
-        registrationForm.controls['cPassword'].errors &&
-        registrationForm.controls['cPassword'].errors?.['ConfirmPassword']
-      ">
-              <div class="fv-plugins-message-container">
-                <div class="fv-help-block">
-                  <span role="alert">
-                    Les mots de passe ne correspondent pas
-                  </span>
-                </div>
-              </div>
-            </ng-container>
-          </div>
-
-          <!-- Bouton d'envoi -->
-          <div class="d-grid mb-6">
-            <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">
-              S'inscrire
-            </button>
-          </div>
-
-          <!-- Lien vers connexion -->
-          <div class="text-center text-gray-500 fw-semibold fs-6 mb-6">
-            Vous avez déjà un compte ?
-            <a routerLink="/auth/login" class="link-primary fw-semibold cursor-pointer"> Se connecter </a>
-          </div>
-
-        </form>
-      </div>
+      </form>
     </div>
-
   </div>
 </div>
 

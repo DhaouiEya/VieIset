@@ -39,7 +39,7 @@ export class AuthService {
     this.unsubscribe.push(subscr);
   }
 
-  login(email: string, password: string, keepMeLoggedIn: boolean): Observable<UserModel> {
+  login(email: string, password: string, role:string,keepMeLoggedIn: boolean): Observable<UserModel> {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password, keepMeLoggedIn })
       .pipe(
         map(res => {
