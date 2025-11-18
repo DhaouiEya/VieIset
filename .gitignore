@@ -3,3 +3,4 @@
 "*.json" 
 "uploads/" 
 .env
+back/credentials.json
