@@ -1,11 +1,7 @@
-<!-- Section en-tête avec titre et bouton -->
+
 <div class="events-header">
     <div class="header-content">
-      <!-- <div class="breadcrumb">
-        <a routerLink="/" class="breadcrumb-link">Accueil</a>
-        <span class="breadcrumb-separator">/</span>
-        <span class="breadcrumb-current">Événements</span>
-      </div> -->
+
       <h1 class="page-title">Événements à venir</h1>
       <p class="page-subtitle">Découvrez les prochains événements passionnants et rejoignez la communauté</p>
 
@@ -18,12 +14,12 @@
     </a> -->
 </div>
 
-<!-- Conteneur des cartes d'événements -->
+
 <div class="events-grid">
   @for (event of events; track event?.id ?? $index) {
     <div class="event-card" (click)="viewEvent(event)">
 
-      <!-- Image de l'événement avec style Bootstrap amélioré -->
+
       @if (event.lienImage) {
         <div class="card-image-wrapper">
           <img
@@ -33,14 +29,13 @@
             class="card-img-top"
           />
           <div class="image-overlay">
-
           </div>
         </div>
       }
 
 
 
-      <!-- En-tête de la carte -->
+
       <div class="card-header">
         <div class="date-section">
           <div class="date-badge">
@@ -62,11 +57,11 @@
         </div>
       </div>
 
-      <!-- Corps de la carte -->
+
       <div class="card-body">
         <p class="event-description">{{ event.description }}</p>
 
-        <!-- Tags de l'événement -->
+
         <div class="event-tags">
           <span class="event-tag">#Tech</span>
           <span class="event-tag">#Networking</span>
@@ -74,7 +69,7 @@
         </div>
       </div>
 
-      <!-- Pied de carte amélioré -->
+
       <div class="card-footer">
         <div class="footer-content">
           <div class="capacity-section">
@@ -84,7 +79,7 @@
         </div>
       </div>
 
-      <!-- Overlay au survol -->
+
       <div class="card-overlay">
         <div class="overlay-content">
           <i class="overlay-icon">👁️</i>
@@ -95,7 +90,6 @@
   }
 </div>
 
-<!-- Pied de page global -->
 <footer class="global-footer">
   <div class="footer-content">
     <div class="footer-section">

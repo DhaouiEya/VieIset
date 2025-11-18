@@ -37,6 +37,7 @@ exports.register = async (req, res, next) => {
 
 
 
+
         // Check if email already exists
         const existingUserEmail = await User.findOne({ email: email.toLowerCase() });
         if (existingUserEmail) {
@@ -55,6 +56,10 @@ exports.register = async (req, res, next) => {
         const tokenExpiry = Date.now() + 3600000; // 1 hour
 
 
+    
+       
+
+
 
 
 
@@ -69,6 +74,7 @@ exports.register = async (req, res, next) => {
             emailVerificationExpires: tokenExpiry,
         });
 
+            // Send verification email
         // Send verification email
         await sendVerificationEmail(user, req, next);
 

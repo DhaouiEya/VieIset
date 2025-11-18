@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventService } from '../../services/event.service';
 import { Event } from '../../models/event.model';
-import { Attendee } from '../../models/attendee.model';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
-import { Participation } from '../../models/participation.model';
+import { Participation } from '../../models/participation';
+
 
 @Component({
   selector: 'app-event-detail',
@@ -20,7 +20,7 @@ import { Participation } from '../../models/participation.model';
 export class EventDetailComponent implements OnInit {
   event?: Event;
   id!:any;
-  student: Attendee = { studentId: '', name: '' };
+
   successMessage = '';
   errorMessage = '';
   alreadyRegistered = false;

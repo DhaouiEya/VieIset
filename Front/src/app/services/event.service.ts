@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Event } from '../models/event.model';
 import { Attendee } from '../models/attendee.model';
-import { Participation } from '../models/participation.model';
+import { Participation } from '../models/participation';
 
 @Injectable({
   providedIn: 'root'

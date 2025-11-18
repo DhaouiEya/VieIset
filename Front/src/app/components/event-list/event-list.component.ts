@@ -4,7 +4,7 @@ import { Event } from '../../models/event.model';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Participation } from '../../models/participation.model';
+import { Participation } from '../../models/participation';
 
 @Component({
   selector: 'app-event-list',

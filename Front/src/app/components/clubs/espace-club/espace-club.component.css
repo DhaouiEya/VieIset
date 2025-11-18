@@ -220,7 +220,7 @@ lord-icon:hover {
 /* Colonne droite (posts) */
 .club-posts {
   flex: 1;
-  /* overflow-y: auto; */
+  overflow-y: auto;
   padding-right: 10px;
 }
 

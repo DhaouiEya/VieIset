@@ -4,37 +4,32 @@ const Schema = mongoose.Schema;
 const etudiantSchema = new Schema({
     email: { type: String, required: true, unique: true },
     emailVerified: { type: Boolean, default: false },
-    emailVerificationToken: { type: String }, // Store email verification token
-    emailVerificationExpires: { type: Date }, // Expiration time for email verification
+    emailVerificationToken: { type: String },
+    emailVerificationExpires: { type: Date },
 
     password: { type: String },
-    // Password reset
     resetPasswordToken: { type: String },
     resetPasswordExpires: { type: Date },
 
-    cin: { type: String, unique: true , sparse:true },
+    cin: { type: String, unique: true, sparse:true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     gender: { type: String, enum: ['Homme', 'Femme'] },
     age: { type: Number },
-    phone: { type: String, unique: true , sparse:true},
+    phone: { type: String, unique: true, sparse:true },
     city: { type: String },
     postalCode: { type: String },
     address: { type: String },
-
 
     department: { type: String, enum: ['Technology', 'Management'] },
     niveau: { type: String, enum: ['L1', 'L2', 'L3', 'M1', 'M2'] },
     speciality: { type: String, enum: ['DSI', 'RSI', 'IOT', 'MAF', 'LET', 'MIN', 'QHSE', 'CO-CMI'] },
     classe: { type: String },
-   
 
-    hobbies: [{ type: String }],      // Loisirs : sport, musique, art...
-    skills: [{ type: String }],      // Compétences : programmation, gestion de projet...
+    hobbies: [{ type: String }],
+    skills: [{ type: String }],
 
-
-
-    volunteering: [{                // Expériences associatives ou bénévolat
+    volunteering: [{
         organization: { type: String },
         role: { type: String },
         description: { type: String },
@@ -51,32 +46,21 @@ const etudiantSchema = new Schema({
         documentURL: { type: String }
     }],
 
-  
-
-
-    //Réseaux et contacts
     linkedin: { type: String },
     github: { type: String },
 
-    //health
     allergies: [{ type: String }],
-    accessibilityNeeds: { type: String }, // Handicap ou besoins particuliers
+    accessibilityNeeds: { type: String },
 
     isActive: { type: Boolean, default: false },
     isOnline: { type: Boolean, default: true },
 
-    // Social login fields
     googleId: { type: String },
+    refreshToken: { type: String },
+    lastLogin: { type: Date },
 
-    // Security and login details
-    refreshToken: { type: String }, // For refresh token in JWT-based auth
-    lastLogin: { type: Date }, // Store last login time
-    
-
-    preRegistered: { type: Boolean, default: false }, // Indique si l'utilisateur a rempli les infos pré-inscription
-    role: { type: String, enum: ['membre', 'clubManager'], default: 'membre' },
-
-
+    preRegistered: { type: Boolean, default: false },
+    role: { type: String, enum: ['membre', 'clubManager'], default: 'membre' }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Etudiant', etudiantSchema);

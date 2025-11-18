@@ -28,6 +28,7 @@ exports.createDemande = async (req, res) => {
 };
 exports.envoyerDates = async (req, res)=> {
     try {
+      
         const { id } = req.params;
         const { dates } = req.body; // attend un tableau de strings ISO
 
@@ -59,7 +60,7 @@ exports.envoyerDates = async (req, res)=> {
             <ul>
                ${liensHTML}
             </ul>
-            <p>Après votre sélection, la date sera confirmée et le statut changera en <strong>acceptée</strong>.</p>
+           
             <p>Si le lien ne fonctionne pas, copiez-collez cette URL dans votre navigateur.</p>
         `;
 
@@ -77,34 +78,6 @@ exports.envoyerDates = async (req, res)=> {
     }
 }
 
-// GET /api/demandes/:id/choisir-date?date=...
-// exports.getDatesChoisies = async(req, res) =>{
-//     try {
-//     const { id } = req.params;
-//     const dateStr = req.query.date;
-//     if (!dateStr) return res.status(400).send('Paramètre date manquant.');
-
-//     const demande = await DemandeAdhesion.findById(id).populate('etudiant').populate('club');
-//     if (!demande) return res.status(404).send('Demande non trouvée.');
-
-//     const chosen = new Date(dateStr);
-//     const found = demande.datesProposees.some(
-//       d => new Date(d).toISOString() === chosen.toISOString()
-//     );
-//     if (!found) return res.status(400).send('La date choisie ne fait pas partie des dates proposées.');
-
-//     demande.dateChoisie = chosen;
-//     demande.statut = 'acceptée';
-//     await demande.save();
-
-//     // Redirection vers page HTML
-//     return res.redirect('/confirmationDate.html');
-
-//   } catch (err) {
-//     console.error('choisirDate error:', err);
-//     return res.status(500).send('Erreur serveur.');
-//   }
-// }
 exports.getDatesChoisies = async (req, res) => {
   try {
     const { id } = req.params;
@@ -147,3 +120,20 @@ exports.getDemandesAdhesion = async (req, res) => {
         return res.status(500).json({ message: 'Erreur serveur.' });
     }
 }
+exports.getDemandesByEtudiant = async (req, res) => {
+    try {
+      //si authetifié apres 
+      // const studentId = req.user._id;
+        const { etudiantId } = req.params;  
+        console.log("Fetching demandes for etudiantId:", etudiantId);
+        const demandes = await DemandeAdhesion.find({ etudiant: etudiantId })
+            .populate('etudiant')
+            .populate('club')
+            .sort({ createdAt: -1 });
+        return res.json(demandes);
+    } catch (err) {
+        console.error('getDemandesByEtudiant error:', err);
+        return res.status(500).json({ message: 'Erreur serveur.' });
+    }
+}
+
