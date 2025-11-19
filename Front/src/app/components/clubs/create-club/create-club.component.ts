@@ -12,6 +12,7 @@ import { Router } from '@angular/router'; // You were missing the Router import!
 import Swal from 'sweetalert2';
 // import { Club } from '../../../models/club'; // Assuming this import exists and is correct
 import { ClubService } from '../../../services/club.service';
+import { ResponsableMenuComponent } from '../../../responsable-club/responsable-menu/responsable-menu.component';
 
 @Component({
   selector: 'app-create-club',
@@ -26,6 +27,8 @@ import { ClubService } from '../../../services/club.service';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    ResponsableMenuComponent
+
   ],
   providers: [
     provideNativeDateAdapter(), // Required for MatDatepicker
@@ -49,7 +52,7 @@ export class CreateClubComponent implements OnInit {
 
   clubForm!: FormGroup;
 
-  
+
   ngOnInit(): void {
     console.log('Initialisation du formulaire de création de club');
     this.clubForm = this.fb.group({
@@ -64,7 +67,7 @@ export class CreateClubComponent implements OnInit {
         '',
         [
           Validators.required,Validators.pattern('[2|5|9][0-9]{7}')
-          
+
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
@@ -74,7 +77,7 @@ export class CreateClubComponent implements OnInit {
     console.log('Formulaire initialisé :', this.clubForm);
   }
 
- 
+
   onFileSelected(event: any, type: 'profil' | 'fond'): void {
     const file = event.target.files[0];
     if (!file) return;
@@ -136,15 +139,15 @@ export class CreateClubComponent implements OnInit {
             timer: 2000,
             showConfirmButton: false,
           })
-            this.isSubmitting = false; 
-             this.clubForm.reset(); 
+            this.isSubmitting = false;
+             this.clubForm.reset();
               this.previewProfil = null;
               this.previewFond = null;
               this.selectedProfil = null;
               this.selectedFond = null;
           // If used as a dialog, close it after creation
           // this.dialogRef.close(res);
-          
+
         },
         error: (err) => {
           Swal.fire({

@@ -5,11 +5,12 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Participation } from '../../models/participation';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-event-list',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterModule, FormsModule],
+  imports: [CommonModule, DatePipe, RouterModule, FormsModule,HeaderComponent],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css' // corrigé
 })

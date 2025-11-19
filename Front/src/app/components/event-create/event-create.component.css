@@ -1,14 +1,27 @@
 /* event-create.component.css */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  min-height: 100vh;
+.event-container {
+  display: flex;
+  height: 100vh;
 }
 
-.container h3 {
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: white;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.event-container h3 {
   font-size: 2.5rem;
   font-weight: 800;
+   color: #1a237e;
   background: linear-gradient(135deg, #3a86ff, #8338ec);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -33,6 +46,9 @@ form {
   border-radius: 20px;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
+  width: 100%;
+  max-width: 900px; /* optionnel : limite la largeur max */
+  margin: 0 auto;   /* centre le formulaire si largeur limitée */
 }
 
 .form-group {

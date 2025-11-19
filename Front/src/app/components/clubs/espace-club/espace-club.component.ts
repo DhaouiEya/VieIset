@@ -11,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
 import { PostClubComponent } from '../post-club/post-club.component';
+import { HeaderComponent } from '../../header/header.component';
 @Component({
   selector: 'app-espace-club',
   imports: [
@@ -22,6 +23,7 @@ import { PostClubComponent } from '../post-club/post-club.component';
     MatDividerModule,
     MatRippleModule,
     PostClubComponent,
+    HeaderComponent
   ],
   templateUrl: './espace-club.component.html',
   styleUrl: './espace-club.component.css',

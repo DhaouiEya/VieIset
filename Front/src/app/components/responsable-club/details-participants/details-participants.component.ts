@@ -5,10 +5,11 @@ import { Attendee } from '../../../models/attendee.model';
 import { Event } from '../../../models/event';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { ResponsableMenuComponent } from '../../../responsable-club/responsable-menu/responsable-menu.component';
 
 @Component({
   selector: 'app-details-participants',
-  imports: [ MatDialogModule,MatDialogContent,MatButtonModule,MatTableModule],
+  imports: [ MatDialogModule,MatDialogContent,MatButtonModule,MatTableModule,ResponsableMenuComponent],
   templateUrl: './details-participants.component.html',
   styleUrl: './details-participants.component.css'
 })

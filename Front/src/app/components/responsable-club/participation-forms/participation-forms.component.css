@@ -2,10 +2,18 @@
   display: flex;
   height: 100vh;
 }
-
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: white;
+  flex-shrink: 0; /* empêche le sidebar de rétrécir */
+  /* si tu veux qu'il soit fixe sur tout l'écran */
+  /* position: fixed;
+     height: 100vh; */
+}
 .main-content {
   flex: 1;
- 
+
   padding: 20px;
   background-color: #f5f5f5;
 }
@@ -52,7 +60,7 @@
   flex-direction: row;
   gap: 7px;
   margin-top: 15px;
-  
+
   background-color: #1E3A5F;
   color: white;
   border: none;
@@ -505,7 +513,7 @@
   font-weight: 600;
 }
 .btn-secondary {
- 
+
 margin-top: 15px;
 }
 .btn-primary {
