@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-11-19T18:25:32.044Z",
+  "method": "POST",
+  "url": "/api/auth/login",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "ReferenceError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "keepmeloggedin is not defined",
+  "stack": "ReferenceError: keepmeloggedin is not defined\n    at exports.login (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:469:29)"
+},

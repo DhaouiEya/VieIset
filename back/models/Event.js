@@ -8,7 +8,7 @@ const eventSchema = new mongoose.Schema({
   endDate: { type: String, required: true },
   capacity: { type: Number, default: 0 },
   lienImage: { type: String, default: null },
-  attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Etudiant' }] // <-- correction
+  attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] // <-- correction
 });
 
 module.exports = mongoose.model('Event', eventSchema);

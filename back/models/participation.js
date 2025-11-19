@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const participationSchema = new mongoose.Schema({
-    etudiant: { type: mongoose.Schema.Types.ObjectId, ref: 'Etudiant', required: true },
+    etudiant: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     event: { type: mongoose.Schema.Types.ObjectId, ref: 'Event', required: true },
     dateParticipation: { type: Date, default: Date.now }
 }, { timestamps: true });

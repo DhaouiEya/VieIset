@@ -1,6 +1,6 @@
 
 const { google } = require("googleapis");
-const Etudiant = require("../models/etudiant");       // ton modèle étudiant
+const User = require("../models/user");       // ton modèle étudiant
 const Club = require("../models/club");               // ton modèle club
 const DemandeAdhesion = require("../models/demandeAdhesion"); // modèle demande
 const path = require('path');
@@ -209,7 +209,7 @@ async function traiterSheet(rows) {
     console.log(` Email: '${email}', Club: '${clubName}'`);
  
     // Chercher étudiant et club dans MongoDB
-    const etudiant = await Etudiant.findOne({ email });
+    const etudiant = await User.findOne({ email });
     if (!etudiant) {
       console.log(`Étudiant non trouvé pour l'email: '${email}'`);
       continue;

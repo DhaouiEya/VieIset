@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Etudiant = require('../models/etudiant');
+const User = require('../models/user');
 
 const compagneSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true },
@@ -25,7 +25,7 @@ const compagneSchema = new mongoose.Schema({
   },
   beneficiaire: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Etudiant',
+    ref: 'User',
     required: true
   },
   dateCreation: { type: Date, default: Date.now }

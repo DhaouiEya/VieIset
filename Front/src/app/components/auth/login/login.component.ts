@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -19,7 +19,7 @@ declare const google: any;
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy , AfterViewInit {
   loginForm!: FormGroup;
   hasError = false;
   message = '';
@@ -42,12 +42,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       google.accounts.id.cancel();
     }
   }
+  ngAfterViewInit() {
+  this.initializeGoogleSignIn();
+}
+
 
   initForm() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, passwordValidator]],
-      // role: ['etudiant', Validators.required], // par défaut Étudiant
+      role: ['etudiant', Validators.required], // par défaut Étudiant
 
       keepMeLoggedIn: [false],
     });
@@ -62,60 +66,31 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onLogin() {
-    if (this.loginForm.invalid) return;
+     this.hasError = false;
+
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      this.hasError = true;
+      this.message = 'Veuillez vérifier les informations saisies';
+      return;
+    }
 
     const { email, password, role, keepMeLoggedIn } = this.loginForm.value;
 
-    this.authService.login(email, password, keepMeLoggedIn).subscribe({
+    this.authService.login(email, password,role, keepMeLoggedIn).subscribe({
       next: (res: any) => {
         console.log('res login ', res);
         if (res.success) {
-          localStorage.setItem('token', res.token);
-
-          // Vérifier que le rôle choisi fait partie des rôles de l'utilisateur
-          // if (
-          //   this.selectedRole === 'etudiant' &&
-          //   res.user.role.includes('etudiant')
-          // ) {
-          //   this.router.navigateByUrl('/clubs');
-          // } else if (
-          //   this.selectedRole === 'clubManager' &&
-          //   res.user.role.includes('clubManager')
-          // ) {
-          //   this.router.navigateByUrl('/dashboard');
-          // } else if (
-          //   this.selectedRole === 'admin' &&
-          //   res.user.role.includes('admin')
-          // ) {
-          //   this.router.navigateByUrl('/admin-dashboard');
-          // } else {
-          //   // Cas où le rôle choisi n'est pas autorisé pour l'utilisateur
-          //   this.hasError = true;
-          //   this.message =
-          //     'Vous n’avez pas accès à cet espace avec le rôle choisi';
-          // }
-
-             if (
-
-            res.role.includes('membre')
-          ) {
-            this.router.navigateByUrl('/clubs');
-          } else if (
-
-            res.role.includes('clubManager')
-          ) {
+          if(this.selectedRole === 'clubManager' && res.user.role.includes('clubManager')){
             this.router.navigateByUrl('/dashboard');
-          } else if (
-
-            res.role.includes('admin')
-          ) {
-            this.router.navigateByUrl('/admindashboard');
-          } else {
-            // Cas où le rôle choisi n'est pas autorisé pour l'utilisateur
-            this.hasError = true;
-            this.message =
-              'Vous n’avez pas accès à cet espace avec le rôle choisi';
           }
+          else if(this.selectedRole === 'etudiant' && res.user.role.includes('etudiant')){
+            this.router.navigateByUrl('/clubs');
+          }
+          else if(this.selectedRole === 'admin' && res.user.role.includes('admin')){
+            this.router.navigateByUrl('/admindashboard');
+          }
+
         } else {
           this.hasError = true;
           this.message = res.error.message || 'Erreur lors de la connexion';
@@ -137,21 +112,37 @@ export class LoginComponent implements OnInit, OnDestroy {
     };
   }
 
+
+
   initializeGoogleSignIn() {
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      google.accounts.id.initialize({
-        client_id:
-         '83197880105-fhf7bp7mugj0js4ecjp15c9tcojh45nv.apps.googleusercontent.com',
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    google.accounts.id.initialize({
+      client_id: '83197880105-fhf7bp7mugj0js4ecjp15c9tcojh45nv.apps.googleusercontent.com',
+      callback: this.handleCredentialResponse.bind(this),
+      cancel_on_tap_outside: false,
+    });
 
-        callback: this.handleCredentialResponse.bind(this),
-        cancel_on_tap_outside: false,
-      });
+    // Affiche le bouton Google
+    google.accounts.id.renderButton(
+      document.getElementById('googleLoginButton'),
+      {
+        theme: 'outline',
+        size: 'large',
+        text: 'continue_with',
+            logo_alignment: 'center' // centre l'icône
 
-      google.accounts.id.prompt();
-    }
+      }
+    );
+
+    // Prompt automatique (optionnel)
+    google.accounts.id.prompt();
   }
+}
+
 
   handleCredentialResponse(response: any) {
+      this.hasError = false;
+
     this.authService
       .googleLogin(
         response.credential,
@@ -160,19 +151,27 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap(() => this.authService.getUserByToken()),
 
-        tap((user) => {
-          if (user) {
-            if (user.role === 'clubManager') {
-              this.router.navigateByUrl('/dashboard');
-            } else {
-              this.router.navigateByUrl('/clubs');
-            }
+           tap((user: any) => {
+        if (user) {
+       console.log("ressss",user)
+          const roles: string[] = user.role;
+
+          // Si l'utilisateur n'a pas le rôle autorisé pour Google login
+          if (!roles.includes('etudiant')) {
+            this.message = 'Google login interdit pour ce rôle.';
+            return;
           }
-        }),
+          console.log('Google authentication successful, navigating to clubs');
+            this.router.navigateByUrl('/clubs');
+        }
+      }),
 
         catchError((error) => {
+                    this.hasError = true;
+          this.message =  error.error?.message || 'Google authentication failed. Please try again.';
+      this.cdr.detectChanges();
+
           console.error('Google authentication failed', error);
-          this.message = 'Google authentication failed. Please try again.';
           return of(null);
         })
       )

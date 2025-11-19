@@ -39,8 +39,8 @@ export class AuthService {
     this.unsubscribe.push(subscr);
   }
 
-  login(email: string, password: string, keepMeLoggedIn: boolean): Observable<UserModel> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password, keepMeLoggedIn })
+  login(email: string, password: string, requestedRole:string,keepMeLoggedIn: boolean): Observable<UserModel> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { email, password,requestedRole, keepMeLoggedIn })
       .pipe(
         map(res => {
           if (res && res.authToken) {
@@ -107,7 +107,7 @@ export class AuthService {
       .pipe(
         map((res: any) => {
           this.setAuthFromLocalStorage(res);
-          return res;
+          return res.user;
         })
       );
   }

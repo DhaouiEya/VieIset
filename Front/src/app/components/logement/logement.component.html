@@ -13,9 +13,11 @@
             <i class="icon-house">🏠</i>
             Liste des Annonces
           </h3>
-          <div class="annonces-count" *ngIf="annonces.length > 0">
+          @if (annonces.length > 0) {
+          <div class="annonces-count">
             {{ annonces.length }} logement{{ annonces.length > 1 ? 's' : '' }}
           </div>
+        }
         </div>
 
         <div class="annonces-list">

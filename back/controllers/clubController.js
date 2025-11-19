@@ -1,5 +1,7 @@
 const Club = require("../models/club");
 const Poste = require("../models/Poste");
+const clubService = require('../services/clubService');// Récupérer un club par l'ID du manager
+
 
 // Ajouter un nouveau club
 exports.createClub = async (req, res) => {
@@ -16,8 +18,6 @@ exports.createClub = async (req, res) => {
   }
 };
 
-// Récupérer un club par l'ID du manager
-const clubService = require('../services/clubService');
 // Récupérer un club par l'ID du manager
 
 exports.createClub = async (req, res) => {

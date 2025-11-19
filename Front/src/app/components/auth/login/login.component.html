@@ -16,14 +16,15 @@
       </div>
 
       <!-- Connexion Google -->
-      <div>
+      <!-- <div>
         <button type="button" (click)="triggerGoogleSignIn()" id="googleLoginButton"
                 class="flex items-center justify-center w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
           <img src="google-icon.svg" alt="Google" class="h-5 w-5 mr-3">
           Connectez-vous avec Google
         </button>
-      </div>
-      <!-- Ajoute ceci pour que google.renderButton ait un parent -->
+      </div> -->
+      <div id="googleLoginButton"></div>
+
 
       <!-- Séparateur -->
       <div class="flex items-center my-4">
@@ -33,12 +34,13 @@
       </div>
 
       <!-- Alertes d'erreur -->
-      <ng-container *ngIf="hasError">
-        <div class="flex items-start bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded mb-4">
-          <i class="bi bi-exclamation-circle-fill mr-2 text-lg"></i>
-          <div>{{ message }}</div>
-        </div>
-      </ng-container>
+<ng-container *ngIf="hasError">
+  <div class="flex items-start bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded mb-4">
+    <i class="bi bi-exclamation-circle-fill mr-2 text-lg"></i>
+    <div>{{ message }}</div>
+  </div>
+</ng-container>
+
 
       <!-- Email -->
       <div class="mb-6">
@@ -65,11 +67,11 @@
         <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           message:
             (loginForm.controls['password'].errors?.['required'] && 'Mot de passe est obligatoire') ||
-            (loginForm.controls['password'].errors?.['minlength'] && 'Minimum 6 caractères requis') ||
             (loginForm.controls['password'].errors?.['uppercase'] && 'Doit contenir une majuscule') ||
             (loginForm.controls['password'].errors?.['lowercase'] && 'Doit contenir une minuscule') ||
             (loginForm.controls['password'].errors?.['digit'] && 'Doit contenir un chiffre') ||
             (loginForm.controls['password'].errors?.['special'] && 'Doit contenir un caractère spécial') ||
+                        (loginForm.controls['password'].errors?.['minLength'] && 'Minimum 6 caractères requis') ||
             (loginForm.controls['password'].errors?.['space'] && 'Les espaces ne sont pas autorisés'),
           control: loginForm.controls['password']
         }"></ng-container>
