@@ -10,17 +10,18 @@ import { DemandeAdhesion } from '../../../models/demande-adhesion';
 import 'lord-icon-element';
 
 import Swal from 'sweetalert2';
+import { ResponsableMenuComponent } from '../../../responsable-club/responsable-menu/responsable-menu.component';
 
 
 @Component({
   selector: 'app-participation-forms',
-  imports: [FormsModule, CommonModule,NgClass],
+  imports: [FormsModule, CommonModule,NgClass,ResponsableMenuComponent],
   templateUrl: './participation-forms.component.html',
   styleUrl: './participation-forms.component.css',
-   schemas: [CUSTOM_ELEMENTS_SCHEMA] 
+   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ParticipationFormsComponent implements OnInit, OnDestroy{
-  
+
 showStatutModal: boolean = false;
 modalTitle: string = '';
 modalDemandes: any[] = [];
@@ -40,7 +41,7 @@ filterStatus: string = 'all'; // valeurs possibles: 'all', 'acceptée', 'refusé
   // Modal / form state
   showModal = false;
   activeDemande?: DemandeAdhesion | null = null;
-  dateInputs: string[] = []; 
+  dateInputs: string[] = [];
   readonly formulairesService : FormulairesService=inject(FormulairesService);
   readonly demandeService : DemandeAdhesionService=inject(DemandeAdhesionService);
   private pollingSubscription?: Subscription;
@@ -57,11 +58,11 @@ chargerDemandesExistantes() {
     next: (res) => {
       this.demandes = res || [];
       console.log('Demandes chargées:', this.demandes);
-      
+
     },
     error: (err) => {
       console.error("Erreur lors du chargement des demandes existantes :", err);
-     
+
     }
   });
 }
@@ -103,10 +104,10 @@ chargerDemandesExistantes() {
   });
 }
 
- 
+
  getPaginatedDemandes(): DemandeAdhesion[] {
     const startIndex = this.currentPage * this.pageSize;
-    
+
     return this.demandes.slice(startIndex, startIndex + this.pageSize);
   }
 
@@ -207,7 +208,7 @@ chargerDemandesExistantes() {
         }
       });
   }
-  
+
   getFilteredDemandes() {
   if (this.filterStatus === 'all') {
     return this.demandes;

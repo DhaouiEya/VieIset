@@ -16,12 +16,13 @@ import { ClubsListComponent } from './components/clubs/clubs-list/clubs-list.com
 
 import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
 import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
-import { ParticipationFormsComponent } from './responsable-club/participation-forms/participation-forms.component';
 
 import { LogementComponent } from './components/logement/logement.component';
 import { AdmindashboardComponent } from './admin/admindashboard/admindashboard.component';
 import { CompagneComponent } from './admin/compagne/compagne.component';
 import { MyClubComponent } from './components/clubs/my-club/my-club.component';
+import { ProfileComponent } from './components/profile/profile/profile.component';
+import { ParticipationFormsComponent } from './components/responsable-club/participation-forms/participation-forms.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -52,5 +53,7 @@ export const routes: Routes = [
   // Other pages
   { path: 'logement', component: LogementComponent },
   { path: 'admindashboard', component: AdmindashboardComponent },
-  { path: 'compagne', component: CompagneComponent }
+  { path: 'compagne', component: CompagneComponent },
+  { path: 'profile', component: ProfileComponent },
+
 ];

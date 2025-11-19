@@ -8,12 +8,13 @@ import { AuthService } from '../../services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Participation } from '../../models/participation';
+import { HeaderComponent } from '../header/header.component';
 
 
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [FormsModule, DatePipe, CommonModule, RouterLink],
+  imports: [FormsModule, DatePipe, CommonModule, RouterLink,HeaderComponent],
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.css']
 })

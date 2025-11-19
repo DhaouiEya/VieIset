@@ -12,6 +12,7 @@ import { Router } from '@angular/router'; // You were missing the Router import!
 import Swal from 'sweetalert2';
 // import { Club } from '../../../models/club'; // Assuming this import exists and is correct
 import { ClubService } from '../../../services/club.service';
+import { ResponsableMenuComponent } from '../../../responsable-club/responsable-menu/responsable-menu.component';
 
 @Component({
   selector: 'app-create-club',
@@ -26,6 +27,8 @@ import { ClubService } from '../../../services/club.service';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    ResponsableMenuComponent
+
   ],
   providers: [
     provideNativeDateAdapter(), // Required for MatDatepicker
