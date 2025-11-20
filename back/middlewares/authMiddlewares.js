@@ -5,7 +5,6 @@ const User = require('../models/user');
 module.exports = async function (req, res, next) {
   const authHeader = req.header('Authorization');
 
-console.log('Middleware d\'authentification appelé,authHeader:', authHeader);
   if (!authHeader) {
     return res.status(401).json({
       error: {
@@ -19,7 +18,6 @@ console.log('Middleware d\'authentification appelé,authHeader:', authHeader);
   const token = authHeader.replace('Bearer ', '');
 
   try {
-console.log('Vérification du token JWT :', token);
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Charger l'utilisateur depuis la base de données

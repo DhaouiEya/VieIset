@@ -32,7 +32,7 @@ export class ResSideBarComponent {
       { icon: 'group', label: 'Membres', route: '/res_club/membres' },
       { icon: 'event', label: 'Événements', route: '/res_club/consulter-events'},
    ]) ;
-  // Signal pour la largeur de la sidebar  
+  // Signal pour la largeur de la sidebar
   sidenavWidth = computed(() => this.collapsed() ? '98px': '320px');
   hidden =computed(()=>this.collapsed()?'none':'block');
 

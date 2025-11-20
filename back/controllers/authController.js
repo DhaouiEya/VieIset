@@ -224,9 +224,6 @@ exports.resendVerificationEmail = async (req, res, next) => {
 
 
 
-
-
-
 exports.googleLogin = async (req, res, next) => {
     const { idToken, keepmeloggedin } = req.body;
 
@@ -396,8 +393,6 @@ exports.infos = async (req, res, next) => {
         next(error);
     }
 };
-
-
 
 
 exports.login = async (req, res, next) => {
@@ -679,6 +674,28 @@ exports.updateUserProfile = async (req, res, next) => {
         res.status(500).json({ message: 'Erreur serveur, veuillez réessayer.' });
     }
 };
+
+
+//logout
+exports.logout = async (req, res, next) => {
+  try {
+    const userId = req.user._id; 
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { refreshToken: null },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Utilisateur introuvable' });
+    }
+
+    return res.json({ success: true, message: 'Déconnexion réussie' });
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 
 

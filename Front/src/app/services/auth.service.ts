@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserModel } from '../models/user.model';
@@ -32,25 +33,40 @@ export class AuthService {
     this.currentUserSubject.next(user);
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<UserModel | null>(null);
     this.currentUser$ = this.currentUserSubject.asObservable();
     const subscr = this.getUserByToken().subscribe();
     this.unsubscribe.push(subscr);
   }
 
-  login(email: string, password: string, requestedRole:string,keepMeLoggedIn: boolean): Observable<UserModel> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password,requestedRole, keepMeLoggedIn })
+  login(
+    email: string,
+    password: string,
+    requestedRole: string,
+    keepMeLoggedIn: boolean
+  ): Observable<UserModel> {
+    return this.http
+      .post<any>(`${this.apiUrl}/login`, {
+        email,
+        password,
+        requestedRole,
+        keepMeLoggedIn,
+      })
       .pipe(
-        map(res => {
+        map((res) => {
           if (res && res.authToken) {
             // Stocker le token et user
-            this.setAuthFromLocalStorage({ ...res.user, authToken: res.authToken, refreshToken: res.refreshToken });
+            this.setAuthFromLocalStorage({
+              ...res.user,
+              authToken: res.authToken,
+              refreshToken: res.refreshToken,
+            });
             this.currentUserSubject.next(res.user);
           }
           return res;
         }),
-        catchError(err => {
+        catchError((err) => {
           console.error('Login error:', err);
           return of(err);
         })
@@ -72,8 +88,7 @@ export class AuthService {
     );
   }
 
-
-    // Mot de passe oublié
+  // Mot de passe oublié
   forgotPassword(email: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/request-password-reset`, { email });
   }
@@ -82,7 +97,6 @@ export class AuthService {
   resetPassword(password: string, token: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/reset-password`, { password, token });
   }
-
 
   // Verify Email
   verifyEmail(token: string): Observable<any> {
@@ -112,16 +126,51 @@ export class AuthService {
       );
   }
 
+  updateUserProfile(updates: any): Observable<any> {
+    const token = this.getAuthFromLocalStorage()?.authToken;
+    const headers = { Authorization: `Bearer ${token}` };
 
-updateUserProfile(updates: any): Observable<any> {
-  const token = this.getAuthFromLocalStorage()?.authToken;
-  const headers = { Authorization: `Bearer ${token}` };
+    return this.http.put<any>(`${this.apiUrl}/update-profile`, updates, {
+      headers,
+    });
+  }
 
-  return this.http.put<any>(`${this.apiUrl}/update-profile`, updates, { headers });
-}
+  logout() {
+    const auth = this.getAuthFromLocalStorage();
 
+    // Si pas de token : nettoyage + redirection
+    if (!auth || !auth.authToken) {
+      this.handleLogoutSuccess();
+      return;
+    }
 
-   // Me (need JWT in headers)
+    this.http.post(`${this.apiUrl}/logout`, {}).subscribe({
+      next: () => {
+        this.handleLogoutSuccess();
+      },
+      error: (error) => {
+        console.error('Logout error:', error);
+        // Déconnexion locale même si l’API échoue
+        this.handleLogoutSuccess();
+      },
+    });
+  }
+
+  // Private method to handle successful logout
+  private handleLogoutSuccess(): void {
+    console.log(`3`);
+
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      localStorage.removeItem(this.authLocalStorageToken);
+      console.log(this.authLocalStorageToken);
+      this.currentUserSubject.next(null); //Réinitialisation du user dans ton service Auth
+      this.router.navigate(['/']).then(() => {
+        document.location.reload();
+      });
+    }
+  }
+
+  // Me (need JWT in headers)
 
   me(token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
