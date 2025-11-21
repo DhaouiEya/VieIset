@@ -34,6 +34,10 @@ getEventParticipations(eventId: string): Observable<Participation[]> {
 
 
 
+  
+    deleteEvent(id: string): Observable<void> {
+    return this.http.delete<void>(`${URL}/${id}`);
+  }
     // Créer un poste avec fichiers (FormData)
     createEventWithFiles(formData: FormData): Observable<Event> {
       return this.http.post<Event>(this.apiUrl, formData);
@@ -49,6 +53,10 @@ getEventParticipations(eventId: string): Observable<Participation[]> {
     });
     console.log("Registering for event with ID:", eventId);
     return this.http.post(`${this.apiUrl}/${eventId}/inscrire`, {}, { headers });
+  }
+   // 🔹 Récupérer tous les participants d'un événement
+  getEventParticipants(eventId: string): Observable<any> {
+    return this.http.get<any>(`${URL}/${eventId}/participations`);
   }
 
 }

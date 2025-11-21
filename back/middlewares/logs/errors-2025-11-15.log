@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "timestamp": "2025-11-15T11:48:12.178Z",
   "method": "POST",
   "url": "/api/auth/login",
@@ -53,4 +54,15 @@
   "severity": "danger",
   "errorMessage": "read ECONNRESET",
   "stack": "MongoServerSelectionError: read ECONNRESET\n    at Topology.selectServer (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\sdam\\topology.js:327:38)\n    at async tryOperation (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:196:22)\n    at async executeOperation (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:78:16)\n    at async FindCursor._initialize (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\cursor\\find_cursor.js:62:26)\n    at async FindCursor.cursorInit (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\cursor\\abstract_cursor.js:632:27)\n    at async FindCursor.fetchBatch (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\cursor\\abstract_cursor.js:666:13)\n    at async FindCursor.next (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\cursor\\abstract_cursor.js:342:17)\n    at async Collection.findOne (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongodb\\lib\\collection.js:313:24)\n    at async model.Query._findOne (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\query.js:2710:15)\n    at async model.Query.exec (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\mongoose\\lib\\query.js:4627:63)"
+=======
+  "timestamp": "2025-11-15T11:27:20.255Z",
+  "method": "POST",
+  "url": "/api/auth/login",
+  "ip": "::1",
+  "errorName": "SyntaxError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Expected ',' or '}' after property value in JSON at position 43",
+  "stack": "SyntaxError: Expected ',' or '}' after property value in JSON at position 43\n    at JSON.parse (<anonymous>)\n    at parse (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\body-parser\\lib\\types\\json.js:77:19)\n    at C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\body-parser\\lib\\read.js:123:18\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at invokeCallback (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\raw-body\\index.js:238:16)\n    at done (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\raw-body\\index.js:227:7)\n    at IncomingMessage.onEnd (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\raw-body\\index.js:287:7)\n    at IncomingMessage.emit (node:events:519:28)\n    at endReadableNT (node:internal/streams/readable:1696:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)"
+>>>>>>> fc82c0cd45863c17d58c19c1374bbd2948c7b47d
 },

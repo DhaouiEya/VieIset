@@ -3,3 +3,7 @@
 "*.json" 
 "uploads/" 
 .env
+<<<<<<< HEAD
+=======
+back/credentials.json
+>>>>>>> fc82c0cd45863c17d58c19c1374bbd2948c7b47d
