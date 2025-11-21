@@ -7,4 +7,7 @@ router.get('/etudiants', etudiantController.getByFFilteredEtudiants);
 
 // Route pour ajouter le rôle Club Manager à un étudiant
 router.patch('/:userId/add-club-manager', etudiantController.addClubManagerRole);
+router.get('/club-managers', etudiantController.getAllClubManagers);
+router.put('/remove-club-manager/:userId', etudiantController.removeClubManagerRole);
+
 module.exports = router;

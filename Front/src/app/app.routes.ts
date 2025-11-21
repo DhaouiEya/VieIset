@@ -34,6 +34,7 @@ import { ParticipationFormsComponent } from './components/responsable-club/parti
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { ListEtudiantsComponent } from './admin/list-etudiants/list-etudiants.component';
 import { DemandedonComponent } from './components/demandedon/demandedon.component';
+import { ClubManagersComponent } from './admin/club-managers/club-managers.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -88,7 +89,8 @@ export const routes: Routes = [
   {path:'demandedonetudiant',component:DemandedonComponent},
 
   //admin routes can be added here
-  {path:'etudiants',component:ListEtudiantsComponent}
+  {path:'etudiants',component:ListEtudiantsComponent},
+  {path:'managers',component:ClubManagersComponent}
 ];
 
 

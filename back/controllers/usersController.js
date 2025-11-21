@@ -1,5 +1,44 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
+//get all manager users
+exports.getAllClubManagers = async (req, res) => {
+  try {
+    const managers = await User.find({ role: { $in: ['clubManager'] } });
+    res.status(200).json(managers);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur serveur", error });
+  }
+};
+//retire club manager role from user
+exports.removeClubManagerRole = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    // Vérifier s'il a déjà clubManager
+    if (!user.role.includes("clubManager")) {
+      return res.status(400).json({ message: "Cet utilisateur n'est pas un responsable de club" });
+    }
+
+    // => L'utilisateur redevient étudiant
+    user.role = ["etudiant"];
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Rôle clubManager retiré. L'utilisateur est redevenu étudiant.",
+      user
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Erreur serveur", error });
+  }
+};
+
 
 // ✅ Récupérer tous les étudiants
 exports.getAllEtudiants = async (req, res) => {
