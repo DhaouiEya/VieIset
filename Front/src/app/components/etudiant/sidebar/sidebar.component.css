@@ -1,0 +1,106 @@
+.app-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-color: rgb(226, 229, 234);
+  color: #1e3fa9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  z-index: 2000;
+  box-shadow: 0px 3px 8px rgba(0,0,0,0.2);
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  
+}
+.avatar-btn {
+  background: white ;
+  border-radius: 50%;
+  padding: 8px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* facultatif : ombre légère */
+  box-shadow: 0 0 6px rgba(0,0,0,0.15);
+}
+
+/* Logo circulaire */
+.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;     /* cercle */
+  object-fit: cover;      /* empêche la déformation */
+  border: 2px solid white; /* optionnel : ajoute un contour blanc */
+}
+
+
+/* Menu principal */
+.main-menu {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+.main-menu li {
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.main-menu li:hover {
+  text-decoration: underline;
+}
+
+/* Menu à droite */
+.right-menu {
+  position: relative;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Dropdown */
+.menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background: white;
+  color: black;
+  padding: 10px 0;
+  border-radius: 6px;
+  display: none;
+  list-style: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.menu-dropdown.show {
+  display: block;
+}
+
+.menu-dropdown li {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.menu-dropdown li:hover {
+  background: #f0f0f0;
+}
+
+.main-content {
+  margin-top: 70px;
+  padding: 20px;
+}

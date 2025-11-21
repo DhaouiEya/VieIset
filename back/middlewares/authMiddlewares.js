@@ -23,8 +23,8 @@ console.log('Vérification du token JWT :', token);
 
     // Charger l'utilisateur depuis la base de données
     const user = await User.findById(decoded._id)
-
-
+ 
+ console.log(" user:", user);
     if (!user) {
       return res.status(404).json({
         error: {
@@ -37,6 +37,7 @@ console.log('Vérification du token JWT :', token);
 
     // Attacher l'utilisateur complet à la requête
     req.user = user;
+     console.log("req.user:", req.user.id);
 
     next(); // Continuer vers le contrôleur ou le prochain middleware
   } catch (err) {

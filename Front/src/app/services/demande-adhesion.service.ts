@@ -20,5 +20,11 @@ export class DemandeAdhesionService {
     return this.http.post(`${URL}/demandes/${demandeId}/envoyer-dates`, { dates });
   }
 
+   getDemandesByEtudiantId(etudiantId: string): Observable<DemandeAdhesion[]> {
+    return this.http.get<DemandeAdhesion[]>(
+      `${URL}/demandes/${etudiantId}`
+    );
+  }
+
 
 }

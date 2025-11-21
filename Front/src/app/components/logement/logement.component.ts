@@ -9,9 +9,9 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-logement',
-  imports:[DatePipe, NgClass, FormsModule, HeaderComponent, FooterComponent],
-  templateUrl: './logement.component.html',
-  styleUrls: ['./logement.component.css']
+  imports:[DatePipe, FormsModule, HeaderComponent, FooterComponent],
+  templateUrl:'./logement.component.html',
+   styleUrl:'./logement.component.css'
 })
 export class LogementComponent implements OnInit {
   annonces: Annonce[] = [];

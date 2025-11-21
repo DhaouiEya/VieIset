@@ -6,7 +6,7 @@ import { BarreComponent } from './barre/barre.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,BarreComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

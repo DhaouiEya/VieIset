@@ -9,6 +9,7 @@ const compagneRoutes=require('./compagneRoutes');
 const etudiantRoutes=require('./etudiantRoutes');
 const eventRoutes=require('./eventRoutes');
 const sheetRoutes=require('./sheetRoutes');
+const reclamationRoutes=require('./reclamationRoutes');
 
 router.use('/etudiants',etudiantRoutes);
 router.use('/compagnes',compagneRoutes);
@@ -19,6 +20,7 @@ router.use('/demandeAdhesion', demandeAdhesionRoutes);
 router.use('/sheets', sheetRoutes); 
 router.use('/events', eventRoutes);
 router.use('/annonces', annonceLogementRoutes);
+router.use('/reclamations', reclamationRoutes);
 
 
 

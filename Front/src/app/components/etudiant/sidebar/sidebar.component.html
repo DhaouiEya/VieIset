@@ -1,0 +1,38 @@
+<!-- App Bar (simple et propre) -->
+<div class="app-bar">
+  
+  <!-- Titre -->
+    <img class="logo" src="logo.png" alt="Logo">
+
+  <!-- Menu principal (Clubs / Events / Logements) -->
+  <ul class="main-menu">
+    <li routerLink="/sideBarEtudiant/clubs">Clubs</li>
+    <li routerLink="/sideBarEtudiant/events">Évènements</li>
+    <li routerLink="/sideBarEtudiant/logements">Logements</li>
+  </ul>
+
+  <!-- Menu déroulant à droite -->
+  <div class="right-menu">
+   <button class="avatar-btn" (click)="toggleMenu()">
+  <lord-icon
+    src="https://cdn.lordicon.com/rzsnbiaw.json"
+    trigger="hover"
+    stroke="bold"
+    colors="primary:#9cc2f4,secondary:#4030e8"
+    style="width:40px;height:40px">
+  </lord-icon>
+</button>
+
+
+    <ul class="menu-dropdown" [class.show]="menuOpen">
+      <li (click)="viewReclamations()">Réclamations</li>
+      <li (click)="logout()">Se déconnecter</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- Contenu -->
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>

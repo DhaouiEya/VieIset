@@ -13,6 +13,7 @@ function generateToken() {
     // Génère un token aléatoire de 32 octets, puis le convertit en chaîne hexadécimale
     return crypto.randomBytes(32).toString('hex');
 }
+// 
 exports.register = async (req, res, next) => {
     try {
         const {
@@ -20,12 +21,9 @@ exports.register = async (req, res, next) => {
             lastName,
             email,
             password,
-
         } = req.body;
 
-
         const requiredFields = ['firstName', 'lastName', 'email', 'password'];
-
         const validationError = validateRequiredFields(req.body, requiredFields);
         if (validationError) {
             return res.status(400).json({
@@ -35,10 +33,7 @@ exports.register = async (req, res, next) => {
             });
         }
 
-
-
-
-        // Check if email already exists
+        // Vérifier si l'email existe déjà
         const existingUserEmail = await User.findOne({ email: email.toLowerCase() });
         if (existingUserEmail) {
             return res.status(400).json({
@@ -47,41 +42,33 @@ exports.register = async (req, res, next) => {
             });
         }
 
-
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Generate verification tokens
+        // Générer un avatar aléatoire avec DiceBear
+        const seed = Math.random().toString(36).substring(2, 10);
+        const avatar = `https://api.dicebear.com/7.x/personas/svg?seed=${seed}`;
+
+        // Générer token email verification
         const emailVerificationToken = generateToken();
         const tokenExpiry = Date.now() + 3600000; // 1 hour
 
-
-    
-       
-
-
-
-
-
-        // Create user
+        // Créer l'utilisateur
         const user = await User.create({
             firstName,
             lastName,
             email: email.toLowerCase(),
             password: hashedPassword,
             role: 'membre',
+            avatar, // <-- ici on ajoute l'avatar
             emailVerificationToken,
             emailVerificationExpires: tokenExpiry,
         });
 
-            // Send verification email
-        // Send verification email
+        // Envoyer l'email de vérification
         await sendVerificationEmail(user, req, next);
 
-
-
-
-        // Generate JWT token for immediate login if needed
+        // Générer JWT token pour login immédiat
         const authToken = jwt.sign(
             { _id: user._id, role: user.role },
             process.env.JWT_SECRET,
@@ -90,14 +77,22 @@ exports.register = async (req, res, next) => {
 
         res.status(201).json({
             success: true,
-            message: 'Registration successful. Verification email link  sent.',
-            authToken
+            message: 'Registration successful. Verification email link sent.',
+            authToken,
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                avatar: user.avatar
+            }
         });
 
     } catch (error) {
         next(error);
     }
 };
+
 
 
 

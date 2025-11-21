@@ -177,13 +177,30 @@ updateUserProfile(updates: any): Observable<any> {
     }
   }
 
-    getToken() {
-    const auth = this.getAuthFromLocalStorage();
-    if (!auth || !auth.authToken) {
-      return of(undefined);
-    }
-    return auth.authToken;
+  //   getToken() {
+  //   const auth = this.getAuthFromLocalStorage();
+  //   if (!auth || !auth.authToken) {
+  //     return of(undefined);
+  //   }
+  //   return auth.authToken;
+  // }
+  getToken(): string | null {
+  const auth = this.getAuthFromLocalStorage();
+  return auth?.authToken ?? null;
+}
+
+    getUserId(): string | null {
+  const token = this.getToken();
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload._id; 
+  } catch (error) {
+    console.error('Erreur en décodant le token', error);
+    return null;
   }
+}
+
 
 
 }

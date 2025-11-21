@@ -46,17 +46,17 @@ participantCount = 0;
         }
       });
 
-      this.eventSvc.getEventParticipations(this.id).subscribe({
+     /* this.eventSvc.getEventParticipations(this.id).subscribe({
       next: (data: Participation[]) => {
         this.participations = data;
         this.participantCount = data.length; // nombre de participants
       },
       error: (err) => console.error(err)
-    });
+    });*/
     }
   }
 
-  inscrire(): void {
+ /* inscrire(): void {
     this.eventSvc.register(this.id).subscribe({
       next: (res) => {
         Swal.fire({
@@ -76,6 +76,6 @@ participantCount = 0;
         });
       }
     });
-  }
+  }*/
 
 }

@@ -6,11 +6,14 @@ const etudiantSchema = new Schema({
     emailVerified: { type: Boolean, default: false },
     emailVerificationToken: { type: String },
     emailVerificationExpires: { type: Date },
-
+    
     password: { type: String },
     resetPasswordToken: { type: String },
     resetPasswordExpires: { type: Date },
-
+    avatar: {
+  type: String,
+  default: ""
+},
     cin: { type: String, unique: true, sparse:true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },

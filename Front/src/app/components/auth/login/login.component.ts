@@ -59,7 +59,7 @@ this.authService.login(email, password, keepMeLoggedIn).subscribe({
       if (res.user?.role === 'clubManager') {
         this.router.navigateByUrl('/dashboard');
       } else {
-        this.router.navigateByUrl('/clubs');
+        this.router.navigateByUrl('/sideBar/clubs');
       }
     } else {
       console.log("zzz ",res)
