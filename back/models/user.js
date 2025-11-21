@@ -21,6 +21,12 @@ const userSchema = new Schema({
 
     googleId: { type: String },
 
+    authProvider: {  //  - Pour savoir comment l'user s'est inscrit
+        type: String,
+        enum: ['local', 'google', 'both'],
+        default: 'local'
+    },
+
     refreshToken: { type: String },
     lastLogin: { type: Date },
 

@@ -28,7 +28,15 @@ const posteSchema = new Schema({
   clubManager: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
+    validate: {
+      validator: async function(value) {
+        const etudiant = mongoose.model('User');
+        const etu = await etudiant.findById(value);
+        return etu && etu.role.includes('clubManager');
+      },
+      message: 'Le poste doit appartenir à un étudiant ayant le rôle clubManager.'
+    }
   }
 });
 

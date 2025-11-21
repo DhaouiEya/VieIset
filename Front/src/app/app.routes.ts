@@ -24,6 +24,7 @@ import { MyClubComponent } from './components/clubs/my-club/my-club.component';
 import { ProfileComponent } from './components/profile/profile/profile.component';
 import { ParticipationFormsComponent } from './components/responsable-club/participation-forms/participation-forms.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
+import { ListEtudiantsComponent } from './admin/list-etudiants/list-etudiants.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -58,4 +59,6 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   //{path:'chatbot', component: ChatbotComponent},
 
+  //admin routes can be added here
+  {path:'etudiants',component:ListEtudiantsComponent}
 ];

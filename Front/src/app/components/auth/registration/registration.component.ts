@@ -233,7 +233,7 @@ export class RegistrationComponent {
           const roles: string[] = user.role;
 
           // Si l'utilisateur n'a pas le rôle autorisé pour Google login
-          if (!roles.includes('etudiant')) {
+          if (roles.includes('admin')) {
             this.message = 'Google login interdit pour ce rôle.';
             return;
           }
