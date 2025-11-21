@@ -11,7 +11,7 @@ const eventRoutes=require('./eventRoutes');
 const sheetRoutes=require('./sheetRoutes');
 const reclamationRoutes=require('./reclamationRoutes');
 
-router.use('/etudiants',etudiantRoutes);
+router.use('/users',etudiantRoutes);
 router.use('/compagnes',compagneRoutes);
 router.use('/postes', posteRoutes);
 router.use('/auth', authRoutes);

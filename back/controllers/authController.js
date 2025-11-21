@@ -1,12 +1,12 @@
-const User = require('../models/etudiant');
+const User = require('../models/user');
 const { validateRequiredFields } = require("../utils/validators")
 const { sendEmail } = require('../services/emailService');
 const { OAuth2Client } = require('google-auth-library');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
-const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const jwt = require('jsonwebtoken');
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 
 function generateToken() {
@@ -14,6 +14,7 @@ function generateToken() {
     return crypto.randomBytes(32).toString('hex');
 }
 // 
+
 exports.register = async (req, res, next) => {
     try {
         const {
@@ -34,6 +35,7 @@ exports.register = async (req, res, next) => {
         }
 
         // Vérifier si l'email existe déjà
+        // Check if email already exists
         const existingUserEmail = await User.findOne({ email: email.toLowerCase() });
         if (existingUserEmail) {
             return res.status(400).json({
@@ -54,6 +56,7 @@ exports.register = async (req, res, next) => {
         const tokenExpiry = Date.now() + 3600000; // 1 hour
 
         // Créer l'utilisateur
+        // Create user
         const user = await User.create({
             firstName,
             lastName,
@@ -61,14 +64,20 @@ exports.register = async (req, res, next) => {
             password: hashedPassword,
             role: 'membre',
             avatar, // <-- ici on ajoute l'avatar
+            role: ['etudiant'],
             emailVerificationToken,
             emailVerificationExpires: tokenExpiry,
+            authProvider: 'local'
         });
 
         // Envoyer l'email de vérification
         await sendVerificationEmail(user, req, next);
 
         // Générer JWT token pour login immédiat
+        // Send verification email
+        await sendVerificationEmail(user, req, next);
+
+        // Generate JWT token for immediate login if needed
         const authToken = jwt.sign(
             { _id: user._id, role: user.role },
             process.env.JWT_SECRET,
@@ -167,12 +176,13 @@ exports.verifyEmail = async (req, res, next) => {
             emailVerificationExpires: { $gt: Date.now() }
         });
 
-        if (!user) {
-            return res.json({
-                success: false,
-                message: 'Invalid or expired token.'
-            });
-        }
+      if (!user) {
+    return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired token.'
+    });
+}
+
 
         // Verify the user's email
         user.isActive = true;
@@ -233,114 +243,133 @@ exports.resendVerificationEmail = async (req, res, next) => {
 
 
 
+
+/**
+ * Connexion avec Google OAuth
+ * Autorisé seulement pour :
+ * - nouveaux utilisateurs
+ * - ou comptes existants avec email/mot de passe ET rôle 'etudiant'
+ */
 exports.googleLogin = async (req, res, next) => {
-    const { idToken, keepmeloggedin } = req.body;
+  const { idToken, keepmeloggedin } = req.body;
 
-    try {
-        // Verify the Google ID token
-        const ticket = await googleClient.verifyIdToken({
-            idToken: idToken,
-            audience: process.env.GOOGLE_CLIENT_ID,
-        });
+  try {
+    // Vérifier le token Google
+    const ticket = await googleClient.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
 
-        const payload = ticket.getPayload();
-        const { sub: googleId, email, email_verified, name } = payload;
+    const payload = ticket.getPayload();
+    const { sub: googleId, email, email_verified, name } = payload;
 
-        // First check for existing user with googleId
-        let user = await User.findOne({ googleId });
+    // Vérifier si utilisateur déjà lié à Google
+    let user = await User.findOne({ googleId });
 
-        if (!user) {
-            // Check if email exists
-            const existingEmailUser = await User.findOne({ email });
+    if (!user) {
+      // Vérifier si l'email existe déjà
+      const existingEmailUser = await User.findOne({ email });
 
-            if (existingEmailUser) {
-                if (email_verified) {
-                    // Link accounts if email is verified
-                    existingEmailUser.googleId = googleId;
-                    existingEmailUser.emailVerified = true;
-                    if (!existingEmailUser.profilePicture) {
-                        existingEmailUser.profilePicture = picture;
-                    }
-                    user = existingEmailUser;
-                } else {
-                    return res.status(400).json({
-                        success: false,
-                        message: 'E-mail déjà enregistré avec une méthode différente.'
-                    });
-                }
-            } else {
-                // Create new user
-                user = new User({
-                    role: 'membre',
-                    googleId,
-                    email,
-                    firstName: name?.split(' ')[0] || '',
-                    lastName: name?.split(' ').slice(1).join(' ') || '',
-                    emailVerified: email_verified,
-                    isActive: true,
-                });
-            }
-        }
-
-
-        // Generate JWT token
-        const authToken = jwt.sign(
-            { _id: user._id, role: user.role },
-            process.env.JWT_SECRET,
-            { expiresIn: keepmeloggedin ? '7d' : '1d' }
-        );
-
-        // Generate refresh token
-        const refreshToken = crypto.randomBytes(64).toString('hex');
-        user.refreshToken = refreshToken;
-
-        // Save user changes
-        await user.save();
-
-        // Log successful login
-        console.log(`Google login successful for user ${user._id} at ${new Date().toISOString()}`);
-        // Return success response
-        res.json({
-            success: true,
-            authToken,
-            refreshToken,
-
-            etudiant: {
-                _id: user._id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                role: user.role,
-            }
-        });
-
-    } catch (error) {
-        console.error('Google login error:', error);
-
-        // Handle specific errors
-        if (error.name === 'TokenExpiredError') {
-            return res.status(401).json({
-                success: false,
-                message: 'Google token expired'
+      if (existingEmailUser) {
+        // Si l'utilisateur a un mot de passe, autoriser seulement si rôle = 'etudiant'
+        if (existingEmailUser.password) {
+          if (!existingEmailUser.role.includes('etudiant')) {
+            return res.status(403).json({
+              success: false,
+              message: 'Connexion Google interdite pour ce rôle.'
             });
+          }
+
+          // Lier Google au compte existant
+          existingEmailUser.googleId = googleId;
+          existingEmailUser.authProvider = 'both'; // local + google
+          user = existingEmailUser;
+
+        } else {
+          // Aucun mot de passe → Google login seulement si étudiant ?
+          return res.status(403).json({
+            success: false,
+            message: 'Compte existant sans mot de passe, Google login interdit.'
+          });
         }
 
-        if (error.name === 'JsonWebTokenError') {
-            return res.status(401).json({
-                success: false,
-                message: 'Invalid Google token'
-            });
-        }
-
-        next(error);
+      } else {
+        // Créer un nouvel utilisateur Google
+        user = new User({
+          googleId,
+          email,
+          firstName: name?.split(' ')[0] || '',
+          lastName: name?.split(' ').slice(1).join('') || '',
+          emailVerified: email_verified,
+          isActive: true,
+          role: ['etudiant'],   // par défaut rôle étudiant pour Google
+          authProvider: 'google'
+        });
+      }
+    } else {
+      // Compte déjà lié à Google, vérifier rôle
+      if (!user.role.includes('etudiant')) {
+        return res.status(403).json({
+          success: false,
+          message: 'Connexion Google interdite pour ce rôle.'
+        });
+      }
+      // Mettre authProvider à jour si mot de passe existant
+      if (user.password) {
+        user.authProvider = 'both';
+      }
     }
+
+    // Générer JWT
+    const authToken = jwt.sign(
+      { _id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: keepmeloggedin ? '7d' : '1d' }
+    );
+
+    // Générer refresh token
+    const refreshToken = crypto.randomBytes(64).toString('hex');
+    user.refreshToken = refreshToken;
+
+    // Sauvegarder l'utilisateur
+    await user.save();
+
+    // Retour JSON
+    return res.json({
+      success: true,
+      authToken,
+      refreshToken,
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+        authProvider: user.authProvider
+      }
+    });
+
+  } catch (error) {
+    console.error('Google login error:', error);
+
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ success: false, message: 'Google token expiré' });
+    }
+
+    if (error.name === 'JsonWebTokenError') {
+      return res.status(401).json({ success: false, message: 'Token Google invalide' });
+    }
+
+    next(error);
+  }
 };
+
 
 
 exports.infos = async (req, res, next) => {
     try {
         const userId = req.params.id;
-        const updates = req.body; // Les champs envoyés pour pré-inscription
+        const updates = req.body;
 
         // Exemple : les champs obligatoires pour pré-inscription
         const requiredFields = ['address'];
@@ -385,24 +414,42 @@ exports.infos = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     try {
-        const { email, password, keepmeloggedin } = req.body;
+        const { email, password, requestedRole ,keepmeloggedin} = req.body;
 
-        let user = await User.findOne({ email: email.toLowerCase() });
-
-
-        // Vérifier si l'utilisateur existe
-        if (!user) {
-            return res.status(401).json({ message: "Email ou mot de passe incorrect." });
+        if (!email || !password || !requestedRole) {
+            return res.status(400).json({
+                success: false,
+                message: 'Email, mot de passe et rôle sont requis.'
+            });
         }
+
+        // Vérifier que le rôle demandé est valide
+        const allowedRoles = ['etudiant', 'clubManager', 'admin'];
+        if (!allowedRoles.includes(requestedRole)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Rôle invalide.'
+            });
+        }
+
+        // Chercher l'utilisateur par email
+        const user = await User.findOne({ email: email.toLowerCase() });
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'Email ou mot de passe incorrect.'
+            });
+        }
+
 
         // Vérifier si le compte est actif
         if (!user.isActive) {
             return res.status(403).json({ message: "Compte inactif. Veuillez contacter l'administrateur." });
         }
 
-
         // Check if user has a password (OAuth users won't have one)
         const isOAuthUser = user.googleId;
+        console.log("authGoogle ", isOAuthUser)
 
         // If user is an OAuth user, they should use OAuth to login
         if (isOAuthUser) {
@@ -413,35 +460,51 @@ exports.login = async (req, res, next) => {
             });
         }
 
-        // For regular users, verify password
-        if (!user.password || !(await bcrypt.compare(password, user.password))) {
-            return res.status(401).json({ success: false, message: 'Login ou mot de passe incorrect' });
+
+        //  Vérifier que l'utilisateur possède ce rôle
+        if (!user.role.includes(requestedRole)) {
+            return res.status(403).json({
+                success: false,
+                message: `L'utilisateur ne possède pas le rôle "${requestedRole}".`
+            });
         }
 
+        //  Vérifier le mot de passe
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({
+                success: false,
+                message: 'Email ou mot de passe incorrect.'
+            });
+        }
 
         // Set token expiration based on 'keepmeloggedin'
         const tokenExpiry = keepmeloggedin ? '7d' : '2d';
         const authToken = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: tokenExpiry });
 
+
         // Generate a refresh token
         const refreshToken = crypto.randomBytes(64).toString('hex');
-
         user.refreshToken = refreshToken;
 
         await user.save();
 
-        res.json({
+        res.status(200).json({
             success: true,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-                googleId:user.googleId,
-
-            authToken, refreshToken
+            message: 'Login successful',
+            authToken,
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                role: user.role
+            }
         });
 
     } catch (error) {
-        next(error); // Pass the error to the middleware
+        console.error('Login error:', error);
+        next(error);
     }
 };
 
@@ -592,13 +655,13 @@ exports.updateUserProfile = async (req, res, next) => {
         // Chercher l'utilisateur
         const user = await User.findById(userId);
         if (!user || !user.isActive) {
-            return res.status(404).json({ success:false,message: 'Utilisateur introuvable ou inactif' });
+            return res.status(404).json({ success: false, message: 'Utilisateur introuvable ou inactif' });
         }
 
         // Gestion du mot de passe séparément
         if (updates.password && updates.password.trim() !== '') {
-            console.log("eee ",updates.password)
-            // updates.password = await bcrypt.hash(updates.password, 10);
+            console.log("eee ", updates.password)
+            updates.password = await bcrypt.hash(updates.password, 10);
         }
 
         // Mettre à jour les autres champs dynamiquement
@@ -611,7 +674,7 @@ exports.updateUserProfile = async (req, res, next) => {
         await user.save();
 
         res.status(200).json({
-            success:true,
+            success: true,
             message: 'Profil mis à jour avec succès',
             user: {
                 id: userId,
@@ -619,7 +682,7 @@ exports.updateUserProfile = async (req, res, next) => {
                 firstName: user.firstName,
                 email: user.email,
                 role: user.role,
-                googleId:user.googleId
+                googleId: user?.googleId
             }
         });
 
@@ -628,6 +691,28 @@ exports.updateUserProfile = async (req, res, next) => {
         res.status(500).json({ message: 'Erreur serveur, veuillez réessayer.' });
     }
 };
+
+
+//logout
+exports.logout = async (req, res, next) => {
+  try {
+    const userId = req.user._id; 
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { refreshToken: null },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Utilisateur introuvable' });
+    }
+
+    return res.json({ success: true, message: 'Déconnexion réussie' });
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 
 

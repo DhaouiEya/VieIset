@@ -54,22 +54,6 @@
           control: profileForm.controls['lastName']
         }"></ng-container>
 
-        <div class="mb-3 d-flex align-items-center">
-          <i class="bi bi-envelope me-2 fs-5"></i>
-          <label class="me-2 mb-0" style="width: 120px;">Email :</label>
-          <input type="email" class="form-control" formControlName="email" [readonly]="!editable || user.googleId"
-            [ngClass]="getControlClass('email')">
-        </div>
-        <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'required',
-          message: 'Email est obligatoire',
-          control: profileForm.controls['email']
-        }"></ng-container>
-        <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'email',
-          message: 'Email invalide',
-          control: profileForm.controls['email']
-        }"></ng-container>
 
         <div class="mb-3 d-flex align-items-center">
           <i class="bi bi-geo-alt me-2 fs-5"></i>

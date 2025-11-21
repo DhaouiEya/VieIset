@@ -54,6 +54,7 @@
 
               "src/styles.css",
               "src/app/assets/css/style.rtl.css"
+
             ],
             "scripts": []
           },

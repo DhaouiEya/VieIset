@@ -1,6 +1,9 @@
-<div class="container">
+<div class="event-container">
+ <aside class="sidebar">
   <app-responsable-menu></app-responsable-menu>
-  <h3>Publier un événement</h3>
+  </aside>
+  <div class="content">
+<h3>Publier un événement</h3>
 
   @if (error) {
     <p class="error">{{ error }}</p>
@@ -47,4 +50,6 @@
     <button type="submit" class="btn btn-primary" [disabled]="loading">Publier</button>
 
   </form>
+  </div>
+
 </div>

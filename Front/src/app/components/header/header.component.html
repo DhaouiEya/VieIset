@@ -1,25 +1,47 @@
-<header class="app-header">
-  <nav class="nav-container">
+<header class="app-header bg-white shadow">
+  <nav class="nav-container flex items-center justify-between px-6 py-4">
+
+    <!-- Logo -->
     <div class="nav-logo">
-      <a routerLink="/home">UniClubs</a>
+      <a routerLink="/home" class="text-xl font-semibold">UniClubs</a>
     </div>
 
-    <ul class="nav-links">
-      <li><a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
-      <li><a routerLink="/clubs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Clubs</a></li>
-      <li><a routerLink="/events" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Events</a></li>
-      <li><a routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">À Propos</a></li>
-      <li><a routerLink="/logement" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Logements</a></li>
+    <!-- Navigation -->
+    <ul class="nav-links hidden md:flex space-x-6">
+      <li><a routerLink="/home" class="hover:text-blue-600">Home</a></li>
+      <li><a routerLink="/clubs" class="hover:text-blue-600">Clubs</a></li>
+      <li><a routerLink="/events" class="hover:text-blue-600">Events</a></li>
+      <li><a routerLink="/about" class="hover:text-blue-600">À Propos</a></li>
+      <li><a routerLink="/logement" class="hover:text-blue-600">Logements</a></li>
     </ul>
 
-    <div class="nav-profile">
-      <a routerLink="/profile" aria-label="Profil">
-        <!-- Icône de profil SVG -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Profil + dropdown -->
+    <div class="relative" (click)="toggleMenu()">
+      <!-- Icon -->
+      <button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
         </svg>
-      </a>
+      </button>
+
+      <!-- Dropdown menu -->
+       @if (menuOpen) {
+      <div 
+           class="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50">
+
+        <a routerLink="/profile"
+           class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+          Mon Profil
+        </a>
+
+        <button (click)="logout()"
+                class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
+          Déconnexion
+        </button>
+      </div>
+      }
     </div>
+
   </nav>
 </header>

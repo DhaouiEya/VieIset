@@ -1,0 +1,71 @@
+
+<div class="chatbot-container">
+
+  <!-- Bouton flottant -->
+  <button class="chatbot-button" (click)="toggle()">
+    <div class="chatbot-pulse"></div>
+    <div class="chatbot-icon">
+      🤖
+    </div>
+  </button>
+
+  <!-- Fenêtre de chat -->
+  @if (open()) {
+    <div class="chatbot-window">
+      <!-- En-tête -->
+      <div class="chatbot-header">
+        <div class="chatbot-title">
+          <div class="chatbot-avatar">
+            🤖
+          </div>
+          <div class="chatbot-info">
+            <div class="chatbot-name">Chatbot ISET Charguia</div>
+            <div class="chatbot-status">
+              <div class="status-dot"></div>
+              En ligne
+            </div>
+          </div>
+        </div>
+        <div class="chatbot-actions">
+          <button class="action-btn close" (click)="toggle()">✕</button>
+        </div>
+      </div>
+
+      <!-- Zone de messages -->
+      <div class="chatbot-messages">
+        @for (msg of messages(); track $index) {
+          <div class="message {{ msg.sender }}">
+            <div class="message-avatar {{ msg.sender === 'user' ? 'user-avatar' : '' }}">
+              {{ msg.sender === 'user' ? '👤' : '🤖' }}
+            </div>
+            <div class="message-content">
+              <div class="message-sender">
+                {{ msg.sender === 'user' ? 'Vous' : 'Assistant' }}
+              </div>
+              <div class="message-text">{{ msg.text }}</div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Zone de saisie -->
+      <div class="chatbot-input">
+        <div class="input-container">
+          <input
+            class="message-input"
+            [ngModel]="message()"
+            (ngModelChange)="message.set($event)"
+            (keydown.enter)="send()"
+            placeholder="Pose une question..."
+          />
+          <button class="send-button" (click)="send()" [disabled]="!message()">
+            ↑
+          </button>
+        </div>
+        <div class="chatbot-footer">
+          Assistant IA - Réponses instantanées
+        </div>
+      </div>
+    </div>
+  }
+</div>

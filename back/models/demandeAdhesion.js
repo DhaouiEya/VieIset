@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const demandeAdhesionSchema = new mongoose.Schema({
     etudiant: { type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Etudiant',
+        ref: 'User',
          required: true },
     club: { type: mongoose.Schema.Types.ObjectId, 
         ref: 'Club', 

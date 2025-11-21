@@ -43,6 +43,8 @@ router.get('/', posteController.getAllPostes);
 router.put('/:id/etat', posteController.updatePosteEtat);
 
 router.put('/react/:postId', authMiddleware, posteController.reactToPost);
+// Ajouter un commentaire
+router.post('/:postId/comment', authMiddleware, posteController.addComment);
 // 5. Supprimer un poste
 router.delete('/:id', posteController.removePoste);
 

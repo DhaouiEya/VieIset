@@ -6,7 +6,7 @@ export function passwordValidator(control: AbstractControl): ValidationErrors | 
 
   const errors: ValidationErrors = {};
 
-  if (value.length < 8) errors['minLength'] = true;
+  if (value.length < 6) errors['minLength'] = true;
   if (!/[A-Z]/.test(value)) errors['uppercase'] = true;
   if (!/[a-z]/.test(value)) errors['lowercase'] = true;
   if (!/[0-9]/.test(value)) errors['digit'] = true;

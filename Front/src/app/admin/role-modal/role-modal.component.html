@@ -1,0 +1,103 @@
+
+
+<!-- Modal Header -->
+<div class="flex justify-between items-center border-b border-gray-300 px-6 py-5">
+  <h4 class="text-2xl font-bold text-gray-900">
+    Ajouter Club Manager à {{ etudiant.firstName }}
+  </h4>
+  <button type="button" (click)="closeModal()"
+          class="text-gray-500 hover:text-gray-700 transition duration-200">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+</div>
+
+<!-- Modal Body -->
+<div class="px-6 py-6 ">
+  <form [formGroup]="roleForm" (ngSubmit)="submit()">
+
+    <!-- Description -->
+    <p class="text-gray-800 text-lg mb-5">
+      Cette action ajoutera le rôle <strong class="text-blue-600">Club Manager</strong> à l'étudiant.
+    </p>
+
+    <!-- Password fields if Google account and no password -->
+          @if (etudiant.authProvider =='google') {
+<p>      Si l'étudiant est connecté via Google sans mot de passe, veuillez définir un mot de passe.
+</p>
+  <!-- Password fields if needed -->
+    <div  class="mb-5">
+      <!-- Mot de passe -->
+      <input type="password" placeholder="Mot de passe" formControlName="password"
+             class="w-full border border-gray-400 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+             [ngClass]="getControlClass('password')" />
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          message:
+            (roleForm.controls['password'].errors?.['required'] && 'Mot de passe est obligatoire') ||
+            (roleForm.controls['password'].errors?.['uppercase'] && 'Doit contenir une majuscule') ||
+            (roleForm.controls['password'].errors?.['lowercase'] && 'Doit contenir une minuscule') ||
+            (roleForm.controls['password'].errors?.['digit'] && 'Doit contenir un chiffre') ||
+            (roleForm.controls['password'].errors?.['special'] && 'Doit contenir un caractère spécial') ||
+                        (roleForm.controls['password'].errors?.['minLength'] && 'Minimum 6 caractères requis') ||
+            (roleForm.controls['password'].errors?.['space'] && 'Les espaces ne sont pas autorisés'),
+          control: roleForm.controls['password']
+        }"></ng-container>
+
+      <!-- Confirmer le mot de passe -->
+
+    </div>
+
+         <div class="mb-6">
+          <input type="password" placeholder="Confirmer le mot de passe" formControlName="cPassword"
+            class="w-full border border-gray-400 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+            [ngClass]="getControlClass('cPassword')">
+          <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+            validation: 'required',
+            message: 'Confirm Password is required',
+            control: roleForm.controls['cPassword']
+          }"></ng-container>
+
+          <ng-container *ngIf="
+    roleForm.controls['cPassword'].errors?.['ConfirmPassword'] &&
+    roleForm.controls['cPassword'].value
+">
+            <div class="fv-plugins-message-container">
+              <div class="fv-help-block">
+                <span role="alert">Les mots de passe ne correspondent pas</span>
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+  }
+
+    <!-- Modal Footer -->
+    <div class="flex justify-end gap-4 mt-6 border-t border-gray-300 pt-5 ">
+      <button type="button" (click)="closeModal()"
+              class="px-5 py-3 bg-gray-300 text-gray-800  rounded-lg hover:bg-gray-400 transition text-lg">
+        Annuler
+      </button>
+      <button type="submit" [disabled]="!roleForm.valid"
+              class="px-5 py-3 bg-blue-600 text-white  rounded-lg hover:bg-blue-700 transition text-lg">
+        Confirmer
+      </button>
+    </div>
+
+  </form>
+</div>
+
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  @if (
+    (validation && control.hasError(validation) && (control.dirty || control.touched)) ||
+    (!validation && control.invalid && (control.dirty || control.touched))
+  ) {
+    <div class="fv-plugins-message-container m-2">
+      <div class="fv-help-block">
+        <span role="alert">{{ message }}</span>
+      </div>
+    </div>
+  }
+</ng-template>
+

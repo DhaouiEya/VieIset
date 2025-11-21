@@ -1,0 +1,43 @@
+.activities-chip-list {
+  width: 100%;
+}
+.purple-chip {
+  background-color: #8e24aa !important; /* violet vif */
+  color: #fff !important;
+  border: 0 !important; /* supprime toute bordure */
+  border-radius: 16px;
+  font-weight: 500;
+  padding: 4px 12px;
+  box-shadow: none; /* pas d'ombre si tu veux un look lisse */
+  transition: background-color 0.2s ease;
+}
+
+.purple-chip:hover {
+  background-color: #7b1fa2 !important; /* violet plus foncé au survol */
+}
+
+.purple-chip mat-icon {
+  color: #fff !important;
+}
+
+
+.bg-blue-light {
+  background-color: #2081f0; /* bleu clair doux */
+  border-color: #357ABD; /* un bleu légèrement plus foncé pour la bordure */
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.bg-blue-light.dragging {
+  background-color: rgb(74, 155, 248); /* un peu plus foncé quand on drag */
+  border-color: #2E5FA1;
+}
+
+.dropzone .dz-message h5,
+.dropzone .dz-message span,
+.dropzone .dz-message p {
+  color: white; /* texte visible sur le bleu */
+}
+
+.dropzone .dz-message img {
+  filter: brightness(0) invert(1); /* icône visible sur fond bleu */
+}

@@ -5,16 +5,19 @@ import { Club } from '../../../models/club';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
 import { PostClubComponent } from '../post-club/post-club.component';
+import { HeaderComponent } from '../../header/header.component';
+import { PosteService } from '../../../services/poste.service';
+import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-espace-club',
   imports: [
-    DatePipe, // obligatoire pour Angular Material
+    DatePipe,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -22,76 +25,75 @@ import { PostClubComponent } from '../post-club/post-club.component';
     MatDividerModule,
     MatRippleModule,
     PostClubComponent,
+    HeaderComponent,
+    FormsModule
   ],
   templateUrl: './espace-club.component.html',
   styleUrl: './espace-club.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EspaceClubComponent implements OnInit {
-      club: Club = {
-      nom: 'Club Informatique ISETCH',
-      description: 'Un espace pour les passionnés de technologie et de programmation 💻.',
-      imageProfil: 'https://media.licdn.com/dms/image/v2/D4D0BAQEB5QqkrEi67g/company-logo_200_200/company-logo_200_200/0/1705913997648/the_team_by_iset_djerba_logo?e=2147483647&v=beta&t=OA4BzPsP_q2MTQnQFsSQ_p4dh1b6mlqN4dY3NLBRcWo',
-      imageFond: 'https://images.unsplash.com/photo-1503264116251-35a269479413',
-      dateCreation: new Date('2020-09-01'),
-      departement: 'Informatique',
-      adresse: 'ISET Charguia, Tunis',
-      telephone: '+216 22 333 444',
-      email: 'clubinfo@isetch.tn',
-
-      reseaux: {
-        facebook: 'https://facebook.com/clubinfo.isetch',
-        instagram: 'https://instagram.com/clubinfo.isetch'
-      },
-      manager: 'Ameni Abidi',
-    };
-   posts = [
-      {
-        contenu: "Notre premier atelier sur Angular 🚀 Merci à tous les participants ! Notre premier atelier sur Angular 🚀 Merci à tous les participants ! Notre premier atelier sur Angular 🚀 Merci à tous les participants ! Notre premier atelier sur Angular 🚀 Merci à tous les participants !Notre premier atelier sur Angular 🚀 Merci à tous les participants ! Notre premier atelier sur Angular 🚀 Merci à tous les participants ! Notre premier atelier sur Angular 🚀 Merci à tous les participants ! Notre premier atelier sur Angular 🚀 Merci à tous les participants ! Notre premier atelier sur Angular 🚀 Merci à tous les participants ! v Notre premier atelier sur Angular 🚀 Merci à tous les participants !",
-        date: new Date(),
-        image: 'https://images.unsplash.com/photo-1503264116251-35a269479413'
-      },
-      {
-        contenu: "Notre premier atelier sur Angular 🚀 Merci à tous les participants ! Notre premier atelier sur Angular 🚀 Merci à tous les participants !Notre premier atelier sur Angular 🚀 Merci à tous les participants ! Formation Docker 🐳 prévue la semaine prochaine ! Inscrivez-vous vite.",
-        date: new Date(),
-         image: 'https://images.unsplash.com/photo-1503264116251-35a269479413'
-      },
-      {
-        contenu: "Retour sur notre hackathon 2025 — quelle énergie incroyable ⚡!",
-        date: new Date(),
-        image: 'https://images.unsplash.com/photo-1503264116251-35a269479413'
-      }
-    ];
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private clubService: ClubService
+    private clubService: ClubService,
+    private posteservice: PosteService
   ) {}
 
   id_club: any;
-  // club: Club | any;
-  // posts: any[] = [];
+  club: Club | any;
+  posts: any[] = [];
+  token: string = '';
 
   ngOnInit(): void {
+
+    /** 🔥 Récupération CORRECTE du JWT depuis localStorage */
+    const stored = localStorage.getItem('authenticationToken');
+
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        this.token = parsed.authToken;  // 👉 On récupère le vrai token
+      } catch (e) {
+        console.error("Erreur parsing token", e);
+      }
+    }
+
+    console.log("TOKEN TROUVÉ :", this.token);
+
     this.id_club = this.activatedRoute.snapshot.paramMap.get('id');
     this.loadClubEspace();
   }
+
   loadClubEspace() {
     this.clubService.getClubById(this.id_club).subscribe(
-      (res)=>{
-        this.club=res.data.club;
-        this.posts=res.data.posts;
-
-        console.log(res)
+      (res) => {
+        this.club = res.data.club;
+        this.posts = res.data.posts;
       },
-      (err)=>{
-        console.error(err)
+      (err) => {
+        console.error(err);
       }
-    )
+    );
   }
 
+  submitComment(post: any) {
+    console.log("TOKEN UTILISÉ DANS COMMENT :", this.token);
 
+    if (!post.newComment) return;
 
+    if (!this.token) {
+      console.error('Token manquant !');
+      return;
+    }
+
+    this.posteservice.addComment(post._id, post.newComment, this.token).subscribe(
+      (res) => {
+        post.comments = res.comments;
+        post.newComment = '';
+      },
+      (err) => console.error(err)
+    );
+  }
 
 }
-

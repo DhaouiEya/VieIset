@@ -1,3 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+.tagify {
+  --tag-pad: 0.15rem 0.5rem;
+}
+.tagify__input:empty::before {
+  line-height: inherit;
+}
+.tagify.form-control {
+  height: unset;
+}
 /* Espace sous la barre du haut */
 .page-content {
   margin-top: 100px; /* un peu plus que la hauteur de ta barre */

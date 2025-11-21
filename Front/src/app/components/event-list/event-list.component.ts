@@ -5,11 +5,13 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Participation } from '../../models/participation';
+import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-event-list',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterModule, FormsModule],
+  imports: [CommonModule, DatePipe, RouterModule, FormsModule,HeaderComponent,FooterComponent],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css' // corrigé
 })
@@ -34,7 +36,6 @@ participantCount = 0;
 
   ngOnInit(): void {
     this.fetchEvents();
-
   }
 
   fetchEvents() {

@@ -1,0 +1,197 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modal-basic-title">Modifier le club</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="clubForm">
+
+    <!-- Nom / Date de création sur la même ligne -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="nom" class="required fw-semibold fs-6 mb-2">Nom du club</label>
+        <input type="text" id="nom" class="form-control form-control-solid" formControlName="nom" />
+      </div>
+      <div class="col-md-6">
+        <label for="dateCreation" class="fw-semibold fs-6 mb-2">Date de création</label>
+        <input type="date" id="dateCreation" class="form-control form-control-solid" formControlName="dateCreation" />
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="description" class="fw-semibold fs-6 mb-2">Description</label>
+      <textarea id="description" class="form-control form-control-solid" formControlName="description"></textarea>
+    </div>
+
+    <!-- Email / Téléphone sur la même ligne -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="email" class="fw-semibold fs-6 mb-2">Email</label>
+        <input type="email" id="email" class="form-control form-control-solid" formControlName="email" />
+      </div>
+      <div class="col-md-6">
+        <label for="telephone" class="fw-semibold fs-6 mb-2">Téléphone</label>
+        <input type="text" id="telephone" class="form-control form-control-solid" formControlName="telephone" />
+      </div>
+    </div>
+
+    <!-- Adresse / Département sur la même ligne -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="adresse" class="fw-semibold fs-6 mb-2">Adresse</label>
+        <input type="text" id="adresse" class="form-control form-control-solid" formControlName="adresse" />
+      </div>
+      <div class="col-md-6">
+        <label for="departement" class="fw-semibold fs-6 mb-2">Département</label>
+        <input type="text" id="departement" class="form-control form-control-solid" formControlName="departement" />
+      </div>
+    </div>
+
+    <!-- Activités -->
+    <div class="mb-3">
+      <label for="adresse" class="fw-semibold fs-6 mb-2">Activités du club</label>
+
+      <mat-form-field class="activities-chip-list w-100" floatLabel="always">
+
+        <mat-chip-grid #activitiesGrid aria-label="Saisir des activités">
+          @for (activite of clubForm.get('activites')?.value; track activite; let i = $index) {
+          <mat-chip-row class="purple-chip" (removed)="removeActivite(activite)" [editable]="true"
+            (edited)="editActivite(activite, $event)">
+            {{ activite }}
+            <button matChipRemove>
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-chip-row>
+          }
+
+          <input placeholder="Nouvelle activité..." [matChipInputFor]="activitiesGrid"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addActivite($event)" />
+        </mat-chip-grid>
+      </mat-form-field>
+
+    </div>
+
+    <div class="container">
+
+      <!-- Image de fond  -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card shadow-sm p-3 rounded upload-card" cdkDrag>
+            <div class="row align-items-center g-3">
+
+              <!-- Image à gauche -->
+              <div class="col-md-8 position-relative">
+                <div class="preview-image imagepreview" cdkDragHandle>
+                  <img *ngIf="clubForm.value.imageFond" [src]="clubForm.value.imageFond" alt="Fond"
+                    class="w-100 rounded" style="object-fit: cover; height: 250px; border-radius: 15px;">
+
+                  <!-- Bouton close -->
+                  <button *ngIf="clubForm.value.imageFond" class="btn position-absolute top-0 end-0 m-2" type="button"
+                    (click)="removeImage('imageFond'); $event.stopPropagation()">
+                    <img src="/myicons/close.svg" alt="close" class="svg-icon svg-icon-2x">
+                  </button>
+
+                  <!-- Spinner upload -->
+                  <div *ngIf="uploadingFond" class="position-absolute top-50 start-50 translate-middle">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Uploading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dropzone à droite -->
+              <div class="col-md-4 dropzone dz-clickable text-center rounded border border-dashed bg-blue-light"
+                [class.dragging]="isDraggingFond" (dragover)="onDragOver($event, 'imageFond')"
+                (dragleave)="onDragLeave($event, 'imageFond')" (drop)="onDrop($event, 'imageFond')"
+                (click)="fileInputFond.click()"
+                style="cursor: pointer; display: flex; flex-direction: column; justify-content: center; height: 250px;">
+
+                <div class="dz-message text-dark">
+                  <div class="middlecircle mx-auto mb-2" style="width: 50px; height: 50px;">
+                    <img src="/myicons/add-image.svg" alt="add" class="svg-icon svg-icon-2x">
+                  </div>
+                  <h5 class="fw-bold mb-1">Télécharger</h5>
+                  <span>ou glisser-déposer votre image</span>
+                  <p class="fs-7 mt-1">PNG ou JPG (max 5MB)</p>
+                </div>
+
+                <input #fileInputFond type="file" class="d-none" accept=".jpg,.jpeg,.png,.webp"
+                  (change)="onFileSelected($event, 'imageFond')">
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image de profil -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card shadow-sm p-3 rounded upload-card" cdkDrag>
+            <div class="row align-items-center g-3">
+
+              <!-- Image à gauche -->
+              <div class="col-md-8 position-relative">
+                <div class="preview-image imagepreview" cdkDragHandle>
+                  <img *ngIf="clubForm.value.imageProfil" [src]="clubForm.value.imageProfil" alt="Profil"
+                    class="w-100 rounded" style="height: 250px; object-fit: cover; border-radius: 15px;">
+
+                  <!-- Bouton close -->
+                  <button *ngIf="clubForm.value.imageProfil" class="btn position-absolute top-0 end-0 m-2" type="button"
+                    (click)="removeImage('imageProfil'); $event.stopPropagation()">
+                    <img src="/myicons/close.svg" alt="close" class="svg-icon svg-icon-2x">
+                  </button>
+
+                  <!-- Spinner upload -->
+                  <div *ngIf="uploadingProfil" class="position-absolute top-50 start-50 translate-middle">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Uploading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dropzone à droite (style bleu comme image de fond) -->
+              <div class="col-md-4 dropzone dz-clickable text-center rounded border border-dashed bg-blue-light"
+                [class.dragging]="isDraggingProfil" (dragover)="onDragOver($event, 'imageProfil')"
+                (dragleave)="onDragLeave($event, 'imageProfil')" (drop)="onDrop($event, 'imageProfil')"
+                (click)="fileInputProfil.click()"
+                style="cursor: pointer; display: flex; flex-direction: column; justify-content: center; height: 250px;">
+
+                <div class="dz-message text-dark">
+                  <div class="middlecircle mx-auto mb-2" style="width: 50px; height: 50px;">
+                    <img src="/myicons/add-image.svg" alt="add" class="svg-icon svg-icon-2x">
+                  </div>
+                  <h5 class="fw-bold mb-1">Télécharger</h5>
+                  <span>ou glisser-déposer votre image</span>
+                  <p class="fs-7 mt-1">PNG ou JPG (max 5MB)</p>
+                </div>
+
+                <input #fileInputProfil type="file" class="d-none" accept=".jpg,.jpeg,.png,.webp"
+                  (change)="onFileSelected($event, 'imageProfil')">
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+  <button type="button" class="btn btn-primary" (click)="saveClub()">Enregistrer</button>
+</div>

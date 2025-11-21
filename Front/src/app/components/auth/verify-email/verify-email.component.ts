@@ -10,8 +10,8 @@ import { AuthService } from '../../../services/auth.service';
   styleUrl: './verify-email.component.css'
 })
 export class VerifyEmailComponent  implements OnInit {
-
-    statusMessage = '';
+statusMessage = '';
+  verificationSuccess = false;
 
   constructor(
     private authService: AuthService,
@@ -28,18 +28,20 @@ export class VerifyEmailComponent  implements OnInit {
      }
    }
 
-   verifyEmail(token: string) {
+
+
+  verifyEmail(token: string) {
     this.authService.verifyEmail(token).subscribe({
       next: (res: any) => {
         this.statusMessage = res.message;
-        // if (res.success) {
-        //   // rediriger vers login après 2s
-        //   setTimeout(() => this.router.navigate(['/dashboard']), 2000);
-        // }
+        this.verificationSuccess = true;
       },
       error: (err) => {
-        console.error(err);
-        this.statusMessage = 'Erreur serveur, réessayez plus tard.';
+        console.error("Erreur vérification email :", err.error?.message);
+        this.statusMessage = err.error?.message || 'Erreur serveur, réessayez plus tard.';
+        this.verificationSuccess = false;
+        // Redirection automatique après quelques secondes si voulu
+        setTimeout(() => this.router.navigate(['/login']), 3000);
       }
     });
   }

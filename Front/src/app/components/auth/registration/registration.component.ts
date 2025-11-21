@@ -1,12 +1,12 @@
 import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   catchError,
   first,
@@ -18,7 +18,9 @@ import {
 } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { passwordValidator } from '../../validators/password.validator';
 
+declare const google: any;
 
 @Component({
   selector: 'app-registration',
@@ -26,18 +28,15 @@ import { CommonModule } from '@angular/common';
   imports: [
     ReactiveFormsModule,
     CommonModule,
-   PasswordStrengthMeterComponent,
+   PasswordStrengthMeterComponent,RouterLink
   ],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent {
   registrationForm!: FormGroup;
-  hasError!: boolean;
-  message: string = 'The registration details are incorrect';
-
-  google: any;
-
+  hasError = false;
+  message = '';
 
   // private fields
   private unsubscribe: Subscription[] = [];
@@ -46,6 +45,7 @@ export class RegistrationComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -75,9 +75,7 @@ export class RegistrationComponent {
         password: [
           '',
           [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(100),
+            Validators.required, passwordValidator
           ],
         ],
         cPassword: [
@@ -133,6 +131,8 @@ export class RegistrationComponent {
         console.error('Erreur inscription:', err);
         this.hasError = true;
         this.message = err.error.message;
+              this.cdr.detectChanges();
+
       },
     });
 
@@ -142,6 +142,7 @@ export class RegistrationComponent {
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
+
 
   getControlClass(controlName: string): any {
     const control = this.registrationForm.get(controlName);
@@ -166,67 +167,92 @@ export class RegistrationComponent {
   //     });
   // }
 
-  initializeGoogleSignIn() {
-    this.google.accounts.id.initialize({
-      client_id:
-        '83197880105-fhf7bp7mugj0js4ecjp15c9tcojh45nv.apps.googleusercontent.com',
-      callback: this.handleCredentialResponse.bind(this),
-          cancel_on_tap_outside: false,
 
+
+  initializeGoogleSignIn() {
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    google.accounts.id.initialize({
+      client_id: '83197880105-fhf7bp7mugj0js4ecjp15c9tcojh45nv.apps.googleusercontent.com',
+      callback: this.handleCredentialResponse.bind(this),
+      cancel_on_tap_outside: false,
     });
 
+    // Affiche le bouton Google
+    google.accounts.id.renderButton(
+      document.getElementById('googleLoginButton'),
+      {
+        theme: 'outline',
+        size: 'large',
+        text: 'continue_with',
+            logo_alignment: 'center' // centre l'icône
 
+      }
+    );
 
+    // Prompt automatique (optionnel)
+    google.accounts.id.prompt();
   }
+}
 
   triggerGoogleSignIn() {
-  // Affiche le prompt Google One Tap
-  this.google.accounts.id.prompt((notification: any) => {
-    // Si le prompt n'a pas été affiché ou a été ignoré
-    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-      // Rendu manuel du bouton Google sur ton élément existant
-      const button = document.getElementById('googleLoginButton');
-      if (button) {
-        this.google.accounts.id.renderButton(button, {
-          theme: 'outline',
-          size: 'large',
-          text: 'continue_with',
-        });
-      }
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      google.accounts.id.prompt((notification: any) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          google.accounts.id.renderButton(
+            document.getElementById('googleLoginButton'),
+            {
+              theme: 'outline',
+              size: 'large',
+              text: 'continue_with',
+            }
+          );
+        }
+      });
     }
-  });
-}
+  }
 
 
 
 
   handleCredentialResponse(response: any) {
+          this.hasError = false;
+
     const idToken = response.credential;
     const keepMeLoggedIn = false;
-    this.authService
-      .googleLogin(idToken, keepMeLoggedIn)
+ this.authService
+      .googleLogin(
+        idToken,
+        keepMeLoggedIn
+      )
       .pipe(
-        tap((auth) => {
-          if (auth) {
-            // Redirection après login réussi
-            this.router.navigate(['/clubs']);
-          }
-        }),
-        switchMap((auth) => {
-          if (auth) {
-            // Récupérer les infos utilisateur si nécessaire
-            return this.authService.getUserByToken();
-          }
-          return of(null);
-        }),
-        catchError((err) => {
-          console.error('Google authentication failed', err);
+        switchMap(() => this.authService.getUserByToken()),
 
-          this.message = err.error?.message || 'Google authentication failed';
+           tap((user: any) => {
+        if (user) {
+       console.log("ressss",user)
+          const roles: string[] = user.role;
 
+          // Si l'utilisateur n'a pas le rôle autorisé pour Google login
+          if (roles.includes('admin')) {
+            this.message = 'Google login interdit pour ce rôle.';
+            return;
+          }
+          console.log('Google authentication successful, navigating to clubs');
+            this.router.navigateByUrl('/clubs');
+        }
+      }),
+
+        catchError((error) => {
+             this.hasError = true;
+          this.message =  error.error?.message || 'Google authentication failed. Please try again.';
+      this.cdr.detectChanges();
+          console.error('Google authentication failed', error);
           return of(null);
         })
       )
       .subscribe();
   }
+
+
+
 }
