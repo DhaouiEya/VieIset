@@ -9,9 +9,16 @@ import { Participation } from '../models/participation';
   providedIn: 'root'
 })
 export class EventService {
+
   private apiUrl = 'http://localhost:9000/api/events'; // <- corrige l’URL
 
+
+
   constructor(private http: HttpClient) {}
+
+   updateEvent(_id: any, formData: FormData) {
+    throw new Error('Method not implemented.');
+  }
 
  getEvents(): Observable<Event[]> {
   return this.http.get<Event[]>(this.apiUrl).pipe(
@@ -34,7 +41,7 @@ getEventParticipations(eventId: string): Observable<Participation[]> {
 
 
 
-  
+
     deleteEvent(id: string): Observable<void> {
     return this.http.delete<void>(`${URL}/${id}`);
   }

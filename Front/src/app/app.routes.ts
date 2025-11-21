@@ -33,6 +33,7 @@ import { ProfileComponent } from './components/profile/profile/profile.component
 import { ParticipationFormsComponent } from './components/responsable-club/participation-forms/participation-forms.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { ListEtudiantsComponent } from './admin/list-etudiants/list-etudiants.component';
+import { DemandedonComponent } from './components/demandedon/demandedon.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -84,6 +85,7 @@ export const routes: Routes = [
   { path: 'compagne', component: CompagneComponent },
   { path: 'profile', component: ProfileComponent },
   //{path:'chatbot', component: ChatbotComponent},
+  {path:'demandedonetudiant',component:DemandedonComponent},
 
   //admin routes can be added here
   {path:'etudiants',component:ListEtudiantsComponent}
