@@ -23,6 +23,7 @@ import { CompagneComponent } from './admin/compagne/compagne.component';
 import { MyClubComponent } from './components/clubs/my-club/my-club.component';
 import { ProfileComponent } from './components/profile/profile/profile.component';
 import { ParticipationFormsComponent } from './components/responsable-club/participation-forms/participation-forms.component';
+import { ListEtudiantsComponent } from './admin/list-etudiants/list-etudiants.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -56,4 +57,6 @@ export const routes: Routes = [
   { path: 'compagne', component: CompagneComponent },
   { path: 'profile', component: ProfileComponent },
 
+  //admin routes can be added here
+  {path:'etudiants',component:ListEtudiantsComponent}
 ];
