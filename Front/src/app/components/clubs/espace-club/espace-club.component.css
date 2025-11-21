@@ -1,3 +1,33 @@
+.comments-list { margin: 15px 0; }
+.comment-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+.comment-author { color: #2c5aa0; font-size: 14px; }
+.comment-text { flex: 1; font-size: 14px; }
+.comment-date { font-size: 12px; color: #6c757d; }
+.comment-form { margin-top: 15px; }
+.form-row { display: flex; gap: 10px; }
+.comment-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 14px;
+}
+.submit-btn {
+  background: #2c5aa0 !important;
+  color: white !important;
+  border-radius: 20px;
+  padding: 0 20px;
+}
+
+
 .club-container {
   max-width: 1200px;
   margin: auto auto;
@@ -10,6 +40,7 @@
   height: 400px;
   object-fit: cover;
 }
+
 
 .profile-section {
   display: flex;

@@ -2,6 +2,26 @@
   "ARTVibe": "ARTVibe est le club artistique de l'ISET Charguia. Il organise des ateliers de peinture, photographie, design graphique et des événements culturels pour les étudiants.",
   "Securinet": "Securinet est le club de cybersécurité. Il propose des ateliers sur la sécurité des réseaux, challenges CTF, formations en pentesting et sensibilisation à la sécurité informatique.",
   "Enactus": "Enactus se concentre sur des projets entrepreneuriaux et sociaux. Les membres développent des initiatives qui combinent impact social et compétences entrepreneuriales.",
-  "Google Club": "Google Club offre des formations et meetups autour des technologies Google (Android, web, cloud), hackathons et sessions de préparation aux certifications."
-  
+  "Google Club": "Google Club offre des formations et meetups autour des technologies Google (Android, web, cloud), hackathons et sessions de préparation aux certifications.",
+  "ISET": {
+    "Nom": "Institut Supérieur des Études Technologiques de Charguia (ISET Charguia)",
+    "Statut": "Institut public sous le Ministère de l’Enseignement Supérieur",
+    "Création": "décret n° 2000‑981, 11 mai 2000",
+    "Adresse": "47, Rue des Entrepreneurs, Charguia II, 2035 Tunis",
+    "Contacts": "Tel : 71 940 322 / 71 940 292, Fax : 71 940 370, Email : info@isetch.rnu.tn",
+    "Domaines": "administration, logistique, management info, systèmes embarqués, développement, transport",
+    "Diplômes": "licence appliquée, mastère professionnel (TS en 5 semestres avec stages)",
+    "Mission": "former des techniciens supérieurs qualifiés et améliorer l’employabilité",
+    "Projet qualité": "management digitalisé pour la qualité académique et la gouvernance",
+    "Masters": "ex. MIQHSE (Management Qualité, Hygiène, Santé, Sécurité, Environnement)"
+  },
+  "VieEtudiante": {
+    "Cafés": ["Timeout", "Havana", "The Cookies Cafes & Bistro"],
+    "Mosquée": "Prés de l'ISET Charguia",
+    "RestaurantsUniversitaires": "Prés de l'ISET",
+    "Foyers": {
+      "Filles": "Ariana",
+      "Garçons": "Sokra"
+    }
+  }
 }

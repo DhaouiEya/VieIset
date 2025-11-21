@@ -64,17 +64,17 @@ submit() {
   if (this.selectedImage) formData.append('image', this.selectedImage);
 
   this.loading = true;
-//   this.eventSvc.createEventWithFiles(formData).subscribe({
-//     next: (ev) => {
-//       this.loading = false;
-//       this.router.navigate(['/events']);
-//     },
-//     error: (err) => {
-//       this.loading = false;
-//       this.error = 'Erreur lors de la création de l’événement.';
-//       console.error(err);
-//     }
-//   });
+  this.eventSvc.createEventWithFiles(formData).subscribe({
+    next: (ev) => {
+      this.loading = false;
+      this.router.navigate(['/events']);
+    },
+    error: (err) => {
+      this.loading = false;
+      this.error = 'Erreur lors de la création de l’événement.';
+      console.error(err);
+    }
+  });
  }
 
 }

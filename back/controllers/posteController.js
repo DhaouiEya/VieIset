@@ -1,4 +1,3 @@
-const posteService = require('../services/posteService');
 const Poste = require('../models/Poste');
 const mongoose = require('mongoose');
 
@@ -14,11 +13,9 @@ const createPoste = async (req, res) => {
     }
 
     const clubManagerId = new mongoose.Types.ObjectId(req.user._id);
-   // Extraire les fichiers uploadés
     const imageFile = req.files?.image ? req.files.image[0] : null;
     const videoFile = req.files?.video ? req.files.video[0] : null;
 
-    // Construire les chemins relatifs pour les fichiers
     const lienImage = imageFile ? `/uploads/${imageFile.filename}` : null;
     const lienVideo = videoFile ? `/uploads/${videoFile.filename}` : null;
 
@@ -30,8 +27,6 @@ const createPoste = async (req, res) => {
       clubManager: clubManagerId
     };
 
-    console.log('Poste data to save:', posteData);
-
     const newPoste = new Poste(posteData);
     const savedPoste = await newPoste.save();
 
@@ -42,14 +37,13 @@ const createPoste = async (req, res) => {
   }
 };
 
-
-
-
-
-// Contrôleur pour récupérer tous les postes
+// Contrôleur pour récupérer tous les postes avec populate
 const getAllPostes = async (req, res) => {
   try {
-    const postes = await posteService.getAllPostes();
+    const postes = await Poste.find()
+      .populate("comments.userId", "firstName lastName")
+      .populate("clubManager", "firstName lastName email");
+
     res.json(postes);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -62,41 +56,37 @@ const updatePosteEtat = async (req, res) => {
     const { id } = req.params;
     const { etat } = req.body;
 
-    const poste = await posteService.updatePosteEtat(id, etat);
+    const poste = await Poste.findByIdAndUpdate(id, { etat }, { new: true });
+    if (!poste) return res.status(404).json({ message: "Poste non trouvé" });
+
     res.json(poste);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 
-
+// Réactions à un poste
 const reactToPost = async (req, res) => {
   try {
     const { postId } = req.params;
-    const { reaction } = req.body; // 'jaime', 'jaimePas' ou null
+    const { reaction } = req.body;
     const userId = req.user._id;
 
     const post = await Poste.findById(postId);
-    
     if (!post) return res.status(404).json({ message: "Post non trouvé" });
 
-    // Chercher la réaction précédente de cet utilisateur
     const existing = post.reactions.find(r => r.userId.toString() === userId.toString());
 
     if (existing) {
       if (reaction === existing.type || reaction === null) {
-        // Annuler la réaction précédente
         post.reactions = post.reactions.filter(r => r.userId.toString() !== userId.toString());
       } else {
-        // Changer de réaction (ex: "J’aime" -> "J’aime pas")
         existing.type = reaction;
       }
     } else if (reaction) {
-      // Nouvelle réaction
       post.reactions.push({ userId, type: reaction });
     }
 
-    // Recalculer les compteurs
     post.nbReactions.jaime = post.reactions.filter(r => r.type === 'jaime').length;
     post.nbReactions.jaimePas = post.reactions.filter(r => r.type === 'jaimePas').length;
 
@@ -108,7 +98,8 @@ const reactToPost = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
-// SUPPRIMER
+
+// Supprimer un poste
 const removePoste = async (req, res) => {
   try {
     const { id } = req.params;
@@ -120,7 +111,7 @@ const removePoste = async (req, res) => {
   }
 };
 
-// MODIFIER
+// Modifier un poste
 const editPoste = async (req, res) => {
   try {
     const { id } = req.params;
@@ -144,12 +135,39 @@ const editPoste = async (req, res) => {
   }
 };
 
+// Ajouter un commentaire
+const addComment = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { text } = req.body;
+    const userId = req.user._id;
+
+    if (!text) return res.status(400).json({ message: "Le commentaire ne peut pas être vide." });
+
+    const post = await Poste.findById(postId);
+    if (!post) return res.status(404).json({ message: "Post non trouvé." });
+
+    post.comments.push({ userId, text });
+    await post.save();
+
+    // Populer les commentaires pour renvoyer le nom de l'utilisateur
+    const populatedPost = await Poste.findById(postId)
+      .populate("comments.userId", "firstName lastName")
+      .populate("clubManager", "firstName lastName");
+
+    res.status(201).json({ message: "Commentaire ajouté.", comments: populatedPost.comments });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur serveur." });
+  }
+};
+
 module.exports = {
   createPoste,
   getAllPostes,
   updatePosteEtat,
   reactToPost,
   removePoste,
-  editPoste // ✅ ajouter ici
-
+  editPoste,
+  addComment
 };

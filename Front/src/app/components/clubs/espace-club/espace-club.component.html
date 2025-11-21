@@ -5,15 +5,15 @@
 
   <!-- Image de couverture -->
   <div class="cover-photo" >
-    <img [src]="club.imageFond" alt="Image de couverture">
+    <img [src]="club?.imageFond" alt="Image de couverture">
   </div>
 
   <!-- Image de profil et infos -->
   <div class="profile-section">
-    <img class="profile-photo " [src]="club.imageProfil" alt="Profil du club">
+    <img class="profile-photo " [src]="club?.imageProfil" alt="Profil du club">
     <div class="info-section">
-      <h2>{{ club.nom }}</h2>
-      <p>{{club.description}}</p>
+      <h2>{{ club?.nom }}</h2>
+      <p>{{club?.description}}</p>
 
     </div>
   </div>
@@ -32,7 +32,7 @@
 
   <!-- Liste des publications -->
 
-  <!-- <div class="posts-section">
+   <!-- <div class="posts-section">
 
     <h3>Publications récentes</h3>
 
@@ -51,9 +51,9 @@
   <div class="sidebar-section">
 
     <h3>Informations</h3>
-    <p><strong>Adresse :</strong> {{ club.adresse }}</p>
-    <p><strong>Département :</strong> {{ club.departement }}</p>
-    <p><strong>Créé le :</strong> {{ club.dateCreation | date }}</p>
+    <p><strong>Adresse :</strong> {{ club?.adresse }}</p>
+    <p><strong>Département :</strong> {{ club?.departement }}</p>
+    <p><strong>Créé le :</strong> {{ club?.dateCreation | date }}</p>
   </div>
 
   <div class="sidebar-section">
@@ -68,7 +68,7 @@
     colors="primary:#30c9e8,secondary:#e4e4e4"
     style="width:50px;height:50px">
 </lord-icon>
-       <span>  {{ club.telephone }}</span></div>
+       <span>  {{ club?.telephone }}</span></div>
     <div>
         <script src="https://cdn.lordicon.com/lordicon.js"></script>
 <lord-icon
@@ -78,9 +78,9 @@
     colors="primary:#30c9e8,secondary:#e4e4e4"
     style="width:50px;height:50px">
 </lord-icon>
-     <span>{{ club.email }}</span>   </div>
+     <span>{{ club?.email }}</span>   </div>
   </div>
-@if(club.reseaux){
+@if(club?.reseaux){
   <div class="sidebar-section">
 
     <h3>Réseaux</h3>
@@ -93,7 +93,7 @@
                 colors="primary:#3080e8,secondary:#b4b4b4"
                 style="width:50px;height:50px">
         </lord-icon>
-       <span> {{ club.reseaux.facebook }}</span>
+       <span> {{ club?.reseaux.facebook }}</span>
     </div>
     <div >
         <script src="https://cdn.lordicon.com/lordicon.js"></script>
@@ -105,14 +105,14 @@
     style="width:50px;height:50px">
 </lord-icon>
 
-        <span>{{ club.reseaux.instagram }}</span></div>
+        <span>{{ club?.reseaux.instagram }}</span></div>
   </div>
   }
 
   <div class="sidebar-section">
 
     <h3>Manager</h3>
-    <p>{{ club.manager.firstName }} {{ club.manager.lastName }}</p>
+    <p>{{ club?.manager.firstName }} {{ club?.manager.lastName }}</p>
 
     <!-- <p>{{ club.manager }} {{ club.manager }}</p> -->
 
@@ -125,8 +125,36 @@
   <div class="club-posts">
     <h3 class="mb-3">Publications récentes</h3>
     @for (post of posts; track $index) {
-      <app-post-club [post]="post" [club]="club"></app-post-club>
+  <app-post-club [post]="post" [club]="club"></app-post-club>
+
+ <!-- Liste des commentaires -->
+@if (post.comments?.length) {
+  <div class="comments-list">
+    @for (comment of post.comments; track $index) {
+      <div class="comment-item">
+        <strong class="comment-author">{{ comment.userId?.firstName }} {{ comment.userId?.lastName }}</strong>
+        <span class="comment-text">{{ comment.text }}</span>
+        <span class="comment-date">{{ comment.date | date:'short' }}</span>
+      </div>
     }
+  </div>
+}
+
+<!-- Formulaire d'ajout de commentaire -->
+<form (ngSubmit)="submitComment(post)" class="comment-form">
+  <div class="form-row">
+    <input
+      type="text"
+      [(ngModel)]="post.newComment"
+      name="commentText"
+      placeholder="Écrire un commentaire..."
+      required
+      class="comment-input">
+    <button type="submit" mat-button class="submit-btn">Envoyer</button>
+  </div>
+</form>
+    }
+
   </div>
 
 </div>
