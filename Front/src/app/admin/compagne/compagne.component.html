@@ -77,12 +77,16 @@
                   <label class="form-label fw-semibold text-dark">
                     <i class="fas fa-user-graduate me-1 text-primary"></i>Bénéficiaire
                   </label>
-                  <select formControlName="beneficiaire" class="form-select modern-select">
-                    <option value="">Sélectionnez un étudiant</option>
-                    @for (etu of etudiants; track etu._id) {
-                      <option [value]="etu._id">{{ etu.firstName }} {{ etu.lastName }}</option>
-                    }
-                  </select>
+                 <select formControlName="beneficiaire" class="form-select">
+  <!-- Optional: a default "please select" option -->
+  <option value="">-- Choisir un bénéficiaire --</option>
+
+  @for (e of etudiants; track e._id) {
+    <option [value]="e._id">
+      {{ e.firstName }} {{ e.lastName }} - {{ e.email }}
+    </option>
+  }
+</select>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100 modern-btn">

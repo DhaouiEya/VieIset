@@ -4,10 +4,11 @@ import { NgModel, FormsModule } from '@angular/forms';
 import { RoleModalComponent } from "../role-modal/role-modal.component";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { AdminMenuComponent } from '../admin-menu/admin-menu.component';
 
 @Component({
   selector: 'app-list-etudiants',
-  imports: [FormsModule],
+  imports: [FormsModule,AdminMenuComponent],
   standalone: true,
   templateUrl: './list-etudiants.component.html',
   styleUrl: './list-etudiants.component.css',

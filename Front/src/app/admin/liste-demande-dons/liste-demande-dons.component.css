@@ -1,0 +1,30 @@
+.table th {
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.table-header {
+  background-color: #0b409c;
+  color: white !important;
+}
+
+.badge {
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.img-thumbnail {
+  border: 2px solid #dee2e6;
+  transition: transform 0.2s;
+}
+
+.img-thumbnail:hover {
+  transform: scale(3);
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(11, 4, 105, 0.3);
+}
+
+.btn-group .btn {
+  padding: 0.4rem 0.7rem;
+}

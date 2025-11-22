@@ -41,4 +41,6 @@ const userSchema = new Schema({
 
 // Nom du modèle : User
 // Nom de la collection MongoDB : user
-module.exports = mongoose.model('User', userSchema, 'user');
+module.exports = mongoose.models.User || mongoose.model("User", userSchema, "user");
+//                                                                           ^^^^^^
+//                                                                           nom de la collection

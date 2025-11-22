@@ -8,9 +8,14 @@
 
   <form [formGroup]="demandeForm" (ngSubmit)="submitDemande()" enctype="multipart/form-data" class="don-form">
     <div class="form-group">
-      <label>Titre de la demande</label>
-      <input type="text" formControlName="title" placeholder="Ex: Aide pour frais médicaux">
-    </div>
+  <label>Titre de la demande</label>
+  <select formControlName="title" class="form-select modern-select">
+    <option value="aide_etudiant">🎓 Aide pour étudiant dans le besoin</option>
+    <option value="aide_club">🏆 Aide pour les clubs universitaires</option>
+    <option value="projet_educatif">💡 Projet éducatif innovant</option>
+  </select>
+</div>
+
 
     <div class="form-group">
       <label>Description détaillée</label>
@@ -69,7 +74,7 @@
                 <td>{{ d.dateDemande | date:'dd MMM yyyy' }}</td>
                 <td>
                   @if (d.annexe) {
-                    <a [href]="'http://localhost:3000/' + d.annexe" target="_blank" class="link-view">
+                    <a [href]="'http://localhost:9000/' + d.annexe" target="_blank" class="link-view">
                       Voir
                     </a>
                   } @else {

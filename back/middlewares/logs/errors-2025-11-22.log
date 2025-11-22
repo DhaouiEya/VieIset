@@ -1,0 +1,24 @@
+{
+  "timestamp": "2025-11-22T09:05:12.471Z",
+  "method": "GET",
+  "url": "/annexes/annexe-1763745224472-145308622.jpg",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "ReferenceError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "fs is not defined",
+  "stack": "ReferenceError: fs is not defined\n    at C:\\Users\\zaoui\\VieIset\\back\\app.js:52:5\n    at Layer.handleRequest (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\index.js:295:15\n    at param (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\index.js:600:14)\n    at param (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\index.js:610:14)\n    at processParams (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\index.js:664:3)"
+},
+{
+  "timestamp": "2025-11-22T09:05:14.292Z",
+  "method": "GET",
+  "url": "/annexes/annexe-1763745224472-145308622.jpg",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "ReferenceError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "fs is not defined",
+  "stack": "ReferenceError: fs is not defined\n    at C:\\Users\\zaoui\\VieIset\\back\\app.js:52:5\n    at Layer.handleRequest (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\index.js:295:15\n    at param (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\index.js:600:14)\n    at param (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\index.js:610:14)\n    at processParams (C:\\Users\\zaoui\\VieIset\\back\\node_modules\\router\\index.js:664:3)"
+},
