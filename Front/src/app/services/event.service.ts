@@ -1,26 +1,31 @@
-
- const URL = 'http://localhost:9000/api/events';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Event } from '../models/event.model';
 import { Attendee } from '../models/attendee.model';
-
-
-
 import { Participation } from '../models/participation';
 
+ const URL = 'http://localhost:9000/api/events'; // <- corrige l’URL
 @Injectable({
   providedIn: 'root'
 })
-export class EventService {
- // <- corrige l’URL
 
+export class EventService {
   constructor(private http: HttpClient) {}
 
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>(URL);
   }
+
+
+//  getEvents(): Observable<Event[]> {
+//   return this.http.get<Event[]>(this.apiUrl).pipe(
+//     map(events => events.map(e => ({ ...e, id: (e as any)._id })))
+//   );
+// }
+getEventParticipations(eventId: string): Observable<Participation[]> {
+  return this.http.get<Participation[]>(`${URL}/${eventId}/participations`);
+}
 
   getEvent(id: string): Observable<Event> {
     return this.http.get<Event>(`${URL}/${id}`);
@@ -29,10 +34,6 @@ export class EventService {
   createEvent(event: Omit<Event, 'id' | 'attendees'>): Observable<Event> {
     return this.http.post<Event>(URL, event);
   }
-
-
-
-    // Créer un poste avec fichiers (FormData)
     createEventWithFiles(formData: FormData): Observable<Event> {
       return this.http.post<Event>(URL, formData);
     }

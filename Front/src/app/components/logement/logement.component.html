@@ -1,158 +1,88 @@
 <!-- app.component.html -->
 
 
-  <div class="container">
-    <h2 class="title">Gestion des Logements</h2>
+  <div class="main">
+    <h1 class="title">
+      <span class="vielset">VielSET</span>
+      <span class="subtitle">Gestion des Logements</span>
+    </h1>
 
-    <div class="content">
-      <!-- Liste des annonces à gauche -->
-      <div class="annonces-section">
-        <div class="section-header">
-          <h3>
-            <i class="icon-house">🏠</i>
-            Liste des Annonces
-          </h3>
-          @if (annonces.length > 0) {
-          <div class="annonces-count">
-            {{ annonces.length }} logement{{ annonces.length > 1 ? 's' : '' }}
-          </div>
-        }
+    <div class="grid">
+      <!-- LISTE DES ANNONCES -->
+      <section class="annonces">
+        <div class="header">
+          <h2>Mes Annonces</h2>
+          <div class="count">{{ annonces.length }} logement{{ annonces.length > 1 ? 's' : '' }}</div>
         </div>
 
-        <div class="annonces-list">
+        <div class="cards">
           @for (annonce of paginatedAnnonces; track annonce._id) {
-            <div class="annonce-card">
-              <div class="card-glow"></div>
-              <div class="annonce-header">
-                <h4>{{ annonce.titre }}</h4>
-                <div class="card-badge">Nouveau</div>
-              </div>
-              <p class="annonce-description">{{ annonce.description }}</p>
-              <div class="annonce-footer">
-                <div class="annonce-meta">
-                  <small class="annonce-date">
-                    <i class="icon-calendar">📅</i>
-                    Créé le : {{ annonce.dateCreation | date:'dd/MM/yyyy à HH:mm' }}
-                  </small>
-                  <div class="annonce-actions">
-                    <button class="btn-action" title="Voir les détails">
-                      <i class="icon-eye">👁️</i>
-                    </button>
-                  </div>
-                </div>
+            <div class="card">
+              <div class="glow-border"></div>
+              <div class="badge">Nouveau</div>
+              <h3>{{ annonce.titre }}</h3>
+              <p>{{ annonce.description }}</p>
+              <div class="footer">
+                <small>{{ annonce.dateCreation | date:'dd MMM yyyy' }}</small>
+                <button class="btn-view">Voir →</button>
               </div>
             </div>
           }
 
           @if (annonces.length === 0) {
-            <div class="empty-state">
-              <div class="empty-icon">
-                <i class="icon-home">🏠</i>
-              </div>
-              <p>Aucun logement disponible</p>
-              <small>Commencez par ajouter votre premier logement</small>
+            <div class="empty">
+              <div class="icon">Home</div>
+              <h3>Aucune annonce</h3>
+              <p>Ajoutez votre premier logement</p>
             </div>
           }
         </div>
 
-        <!-- Pagination -->
-        @if (annonces.length > itemsPerPage) {
-          <div class="pagination-section">
-            <div class="pagination">
-              <button class="pagination-btn"
-                      (click)="goToPage(currentPage - 1)"
-                      [disabled]="currentPage === 1">
-                <i class="icon-arrow">←</i>
-                Précédent
-              </button>
+        <!-- PAGINATION -->
+        @if (totalPages > 1) {
+          <div class="pagination">
+            <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">← Précédent</button>
 
-              <div class="pagination-numbers">
-                @for (page of getPageNumbers(); track page) {
-                  <button class="pagination-number"
-                          [class.active]="page === currentPage"
-                          (click)="goToPage(page)">
-                    {{ page }}
-                  </button>
-                }
-              </div>
-
-              <button class="pagination-btn"
-                      (click)="goToPage(currentPage + 1)"
-                      [disabled]="currentPage === totalPages">
-                Suivant
-                <i class="icon-arrow">→</i>
-              </button>
+            <div class="pages">
+              @for (page of getPageNumbers(); track page) {
+                <button [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</button>
+              }
             </div>
 
-            <div class="pagination-info">
-              Page {{ currentPage }} sur {{ totalPages }}
-              <span class="pagination-total">({{ annonces.length }} logement{{ annonces.length > 1 ? 's' : '' }})</span>
-            </div>
+            <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Suivant →</button>
           </div>
         }
-      </div>
+      </section>
 
-      <!-- Formulaire d'ajout à droite -->
-      <div class="form-section">
-        <div class="form-header">
-          <h3>
-            <i class="icon-add">✨</i>
-            Ajouter une nouvelle annonce
-          </h3>
-          <div class="form-steps">Étape 1</div>
-        </div>
+      <!-- FORMULAIRE -->
+      <aside class="form-panel">
+        <h2>Ajouter une annonce</h2>
 
-        <form (ngSubmit)="onSubmit(annonceForm)" #annonceForm="ngForm" class="annonce-form">
-          <div class="form-group">
-            <label for="titre" class="form-label">
-              <i class="icon-title">📝</i>
-              Titre *
-            </label>
-            <input type="text" id="titre" name="titre" class="form-control"
-                   [(ngModel)]="newAnnonce.titre"
-                   #titre="ngModel"
-                   required
-                   placeholder="Ex: Appartement 3 pièces centre-ville"
-                   [class.invalid]="titre.invalid && titre.touched">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+          <div class="input-group">
+            <input type="text" [(ngModel)]="newAnnonce.titre" name="titre" #titre="ngModel" required placeholder=" " />
+            <label>Titre *</label>
             @if (titre.invalid && titre.touched) {
-              <div class="error-message">
-                <i class="icon-error">⚠️</i>
-                Le titre est requis
-              </div>
+              <small class="error">Champ requis</small>
             }
           </div>
 
-          <div class="form-group">
-            <label for="description" class="form-label">
-              <i class="icon-description">📄</i>
-              Description *
-            </label>
-            <textarea id="description" name="description" class="form-control"
-                      [(ngModel)]="newAnnonce.description"
-                      #description="ngModel"
-                      required
-                      rows="6"
-                      placeholder="Décrivez votre logement en détail..."
-                      [class.invalid]="description.invalid && description.touched"></textarea>
-            @if (description.invalid && description.touched) {
-              <div class="error-message">
-                <i class="icon-error">⚠️</i>
-                La description est requise
-              </div>
+          <div class="input-group">
+            <textarea [(ngModel)]="newAnnonce.description" name="description" #desc="ngModel" required rows="6" placeholder=" "></textarea>
+            <label>Description détaillée *</label>
+            @if (desc.invalid && desc.touched) {
+              <small class="error">Champ requis</small>
             }
           </div>
 
-          <button type="submit" class="btn-primary" [disabled]="!annonceForm.valid">
-            <span class="btn-icon">
-              <i class="icon-plus">+</i>
-            </span>
+          <button type="submit" class="btn-add" [disabled]="!f.valid">
             Ajouter le logement
-            <div class="btn-shine"></div>
           </button>
         </form>
-      </div>
+      </aside>
     </div>
   </div>
 
   <app-footer></app-footer>
+
 

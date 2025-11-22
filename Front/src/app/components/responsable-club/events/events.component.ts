@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EventService } from '../../../services/event.service';
 import { DatePipe } from '@angular/common';
-import { Event } from '../../../models/event';
+import { Event } from '../../../models/event.model';
 import { DetailsParticipantsComponent } from '../details-participants/details-participants.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -75,7 +75,7 @@ loadEvents() {
     cancelButtonText: 'Annuler'
   }).then((result) => {
     if (result.isConfirmed) {
-      this.eventService.deleteEvent(event._id || '').subscribe({
+      this.eventService.deleteEvent(event.id || '').subscribe({
         next: () => {
           this.loadEvents();
           Swal.fire(
@@ -110,12 +110,12 @@ openUpdateEventDialog(event?: Event) {
   });
 }
  // Quand le modal se ferme, on recharge les événements si update réussi
- 
+
   viewAttendees(event?: Event) {
     const dialogRef = this.dialog.open(DetailsParticipantsComponent, {
       width: '400px',
       disableClose: true,
-      data: event 
+      data: event
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -124,7 +124,7 @@ openUpdateEventDialog(event?: Event) {
   }
 //     openImageModal(event: any) {
 //   this.selectedEvent = event;
-//  // this.selectedEventImage = 'http://localhost:9000' + event.lienImage; 
+//  // this.selectedEventImage = 'http://localhost:9000' + event.lienImage;
 //   this.showImageModal = true;
 //    console.log('Modal ouvert pour:', event.title);
 // }

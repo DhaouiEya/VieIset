@@ -17,6 +17,14 @@ import { ClubsListComponent } from './components/clubs/clubs-list/clubs-list.com
 import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
 import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
 
+
+
+import { EventsComponent } from './components/responsable-club/events/events.component';
+import { ResSideBarComponent } from './components/responsable-club/res-side-bar/res-side-bar.component';
+
+import { UpdateEventComponent } from './components/responsable-club/update-event/update-event.component';
+import { ConsulterDemandesAdhesionComponent } from './components/consulter-demandes-adhesion/consulter-demandes-adhesion.component';
+
 import { LogementComponent } from './components/logement/logement.component';
 import { AdmindashboardComponent } from './admin/admindashboard/admindashboard.component';
 import { CompagneComponent } from './admin/compagne/compagne.component';
@@ -30,11 +38,9 @@ import { HomeComponent } from './components/homePage/home/home.component';
 import { AppBarHomeComponent } from './components/homePage/app-bar-home/app-bar-home.component';
 import { FooterHomeComponent } from './components/homePage/footer-home/footer-home.component';
 import { AboutUsComponent } from './components/homePage/about-us/about-us.component';
-import { MyClubComponent } from './components/clubs/my-club/my-club.component';
-import { ProfileComponent } from './components/profile/profile/profile.component';
+
 import { ParticipationFormsComponent } from './components/responsable-club/participation-forms/participation-forms.component';
-import { ChatbotComponent } from './chatbot/chatbot.component';
-import { ListEtudiantsComponent } from './admin/list-etudiants/list-etudiants.component';
+
 
 export const routes: Routes = [
  
@@ -71,6 +77,28 @@ export const routes: Routes = [
   { path: 'createClub', component: CreateClubComponent },
   { path: 'espaceClub/:id', component: EspaceClubComponent },
   
+ 
+//il faut  avec id
+  {path: 'espaceClub/:id',component:EspaceClubComponent },
+  // {path: 'espaceClub',component:EspaceClubComponent },
+
+
+  {path:"res_club", component:ResSideBarComponent,children:
+  [
+    {path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    {path: 'dashboard', component: ResponsableDashboardComponent },
+    { path: 'consulter-events', component:EventsComponent},
+    { path: 'publications', component: PublicationPostComponent },
+    {path:'createClub',component:CreateClubComponent},
+    {path:"updateEvent/:id",component:UpdateEventComponent},
+    {path: 'participation-forms', component: ParticipationFormsComponent},
+
+
+  ],
+  },
+  {path:"consulter-demandes", component:ConsulterDemandesAdhesionComponent},
+{ path: 'espaceClub/:id', component: EspaceClubComponent },
+  { path: 'clubs', component: ClubsListComponent },
 
   // Other pages
  
@@ -89,3 +117,8 @@ export const routes: Routes = [
 
   },
 ];
+
+
+
+
+

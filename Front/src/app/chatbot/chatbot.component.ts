@@ -35,7 +35,7 @@ export class ChatbotComponent implements AfterViewChecked {
     // Ajouter un message de bienvenue si c'est la première ouverture
     if (this.open() && this.messages().length === 0) {
       setTimeout(() => {
-        this.messages.set([{ sender: 'bot', text: "Bonjour 👋 "
+        this.messages.set([{ sender: 'bot', text: " "
  }]);
       }, 300);
     }

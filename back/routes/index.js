@@ -10,7 +10,9 @@ const etudiantRoutes=require('./etudiantRoutes');
 const eventRoutes=require('./eventRoutes');
 const sheetRoutes=require('./sheetRoutes');
 const reclamationRoutes=require('./reclamationRoutes');
+const demandeDonRoutes=require('./demandeDonRoutes');
 
+router.use('/demandedon',demandeDonRoutes);
 router.use('/users',etudiantRoutes);
 router.use('/compagnes',compagneRoutes);
 router.use('/postes', posteRoutes);

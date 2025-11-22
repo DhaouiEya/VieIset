@@ -1,0 +1,28 @@
+<div class="demandes-container">
+
+  <h2>Mes demandes d'adhésion</h2>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Club</th>
+        <th>Date de la demande</th>
+        <th>Statut</th>
+       
+        <th>Date choisie</th>
+      </tr>
+    </thead>
+    <tbody>
+        @for(demande of demandes; track $index) {
+      <tr>
+        <td>{{ demande.club.nom }}</td>
+        <td>{{ demande.dateDemande | date:'short' }}</td>
+        <td>{{ demande.statut }}</td>
+        <td>{{ demande.dateChoisie ? (demande.dateChoisie | date:'short') : '-' }}</td>
+      </tr>}
+    </tbody>
+  </table>
+
+</div>
+
+

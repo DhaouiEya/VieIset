@@ -12,7 +12,6 @@ router.post('/google-login', authController.googleLogin);
 router.put('/:id/pre-register',authController.infos);
 
 router.post('/login', authController.login);
-
 router.post('/request-password-reset', authController.requestPasswordReset);
 router.post('/reset-password', authController.resetPassword);
 
