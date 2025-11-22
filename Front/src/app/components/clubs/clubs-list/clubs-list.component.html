@@ -1,59 +1,146 @@
-<app-header></app-header>
-<div class="m-15 ">
 
-<div class="main-header pt-20">
-  <h1>Clubs Universitaires</h1>
-  <p>Découvrez, rejoignez et participez à la vie étudiante.</p>
-</div>
+<main class="bg-slate-50 ">
 
-<div class="clubs-grid">
-  @for (club of clubs; track $index) {
-  <div class="club-card" >
-    <div class="card-header" [style.backgroundImage]="'url(' + club.imageFond + ')'">
-      <div class="header-content">
-        <h3 class="club-name">{{ club.nom }}</h3>
+  <!-- Section principale avec un fond gris clair -->
+  <div class="container mx-auto px-3 sm:px-4 lg:px-6 py-6">
+    <!-- Conteneur centré avec padding horizontal réduit -->
 
-        <p class="club-department" >{{ club.departement }}</p>
-      </div>
+    <div class="text-center mb-6">
+      <!-- En-tête de la page -->
+      <h1
+        class="text-3xl sm:text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+        Discover Our Clubs
+      </h1>
+      <p class="mt-2 text-base text-gray-600 max-w-2xl mx-auto">
+        Explore the vibrant communities and opportunities waiting for you.
+      </p>
     </div>
-    <div class="card-body">
-      <p class="club-description">{{ club.description }}</p>
-      @if(club.activites?.length) {
-      <div class="club-activities" >
 
-        @for (act of club.activites; track $index) {
-          <span class="activity-tag">{{ act }}</span>
+    <div class="space-y-6">
+      <!-- Boucle Angular pour générer une card par club -->
+      @for (club of clubs; track club._id; let i = $index) {
+
+      <!-- Club Card -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden md:p-3 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1">
+
+        <!-- Club Info Section -->
+        <div class="flex flex-col md:flex-row gap-4 md:gap-6" [class.md:flex-row-reverse]="i % 2 !== 0">
+
+          <!-- Image du club -->
+          <div class="md:w-1/2 w-full">
+            <img [src]="club.imageFond" alt="Image for {{club.nom}}" class="rounded-xl object-cover w-full h-60 md:h-70 lg:h-80">
+          </div>
+
+          <!-- Contenu du club -->
+          <div class="md:w-1/2 w-full flex flex-col py-4 px-4 md:px-4">
+
+            <!-- Nom du club et département -->
+            <div class="mb-3 pt-1 flex flex-wrap items-center justify-center gap-2">
+              <h2 class="text-3xl md:text-4xl font-bold text-blue-800">
+                {{ club.nom }}
+              </h2>
+              <span class="ml-2 text-xs md:text-sm font-medium bg-yellow-400 text-white px-2 py-1 rounded-full border border-yellow-400">
+                {{ club.departement }}
+              </span>
+            </div>
+
+            <!-- Description et activités -->
+            <div class="flex-grow flex flex-col justify-center items-start space-y-3 mb-3">
+              <p class="text-base md:text-lg text-gray-700 text-left leading-relaxed">{{ club.description }}</p>
+              <div class="club-activities flex flex-wrap justify-start gap-1.5">
+                @for (act of club.activites; track $index) {
+                  <span class="activity-tag bg-blue-100 text-blue-800 text-xs md:text-sm font-semibold px-2 py-1 rounded-full border border-blue-200">
+                    {{ act }}
+                  </span>
+                }
+              </div>
+            </div>
+
+            <!-- Bouton et réseaux sociaux -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-1 pt-1">
+
+              <!-- Bouton Espace Club -->
+              <div class="flex justify-start">
+                <button
+                  class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold text-base px-4 py-2 rounded-full transition-all duration-300 transform hover:scale-105 flex items-center gap-1.5"
+                  (click)="goToClubSpace(club._id)">
+                  <i class="bi bi-house-door-fill text-lg"></i>
+                  Espace Club
+                </button>
+              </div>
+
+              <!-- Icônes sociales -->
+              <div class="social-links flex justify-end items-center gap-3 mt-1 pt-1">
+                @if (club.reseaux?.facebook) {
+                  <a [href]="club.reseaux?.facebook" target="_blank" aria-label="Facebook"
+                     class="transition-transform hover:scale-110 hover:shadow-lg rounded-full">
+                    <i class="bi bi-facebook" style="font-size: 1.75rem; color:#4267B2;"></i>
+                  </a>
+                }
+                @if (club.reseaux?.instagram) {
+                  <a [href]="club.reseaux?.instagram" target="_blank" aria-label="Instagram"
+                     class="transition-transform hover:scale-110 hover:shadow-lg rounded-full">
+                    <i class="bi bi-instagram" style="font-size: 1.75rem; color:#C13584;"></i>
+                  </a>
+                }
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Club Leaders Section -->
+        @if(club.leaders && club.leaders.length > 0) {
+        <div class="mt-6 pt-6 border-t border-gray-200">
+
+          <div class="text-center mb-4">
+            <div class="inline-flex items-center justify-center">
+              <span class="relative inline-flex">
+                <span class="absolute inline-flex w-full h-full bg-blue-400 rounded-full opacity-75 animate-ping"></span>
+                <span class="relative inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-bold tracking-wider uppercase px-4 py-2 rounded-full shadow">
+                  <i class="bi bi-people-fill mr-1"></i>
+                  Our Team
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap justify-center items-start gap-4">
+            @for(leader of club.leaders; track leader.name) {
+            <div class="group relative w-full max-w-xs">
+
+              <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl transform group-hover:scale-105 transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+
+              <div class="relative bg-gray-50 rounded-xl border border-gray-100 p-4 text-center transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 z-10">
+
+                <div class="relative inline-block mb-3">
+                  <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full transform group-hover:scale-110 transition-all duration-300"></div>
+                  <img [src]="leader.photoUrl" alt="Photo of {{leader.name}}"
+                       class="relative w-20 h-20 rounded-full mx-auto object-cover border-3 border-white shadow z-10">
+                </div>
+
+                <div class="space-y-1.5">
+                  <h4 class="text-base font-bold text-gray-800 group-hover:text-gray-900 transition-colors">
+                    {{ leader.name }}
+                  </h4>
+                  <p class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full inline-block">
+                    {{ leader.role }}
+                  </p>
+                </div>
+
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+
+              <div class="absolute inset-0 bg-blue-200/20 rounded-xl blur-lg transform group-hover:scale-105 transition-all duration-300 opacity-0 group-hover:opacity-100 -z-10"></div>
+            </div>
+            }
+          </div>
+
+        </div>
         }
       </div>
-    }
-    </div>
-    <div class="card-footer">
-
-      <div class="social-links">
-        @if( club.reseaux?.facebook) {
-        <a  [href]="club.reseaux?.facebook" target="_blank" aria-label="Facebook">
-    <i class="bi bi-facebook" style="font-size: 1.5rem; color:#4267B2;"></i>
-        </a>
       }
-        @if( club.reseaux?.instagram) {
-
-        <a [href]="club.reseaux?.instagram" target="_blank" aria-label="Instagram">
-    <i class="bi bi-instagram" style="font-size: 1.5rem; color:#C13584;"></i>
-        </a>
-      }
-
-      </div>
-
-<button class="btn btn-primary btn-sm rounded-pill" (click)="goToClubSpace(club._id)">
-  <i class="bi bi-house-door-fill me-2"></i> Espace Club
-</button>
-
-
     </div>
   </div>
-}
-</div>
-
-</div>
-
-<app-footer></app-footer>
+</main>

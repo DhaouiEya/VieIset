@@ -14,6 +14,13 @@ const club=new mongoose.Schema({
       facebook: { type: String },
       instagram: { type: String }
     },
+
+     leaders: [{
+        name: { type: String, required: true },
+        photoUrl: { type: String, required: true },
+        role: { type: String, required: true }
+    }],
+    
    manager: { 
          type: mongoose.Schema.Types.ObjectId, 
          ref: 'User',
@@ -23,6 +30,7 @@ const club=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
     }],
+    
     actif:{type:Boolean,default:true}
 },{timestamps:true});
 

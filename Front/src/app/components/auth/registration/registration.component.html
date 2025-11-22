@@ -4,44 +4,42 @@
     <img src="bg1.jpg" alt="Image d'inscription" class="object-cover w-full h-screen">
   </div>
 
+
   <!-- Formulaire à droite -->
-  <div class="flex flex-1 items-center justify-center px-8 py-12">
-    <div class="w-full max-w-xl"> <!-- Agrandi de max-w-md -> max-w-xl -->
-      <form [formGroup]="registrationForm" (ngSubmit)="submit()" class="space-y-10">
+ <div class="flex flex-1 items-center justify-center px-8 py-12">
+    <div class="w-full max-w-xl">
+      <form [formGroup]="registrationForm" (ngSubmit)="submit()" class="space-y-6">
 
         <!-- Titre -->
         <div class="text-center">
-          <h1 class="text-blue-600 text-3xl font-bold mb-2">Bienvenue à ISET Vie Étudiant</h1>
-          <p class="text-gray-500 font-medium">Entrez vos informations pour créer votre compte</p>
+          <h1 class="text-blue-600 text-2xl font-bold mb-2">Bienvenue à ISET Vie Étudiant</h1>
+          <p class="text-gray-500 font-medium text-base">Entrez vos informations pour créer votre compte</p>
         </div>
 
         <!-- Connexion Google -->
-        <!-- Connexion Google -->
-       <div id="googleLoginButton"></div>
-
-
-
+        <div id="googleLoginButton"></div>
 
         <!-- Séparateur -->
         <div class="flex items-center my-4">
           <hr class="flex-1 border-gray-300">
-          <span class="px-2 text-gray-400">ou</span>
+          <span class="px-2 text-gray-400 text-base">ou</span>
           <hr class="flex-1 border-gray-300">
         </div>
 
+
         <!-- Alertes d'erreur -->
         <ng-container *ngIf="hasError">
-          <div class="flex items-start bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded mb-4">
-            <i class="bi bi-exclamation-circle-fill mr-2 text-lg"></i>
+          <div class="flex items-start bg-red-100 border border-red-300 text-red-700 px-4 py-2 rounded mb-4 text-base">
+            <i class="bi bi-exclamation-circle-fill mr-2 text-base"></i>
             <div>{{ message }}</div>
           </div>
         </ng-container>
 
         <!-- Champs du formulaire -->
-        <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <input type="text" placeholder="Prénom" formControlName="firstName"
-              class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+         <input type="text" placeholder="Prénom" formControlName="firstName"
+              class="w-full px-4 py-3 text-base border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
               [ngClass]="getControlClass('firstName')">
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
               validation: 'required',
@@ -51,8 +49,8 @@
           </div>
 
           <div>
-            <input type="text" placeholder="Nom" formControlName="lastName"
-              class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+               <input type="text" placeholder="Nom" formControlName="lastName"
+              class="w-full px-4 py-3 text-base border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
               [ngClass]="getControlClass('lastName')">
             <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
               validation: 'required',
@@ -62,9 +60,9 @@
           </div>
         </div>
 
-        <div class="mb-6">
+        <div class="mb-4">
           <input type="email" placeholder="Email" formControlName="email"
-            class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+            class="w-full px-4 py-3 text-base border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
             [ngClass]="getControlClass('email')">
           <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
             validation: 'required',
@@ -80,9 +78,9 @@
           }"></ng-container>
         </div>
 
-        <div class="mb-6">
-          <input type="password" placeholder="Mot de passe" formControlName="password"
-            class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+        <div class="mb-4">
+           <input type="password" placeholder="Mot de passe" formControlName="password"
+            class="w-full px-4 py-3 text-base border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
             [ngClass]="getControlClass('password')">
           <div class="mt-2">
             <password-strength-meter [password]="registrationForm.get('password')?.value" [minPasswordLength]="6"
@@ -105,9 +103,9 @@
           </div>
         </div>
 
-        <div class="mb-6">
-          <input type="password" placeholder="Confirmer le mot de passe" formControlName="cPassword"
-            class="w-full px-4 py-2 border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
+        <div class="mb-4">
+         <input type="password" placeholder="Confirmer le mot de passe" formControlName="cPassword"
+            class="w-full px-4 py-3 text-base border border-gray-300 rounded bg-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none"
             [ngClass]="getControlClass('cPassword')">
           <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
             validation: 'required',
@@ -119,7 +117,7 @@
     registrationForm.controls['cPassword'].errors?.['ConfirmPassword'] &&
     registrationForm.controls['cPassword'].value
 ">
-            <div class="fv-plugins-message-container">
+            <div class="fv-plugins-message-container text-base mt-1">
               <div class="fv-help-block">
                 <span role="alert">Les mots de passe ne correspondent pas</span>
               </div>
@@ -128,16 +126,16 @@
 
         </div>
 
-        <!-- Bouton d'envoi -->
+       <!-- Bouton d'envoi -->
         <div>
           <button type="submit"
-            class="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition">
+            class="w-full px-4 py-3 bg-blue-600 text-white text-base font-semibold rounded hover:bg-blue-700 transition">
             S'inscrire
           </button>
         </div>
 
         <!-- Lien vers connexion -->
-        <div class="text-center text-gray-500 font-medium">
+        <div class="text-center text-gray-500 font-medium text-base">
           Vous avez déjà un compte ?
           <a routerLink="/login" class="text-blue-600 hover:underline cursor-pointer">Se connecter</a>
         </div>

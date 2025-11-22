@@ -14,7 +14,18 @@ const userSchema = new Schema({
     cin: { type: String, unique: true, sparse: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    address: { type: String },
+ adresse: { type: String },
+  ville: { type: String },
+
+    photoProfil: { type: String },
+    dateNaissance: { type: Date },
+    numeroTelephone: { type: String },
+  /* ==== Parcours académique ==== */
+
+  filiere: { type: String },         // ex : Informatique, Gestion, Génie Civil
+  specialite: { type: String },                      // ex : Développement Web, Réseaux, IA
+  niveau: { type: String },          // ex : L1, L2, L3, M1, M2
+  classe: { type: String },                          // ex : 2ème année B, Groupe 3
 
     isActive: { type: Boolean, default: false },
     isOnline: { type: Boolean, default: true },
@@ -29,7 +40,7 @@ const userSchema = new Schema({
 
     refreshToken: { type: String },
     lastLogin: { type: Date },
-
+    profileCompletion: { type: Number, default: 0 },
     preRegistered: { type: Boolean, default: false },
     role: {
         type: [String],

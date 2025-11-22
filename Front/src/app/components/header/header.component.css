@@ -1,7 +1,7 @@
 /* App Header Navigation */
 .app-header {
   position: fixed;
-  top: 80px;
+  top: 0;
   left: 0;
   width: 100%;
   height: 80px;
@@ -31,7 +31,7 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--primary-text-color);
+  color: var(--yellow-400);
   text-decoration: none;
 }
 
@@ -61,8 +61,13 @@
   transition: color 0.3s ease;
 }
 
+
+.nav-links a:hover,
+.nav-links a.active-link {
+  color: var(--yellow-400) !important;
+}
 .nav-links a:hover {
-  color: var(--primary-text-color);
+  color: var(--yellow-400);
 }
 
 .nav-links a::after {
@@ -73,7 +78,7 @@
   transform: translateX(-50%);
   width: 0;
   height: 3px;
-  background-color: var(--accent-color-1);
+  background-color: var(--yellow-400);
   border-radius: 2px;
   transition: width 0.3s ease;
 }
@@ -91,12 +96,12 @@
   height: 40px;
   border-radius: 50%;
   background-color: #e9ecef;
-  color: var(--primary-text-color);
+  color: var(--yellow-400);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-profile a:hover {
-  background-color: var(--accent-color-1);
+  background-color: var(--yellow-400);
   color: white;
 }
 

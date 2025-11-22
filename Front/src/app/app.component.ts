@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { BarreComponent } from './barre/barre.component';
+import { HeaderComponent } from "./components/header/header.component";
 
-// import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,BarreComponent],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

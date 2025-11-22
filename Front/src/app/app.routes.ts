@@ -24,6 +24,7 @@ import { MyClubComponent } from './components/clubs/my-club/my-club.component';
 import { ProfileComponent } from './components/profile/profile/profile.component';
 import { ParticipationFormsComponent } from './components/responsable-club/participation-forms/participation-forms.component';
 import { ListEtudiantsComponent } from './admin/list-etudiants/list-etudiants.component';
+import { ProfileHeaderComponent } from './components/profile/profile-header/profile-header.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/register', pathMatch: 'full' },
@@ -51,11 +52,12 @@ export const routes: Routes = [
   { path: 'espaceClub/:id', component: EspaceClubComponent },
   { path: 'clubs', component: ClubsListComponent },
 
+
   // Other pages
   { path: 'logement', component: LogementComponent },
   { path: 'admindashboard', component: AdmindashboardComponent },
   { path: 'compagne', component: CompagneComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileHeaderComponent },
 
   //admin routes can be added here
   {path:'etudiants',component:ListEtudiantsComponent}

@@ -1,134 +1,84 @@
-<app-header></app-header>
 
-<div class="club-container mat-elevation-z4">
-   <app-header></app-header>
-
-  <!-- Image de couverture -->
-  <div class="cover-photo" >
-    <img [src]="club.imageFond" alt="Image de couverture">
-  </div>
-
-  <!-- Image de profil et infos -->
-  <div class="profile-section">
-    <img class="profile-photo " [src]="club.imageProfil" alt="Profil du club">
-    <div class="info-section">
-      <h2>{{ club.nom }}</h2>
-      <p>{{club.description}}</p>
-
+<div class="p-4 ">
+  @if (isLoading()) {
+    <div class="flex justify-center items-center h-screen">
+      <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
     </div>
-  </div>
-  <!-- <mat-divider></mat-divider> -->
-<!-- navigation -->
-  <div class="club-nav">
-  <div class="left-buttons">
-    <button mat-button class="active">Posts</button>
-    <button mat-button>Events</button>
-    <button mat-button>About Us</button>
-  </div>
-  <div class="right-button">
-    <button mat-button>Rejoindre Us</button>
-  </div>
-</div>
-
-  <!-- Liste des publications -->
-
-  <!-- <div class="posts-section">
-
-    <h3>Publications récentes</h3>
-
-@for (post of posts; track $index) {
-  <app-post-club [post]="post" [clubNom]="club.nom"></app-post-club>
-}
-
-  </div> -->
-  <div class="posts-layout">
-
-  <!-- COLONNE GAUCHE FIXE -->
- <div class="club-sidebar mat-elevation-z2">
-
-
-
-  <div class="sidebar-section">
-
-    <h3>Informations</h3>
-    <p><strong>Adresse :</strong> {{ club.adresse }}</p>
-    <p><strong>Département :</strong> {{ club.departement }}</p>
-    <p><strong>Créé le :</strong> {{ club.dateCreation | date }}</p>
-  </div>
-
-  <div class="sidebar-section">
-
-    <h3>Contact</h3>
-    <div>
-        <script src="https://cdn.lordicon.com/lordicon.js"></script>
-<lord-icon
-    src="https://cdn.lordicon.com/xvxvvvel.json"
-    trigger="hover"
-    stroke="bold"
-    colors="primary:#30c9e8,secondary:#e4e4e4"
-    style="width:50px;height:50px">
-</lord-icon>
-       <span>  {{ club.telephone }}</span></div>
-    <div>
-        <script src="https://cdn.lordicon.com/lordicon.js"></script>
-<lord-icon
-    src="https://cdn.lordicon.com/zvamcipt.json"
-    trigger="hover"
-    stroke="bold"
-    colors="primary:#30c9e8,secondary:#e4e4e4"
-    style="width:50px;height:50px">
-</lord-icon>
-     <span>{{ club.email }}</span>   </div>
-  </div>
-@if(club.reseaux){
-  <div class="sidebar-section">
-
-    <h3>Réseaux</h3>
-    <div >
-        <script src="https://cdn.lordicon.com/lordicon.js"></script>
-        <lord-icon
-                src="https://cdn.lordicon.com/jxcoxfau.json"
-                trigger="hover"
-                 stroke="bold"
-                colors="primary:#3080e8,secondary:#b4b4b4"
-                style="width:50px;height:50px">
-        </lord-icon>
-       <span> {{ club.reseaux.facebook }}</span>
+  } @else if (error()) {
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <strong class="font-bold">Error:</strong>
+      <span class="block sm:inline">{{ error() }}</span>
     </div>
-    <div >
-        <script src="https://cdn.lordicon.com/lordicon.js"></script>
-<lord-icon
-    src="https://cdn.lordicon.com/lljlideu.json"
-    trigger="hover"
-    stroke="bold"
-    colors="primary:#ee66aa,secondary:#a866ee"
-    style="width:50px;height:50px">
-</lord-icon>
+  } @else if (club) {
+    <div class="club-container shadow-lg">
+      <div class="cover-photo">
+        <img [src]="club.imageFond" alt="Image de couverture" class="w-full h-full object-cover">
+      </div>
 
-        <span>{{ club.reseaux.instagram }}</span></div>
-  </div>
+      <div class="profile-section">
+        <img class="profile-photo" [src]="club.imageProfil" alt="Profil du club">
+        <div class="info-section">
+          <h2 class="text-3xl font-bold text-gray-800">{{ club.nom }}</h2>
+          <p class="text-gray-600 mt-2">{{ club.description }}</p>
+        </div>
+      </div>
+
+      <div class="club-nav">
+        <div class="left-buttons">
+          <button class="active">Posts</button>
+        </div>
+        <div class="right-button">
+          <button>Rejoindre Us</button>
+        </div>
+      </div>
+
+      <div class="posts-layout">
+        <div class="club-sidebar shadow-md">
+          <div class="sidebar-section">
+            <h3 class="text-lg font-semibold text-blue-600">Informations</h3>
+            <p><strong>Adresse :</strong> {{ club.adresse }}</p>
+            <p><strong>Département :</strong> {{ club.departement }}</p>
+            <p><strong>Créé le :</strong> {{ club.dateCreation | date:'longDate' }}</p>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="text-lg font-semibold text-blue-600">Contact</h3>
+            <div class="flex items-center gap-2">
+              <lord-icon src="https://cdn.lordicon.com/xvxvvvel.json" trigger="hover" stroke="bold" colors="primary:#30c9e8,secondary:#e4e4e4" style="width:50px;height:50px"></lord-icon>
+              <span>{{ club.telephone }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <lord-icon src="https://cdn.lordicon.com/zvamcipt.json" trigger="hover" stroke="bold" colors="primary:#30c9e8,secondary:#e4e4e4" style="width:50px;height:50px"></lord-icon>
+              <span>{{ club.email }}</span>
+            </div>
+          </div>
+
+          @if(club.reseaux){
+            <div class="sidebar-section">
+              <h3 class="text-lg font-semibold text-blue-600">Réseaux</h3>
+              <div class="flex items-center gap-2">
+                <lord-icon src="https://cdn.lordicon.com/jxcoxfau.json" trigger="hover" stroke="bold" colors="primary:#3080e8,secondary:#b4b4b4" style="width:50px;height:50px"></lord-icon>
+                <span>{{ club.reseaux.facebook }}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <lord-icon src="https://cdn.lordicon.com/lljlideu.json" trigger="hover" stroke="bold" colors="primary:#ee66aa,secondary:#a866ee" style="width:50px;height:50px"></lord-icon>
+                <span>{{ club.reseaux.instagram }}</span>
+              </div>
+            </div>
+          }
+
+          <div class="sidebar-section">
+            <h3 class="text-lg font-semibold text-blue-600">Manager</h3>
+            <p>{{ club.manager.firstName }} {{ club.manager.lastName }}</p>
+          </div>
+        </div>
+
+        <div class="club-posts">
+          @for (post of posts; track post._id) {
+            <app-post-club [post]="post" [club]="club"></app-post-club>
+          }
+        </div>
+      </div>
+    </div>
   }
-
-  <div class="sidebar-section">
-
-    <h3>Manager</h3>
-    <p>{{ club.manager.firstName }} {{ club.manager.lastName }}</p>
-
-    <!-- <p>{{ club.manager }} {{ club.manager }}</p> -->
-
-  </div>
-
-</div>
-
-
-  <!-- COLONNE DROITE QUI SCROLL -->
-  <div class="club-posts">
-    <h3 class="mb-3">Publications récentes</h3>
-    @for (post of posts; track $index) {
-      <app-post-club [post]="post" [club]="club"></app-post-club>
-    }
-  </div>
-
-</div>
-
 </div>

@@ -1,0 +1,48 @@
+<div>
+  <div class="flex justify-between items-center mb-6">
+    <h3 class="text-2xl font-semibold text-gray-900">Détails du Profil</h3>
+    <button (click)="onEdit()" class="px-6 py-3 text-lg text-white bg-blue-500 rounded-lg  hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">Modifier le Profil</button>
+  </div>
+  <div class="grid grid-cols-1 gap-y-6 text-lg">
+
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-500 font-medium">Nom Complet</span>
+      <span class="text-gray-800 font-medium ">{{ user?.lastName || 'Non renseigné' }} {{ user?.firstName || 'Non renseigné' }}</span>
+    </div>
+
+
+
+      <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-500 font-medium">Date de Naissance</span>
+      <span class="text-gray-800 font-medium">{{ user?.dateNaissance || 'Non renseigné' }}</span>
+    </div>
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-500 font-medium">Téléphone</span>
+      <span class="text-gray-800 font-medium flex items-center gap-2">{{ user?.numeroTelephone || 'Non renseigné' }} </span>
+    </div>
+      <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-500 font-medium">Adresse</span>
+      <span class="text-gray-800 font-medium">{{ user?.adresse || 'Non renseigné' }}</span>
+    </div>
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-500 font-medium">Ville</span>
+      <span class="text-gray-800 font-medium">{{ user?.ville || 'Non renseigné' }}</span>
+    </div>
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-500 font-medium">Filière</span>
+      <span class="text-gray-800 font-medium">{{ user?.filiere || 'Non renseigné' }}</span>
+    </div>
+      <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-500 font-medium">Spécialité</span>
+      <span class="text-gray-800 font-medium">{{ user?.specialite || 'Non renseigné' }}</span>
+    </div>
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-500 font-medium">Niveau</span>
+      <span class="text-gray-800 font-medium">{{ user?.niveau || 'Non renseigné' }}</span>
+    </div>
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-500 font-medium">Classe</span>
+      <span class="text-gray-800 font-medium">{{ user?.classe || 'Non renseigné' }}</span>
+    </div>
+  </div>
+</div>
