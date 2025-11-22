@@ -115,9 +115,10 @@
                 <p class="info-text">Vous êtes déjà inscrit à cet événement.</p>
               </div>
             } @else {
+               <!-- (click)="inscrire()" -->
               <div class="registration-button">
                 <button
-                  (click)="inscrire()"
+                
                   class="btn-inscrire"
                   [disabled]="alreadyRegistered "
                   aria-label="S'inscrire à cet événement">

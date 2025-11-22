@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="header-strip mx-auto">
+    <h4>Liste de mes  demandes d’adhésion à un club </h4>
+  </div>
+
+  <div class="table-container mx-auto">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Club</th>
+            <th>Statut</th>
+            <th>Date de demande</th>
+            <th>Date choisie (si acceptée)</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (d of demandes; track $index) {
+            <tr>
+              <td>{{ d.club.nom }}</td>
+
+              <td>
+                <span 
+                  [ngClass]="{
+                    'badge bg-warning': d.statut === 'en attente' || d.statut === 'en cours',
+                    'badge bg-success': d.statut === 'acceptée',
+                    'badge bg-danger': d.statut === 'refusée'
+                  }">
+                  {{ d.statut }}
+                </span>
+              </td>
+
+              <td>{{ d.dateDemande | date:'short' }}</td>
+
+              <td>
+                @if (d.statut === 'acceptée' && d.dateChoisie) {
+                  {{ d.dateChoisie | date:'short' }}
+                } @else {
+                  -
+                }
+              </td>
+
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

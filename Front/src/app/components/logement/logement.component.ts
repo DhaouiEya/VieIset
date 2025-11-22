@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-logement',
-  imports:[DatePipe, FormsModule, HeaderComponent, FooterComponent],
+  imports:[DatePipe, FormsModule, FooterComponent],
   templateUrl: './logement.component.html',
   styleUrls: ['./logement.component.css']
 })

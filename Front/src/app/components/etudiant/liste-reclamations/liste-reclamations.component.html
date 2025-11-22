@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="header-strip mx-auto">
+    <h4> Liste des réclamations</h4>
+    <button class="btn btn-primary float-end" (click)="openCreateDialog()">Ajouter une réclamation</button>
+  </div>
+
+  <div class="table-container mx-auto">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+          <tr>
+          
+            <th>Sujet</th>
+            <th>Description</th>
+            <th>Date de création</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of reclamations; track $index) {
+            <tr>
+             
+
+              <!-- Sujet avec modal -->
+              <td class="sujet-cell">
+                @if(r.sujet.length > 30) {
+                  {{ r.sujet | slice:0:30 }}...
+                  <a href="#" (click)="openSujet(modalSujet, r.sujet); $event.preventDefault()">Voir plus</a>
+                } @else {
+                  {{ r.sujet }}
+                }
+              </td>
+
+              <!-- Description avec modal -->
+              <td class="description-cell">
+                @if(r.description.length > 50) {
+                  {{ r.description | slice:0:50 }}...
+                  <a href="#" (click)="openDescription(modalDesc, r.description); $event.preventDefault()">Voir plus</a>
+                } @else {
+                  {{ r.description }}
+                }
+              </td>
+
+              <td>{{ r.dateCreation | date:'short' }}</td>
+              <td>{{ r.statut }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Description très simple et centrée -->
+<ng-template #modalDesc let-modal>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow-none">
+      <div class="modal-body p-3 text-center">
+        <p class="mb-0">{{ descriptionToShow }}</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal Sujet très simple et centrée -->
+<ng-template #modalSujet let-modal>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow-none">
+      <div class="modal-body p-3 text-center">
+        <p>{{ sujetToShow }}</p>
+      </div>
+    </div>
+  </div>
+</ng-template>

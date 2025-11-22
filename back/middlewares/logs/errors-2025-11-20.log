@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-11-20T03:10:01.847Z",
+  "method": "GET",
+  "url": "/api/demandeAdhesion/demandes/6904d8d39135510c679521fc/choisir-date?date=%222025-02-20T10:00:00.000Z%22",
+  "ip": "::1",
+  "errorName": "SyntaxError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Unexpected token ']', ...\"\r\n    \r\n  ]\r\n}\r\n\" is not valid JSON",
+  "stack": "SyntaxError: Unexpected token ']', ...\"\r\n    \r\n  ]\r\n}\r\n\" is not valid JSON\n    at JSON.parse (<anonymous>)\n    at parse (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\body-parser\\lib\\types\\json.js:77:19)\n    at C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\body-parser\\lib\\read.js:123:18\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at invokeCallback (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\raw-body\\index.js:238:16)\n    at done (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\raw-body\\index.js:227:7)\n    at IncomingMessage.onEnd (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\raw-body\\index.js:287:7)\n    at IncomingMessage.emit (node:events:519:28)\n    at endReadableNT (node:internal/streams/readable:1696:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)"
+},
