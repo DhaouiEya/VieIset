@@ -663,6 +663,17 @@ exports.updateUserProfile = async (req, res, next) => {
                 lastName: user.lastName,
                 firstName: user.firstName,
                 email: user.email,
+                address: user.address,
+                ville: user.ville,
+                dateNaissance: user.dateNaissance,
+                photoProfil: user.photoProfil,
+                numeroTelephone: user.numeroTelephone,
+                filiere: user.filiere,
+                specialite: user.specialite,
+                niveau: user.niveau,
+                classe: user.classe,
+                profileCompletion: user.profileCompletion,
+
                 role: user.role,
                 googleId: user?.googleId
             }

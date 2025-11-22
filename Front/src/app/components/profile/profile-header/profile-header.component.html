@@ -17,9 +17,10 @@
       <div class="flex flex-wrap items-center gap-6">
         <!-- Avatar -->
         <div class="relative">
-          <img [src]="user?.photoProfil || 'blank.png'" alt="Avatar de l'étudiant"
-            class="w-28 h-28 rounded-full object-cover ring-4 ring-offset-2 ring-blue-400">
-          <span class="absolute bottom-2 right-2 block h-5 w-5 rounded-full bg-green-400 border-2 border-white"></span>
+          <img [src]="user?.photoProfil" alt="Avatar de l'étudiant"
+            class="w-28 h-28 rounded-xl object-cover ring-4 ring-offset-2 ring-yellow-400">
+          <span class="absolute block h-5 w-5 rounded-full bg-green-400 border-2 border-white"
+            style="margin-top: -25px; margin-left: 80px;"></span>
         </div>
         <!-- Info -->
         <div class="flex-1">
@@ -64,8 +65,7 @@
             <span class="text-base font-medium text-gray-700">{{ user?.profileCompletion }}%</span>
           </div>
           <div class="w-full bg-gray-200 rounded-full h-2.5">
-            <div class="h-2.5 rounded-full bg-gradient-to-r from-yellow-400 to-blue-500"
-              [style.width.%]="user?.profileCompletion"></div>
+            <div class="h-2.5 rounded-full   bg-green-500" [style.width.%]="user?.profileCompletion"></div>
           </div>
         </div>
       </div>
@@ -74,12 +74,23 @@
     <!-- Tabs -->
     <div class="border-b border-gray-200 mb-8">
       <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-        <button (click)="switchToTab('Overview')" [class.border-blue-500]="activeTab() === 'Overview'"
-          [class.text-blue-600]="activeTab() === 'Overview'"
-          class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base text-gray-500 hover:text-blue-600 hover:border-blue-500">Aperçu</button>
-        <button (click)="switchToTab('Settings')" [class.border-blue-500]="activeTab() === 'Settings'"
-          [class.text-blue-600]="activeTab() === 'Settings'"
-          class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base text-gray-500 hover:text-blue-600 hover:border-blue-500">Paramètres</button>
+        <button (click)="switchToTab('Overview')" [ngClass]="{
+    'border-blue-500 text-blue-600': activeTab() === 'Overview',
+    'border-transparent text-gray-500 hover:text-blue-600 hover:border-blue-500': activeTab() !== 'Overview'
+  }" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base">
+          Aperçu
+        </button>
+
+            <button (click)="switchToTab('Settings')" [ngClass]="{
+    'border-blue-500 text-blue-600': activeTab() === 'Settings',
+    'border-transparent text-gray-500 hover:text-blue-600 hover:border-blue-500': activeTab() !== 'Settings'
+  }" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base">
+          Paramètres
+        </button>
+
+
+
+
 
       </nav>
     </div>

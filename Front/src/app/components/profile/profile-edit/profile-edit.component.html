@@ -5,70 +5,109 @@
   </div>
 
   <div >
-    <!-- Avatar -->
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
-      <label class="block text-base font-medium text-gray-700 md:text-left">Avatar</label>
-      <div class="md:col-span-2">
-        <div class="flex items-center gap-5">
-          <img [src]="avatarPreview || user?.photoProfil" alt="Aperçu de l'avatar" class="h-20 w-20 rounded-full object-cover border border-gray-300">
-          <div class="relative">
-            <input id="photo-upload" name="photo-upload" type="file" class="sr-only" (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/jpg">
-            <label for="photo-upload" class="cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-4 text-base font-medium text-gray-700  hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-              <span>Changer</span>
-            </label>
-          </div>
+     <!-- Template pour les erreurs -->
+    <ng-template #formError let-control="control" let-message="message" let-validation="validation">
+      @if (
+      (validation && control.hasError(validation) && (control.dirty || control.touched)) ||
+      (!validation && control.invalid && (control.dirty || control.touched))
+      ) { <div class="fv-plugins-message-container mb-2" style="margin-left: 16%;">
+        <div class="fv-help-block">
+          <span role="alert">{{ message }}</span>
         </div>
-        <p class="mt-2 text-sm text-gray-500">Types de fichiers autorisés: png, jpg, jpeg.</p>
+      </div>
+      }
+    </ng-template>
+
+    <!-- Avatar -->
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-start gap-2 md:gap-5 py-5">
+      <label class="block text-base font-medium text-gray-700 md:text-left pt-2">Avatar</label>
+      <div class="md:col-span-2">
+        <div class="relative w-32 h-32">
+            <img [src]="avatarPreview || user.photoProfil" alt="Aperçu de l'avatar" class="h-32 w-32 rounded-xl object-cover shadow-sm border border-gray-200">
+
+            <!-- Hidden file input -->
+            <input id="photo-upload" name="photo-upload" type="file" class="sr-only" (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/jpg">
+
+            <!-- Edit button (pencil icon) -->
+            <label for="photo-upload" class="absolute top-0 right-0 -mt-3 -mr-3 flex items-center justify-center h-8 w-8 rounded-full bg-white shadow-md cursor-pointer hover:bg-gray-100 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L14.732 3.732z" />
+                </svg>
+            </label>
+
+            <!-- Remove button (X icon) -->
+            @if (avatarPreview) {
+              <button type="button"  (click)="removeAvatarPreview()" class="absolute bottom-0 right-0 -mb-3 -mr-3 flex items-center justify-center h-8 w-8 rounded-full bg-white shadow-md cursor-pointer hover:bg-gray-100 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+              </button>
+            }
+        </div>
+        <p class="mt-4 text-sm text-gray-500">Types de fichiers autorisés: png, jpg, jpeg.</p>
       </div>
     </div>
 
     <!-- Fields -->
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
-      <label for="prenom" class="block text-base font-medium text-gray-700">Prénom</label>
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-5">
+      <label for="prenom" class="block text-base font-medium text-gray-700 required">Prénom</label>
       <div class="md:col-span-2">
-        <input type="text" formControlName="firstName" id="prenom" placeholder="Prénom" class="block w-full rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
+        <input type="text" formControlName="firstName" id="prenom" placeholder="Prénom" class="block w-full form-control form-control-lg form-control-solid rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
       </div>
+       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'Prénom est obligatoire',
+          control: studentForm.controls['firstName']
+        }"></ng-container>
+
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
-      <label for="nom" class="block text-base font-medium text-gray-700">Nom</label>
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-5">
+      <label for="nom" class="block text-base font-medium text-gray-700 required">Nom</label>
       <div class="md:col-span-2">
-        <input type="text" formControlName="lastName" id="nom" placeholder="Nom" class="block w-full rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
+        <input type="text" formControlName="lastName" id="nom" placeholder="Nom" class="block w-full form-control form-control-lg form-control-solid rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
       </div>
+       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'Nom est obligatoire',
+          control: studentForm.controls['lastName']
+        }"></ng-container>
+
+
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-5">
       <label for="adresse" class="block text-base font-medium text-gray-700">Adresse</label>
       <div class="md:col-span-2">
-        <input type="text" formControlName="adresse" id="adresse" class="block w-full rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
+        <input type="text" formControlName="adresse" id="adresse" class="block w-full rounded-md form-control form-control-lg form-control-solid border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-5">
       <label for="phone" class="block text-base font-medium text-gray-700">Téléphone</label>
       <div class="md:col-span-2">
-        <input type="text" formControlName="numeroTelephone" id="phone" class="block w-full rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
+        <input type="text" formControlName="numeroTelephone" id="phone" class="block w-full form-control form-control-lg form-control-solid rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-5">
       <label for="dateNaissance" class="block text-base font-medium text-gray-700">Date de Naissance</label>
       <div class="md:col-span-2">
-        <input type="date" formControlName="dateNaissance" id="dateNaissance" class="block w-full rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
+        <input type="date" formControlName="dateNaissance" id="dateNaissance" class="block w-full form-control form-control-lg form-control-solid rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-5">
       <label for="ville" class="block text-base font-medium text-gray-700">Ville</label>
       <div class="md:col-span-2">
-        <input type="text" formControlName="ville" id="ville" class="block w-full rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
+        <input type="text" formControlName="ville" id="ville" class="block w-full form-control form-control-lg form-control-solid rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-5">
       <label for="filiere" class="block text-base font-medium text-gray-700">Filière</label>
       <div class="md:col-span-2">
-        <select formControlName="filiere" id="filiere" class="block w-full rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
+        <select formControlName="filiere" id="filiere" class="block w-full form-control form-control-lg form-control-solid  rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
           <option value="" disabled>Choisir une filière</option>
           @for (filiere of filieres; track filiere) {
             <option [value]="filiere">{{ filiere }}</option>
@@ -77,10 +116,10 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-5">
       <label for="specialite" class="block text-base font-medium text-gray-700">Spécialité</label>
       <div class="md:col-span-2">
-        <select formControlName="specialite" id="specialite" class="block w-full rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
+        <select formControlName="specialite" id="specialite" class="block w-full form-control form-control-lg form-control-solid  rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
           <option value="" disabled>Choisir une spécialité</option>
           @for (spec of availableSpecialites; track spec) {
             <option [value]="spec">{{ spec }}</option>
@@ -89,10 +128,10 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-5">
       <label for="niveau" class="block text-base font-medium text-gray-700">Niveau</label>
       <div class="md:col-span-2">
-        <select formControlName="niveau" id="niveau" class="block w-full rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
+        <select formControlName="niveau" id="niveau" class="block w-full form-control form-control-lg form-control-solid  rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
             <option value="" disabled>Choisir un niveau</option>
           @for (niveau of niveaux; track niveau) {
             <option [value]="niveau">{{ niveau }}</option>
@@ -101,10 +140,10 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 md:items-center gap-2 md:gap-5 py-5">
       <label for="classe" class="block text-base font-medium text-gray-700">Classe</label>
       <div class="md:col-span-2">
-        <input type="text" formControlName="classe" id="classe" class="block w-full rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
+        <input type="text" formControlName="classe" id="classe" class="block w-full form-control form-control-lg form-control-solid  rounded-md border border-gray-300  focus:border-blue-500 focus:ring-blue-500 text-base py-2.5 px-4">
       </div>
     </div>
   </div>

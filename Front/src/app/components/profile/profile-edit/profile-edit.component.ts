@@ -1,11 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-edit',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './profile-edit.component.html',
   styleUrl: './profile-edit.component.css'
 })
@@ -38,8 +39,8 @@ export class ProfileEditComponent {
 
   initForm(){
     this.studentForm = this.fb.group({
-      firstName: [this.user.firstName || ''],
-      lastName: [this.user.lastName || ''],
+      firstName: [this.user.firstName || '',[Validators.required]],
+      lastName: [this.user.lastName || '',[Validators.required]],
       adresse: [this.user.adresse || ''],
       numeroTelephone: [this.user.numeroTelephone || ''],
       dateNaissance: [this.user.dateNaissance || ''],
@@ -113,6 +114,15 @@ export class ProfileEditComponent {
     const reader = new FileReader();
     reader.onload = (e) => this.avatarPreview = e.target?.result as string;
     reader.readAsDataURL(file);
+  }
+
+
+  removeAvatarPreview(): void {
+    this.avatarPreview = null;
+    const fileInput = document.getElementById('photo-upload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 
 }
