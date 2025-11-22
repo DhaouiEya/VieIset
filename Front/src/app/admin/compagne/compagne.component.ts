@@ -5,6 +5,7 @@ import { AdminMenuComponent } from '../admin-menu/admin-menu.component';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { UsersService } from '../../services/users.service';
+import { DemandeDonService } from '../../services/demandedon.service';
 
 @Component({
   selector: 'app-compagne',
@@ -24,7 +25,8 @@ compagneForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private compagneService: CompagneService,
-    private userService: UsersService
+    private userService: UsersService,
+    private demandeDonService: DemandeDonService
 
   ) {}
 // --- Validation personnalisée ---
@@ -49,7 +51,17 @@ dateValidator(control: AbstractControl): ValidationErrors | null {
   }, { validators: this.dateValidator });
 
   this.getAllCompagnes();
-  this.loadEtudiants();
+  
+ this.demandeDonService.getEtudiantsAyantDemande().subscribe({
+  next: (res) => {
+    console.log('Réponse du backend →', res); // debug de la réponse
+    this.etudiants = res;
+  },
+  error: (err) => {
+    console.error('Erreur récupération étudiants →', err); // debug erreur
+  }
+});
+
 }
 
 

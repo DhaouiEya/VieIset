@@ -8,7 +8,7 @@ const helmet = require('helmet');// Security middleware to set various HTTP head
 const path = require('path'); //trouver le bon chemin de fichier
 
 const routes = require('./routes');
-
+const fs = require('fs');
 
 const app = express();
 
@@ -37,6 +37,26 @@ app.use(
 
 // Servir les fichiers statiques (images, etc.)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// SERVIR LE DOSSIER annexes
+app.use('/annexes', express.static(path.join(__dirname, 'uploads/annexes')));
+app.get('/annexes/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const basePath = path.join(__dirname, 'uploads/annexes');
+
+  // Liste toutes les extensions courantes
+  const extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.pdf'];
+  let found = false;
+
+  for (const ext of extensions) {
+    const fullPath = path.join(basePath, filename.replace(/\.[^.]+$/, '') + ext);
+    if (fs.existsSync(fullPath)) {
+      return res.sendFile(fullPath);
+    }
+  }
+
+  // Si rien trouvé → 404 classique
+  res.status(404).send('Fichier non trouvé');
+});
 app.use('/api', routes);
 // Utilisez les routes
 

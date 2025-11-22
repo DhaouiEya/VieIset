@@ -1,0 +1,93 @@
+<app-header></app-header>
+
+<div class="demande-container">
+  <div class="header-section">
+    <h2>Publier une demande de don</h2>
+    <p class="subtitle">Nous sommes là pour vous accompagner dans vos moments difficiles</p>
+  </div>
+
+  <form [formGroup]="demandeForm" (ngSubmit)="submitDemande()" enctype="multipart/form-data" class="don-form">
+    <div class="form-group">
+  <label>Titre de la demande</label>
+  <select formControlName="title" class="form-select modern-select">
+    <option value="aide_etudiant">🎓 Aide pour étudiant dans le besoin</option>
+    <option value="aide_club">🏆 Aide pour les clubs universitaires</option>
+    <option value="projet_educatif">💡 Projet éducatif innovant</option>
+  </select>
+</div>
+
+
+    <div class="form-group">
+      <label>Description détaillée</label>
+      <textarea formControlName="description" rows="5" placeholder="Expliquez votre situation avec précision..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Montant demandé (DT)</label>
+      <input type="number" formControlName="montant" placeholder="1500">
+    </div>
+
+    <div class="form-group">
+      <label>Joindre un justificatif (facture, ordonnance, devis...)</label>
+      <input type="file" (change)="onFileSelected($event)" accept=".pdf,.jpg,.jpeg,.png">
+      <small class="help-text">Formats acceptés : PDF, JPG, PNG</small>
+    </div>
+
+    <button type="submit" [disabled]="demandeForm.invalid" class="submit-btn">
+      Envoyer la demande
+    </button>
+  </form>
+
+  <div class="my-requests-section">
+    <h2>Mes demandes</h2>
+
+    @if (myDemandes.length === 0) {
+      <div class="empty-state">
+        <p>Vous n'avez pas encore soumis de demande.</p>
+      </div>
+    } @else {
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Titre</th>
+              <th>Montant</th>
+              <th>Statut</th>
+              <th>Date</th>
+              <th>Justificatif</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (d of myDemandes; track d._id) {
+              <tr>
+                <td class="title-cell">{{ d.title }}</td>
+                <td class="amount">{{ d.montant  }} DT</td>
+                <td>
+                  <span class="status-badge" [class]="'status-' + d.statut">
+                    @switch (d.statut) {
+                      @case ('EN_ATTENTE') { En attente }
+                      @case ('ACCEPTEE')   { Acceptée }
+                      @case ('REFUSEE')    { Refusée }
+                    }
+                  </span>
+                </td>
+                <td>{{ d.dateDemande | date:'dd MMM yyyy' }}</td>
+                <td>
+                  @if (d.annexe) {
+                    <a [href]="'http://localhost:9000/' + d.annexe" target="_blank" class="link-view">
+                      Voir
+                    </a>
+                  } @else {
+                    <span class="no-file">—</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>
+
+<app-footer></app-footer>

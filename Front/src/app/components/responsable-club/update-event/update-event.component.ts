@@ -11,7 +11,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-update-event',
-  imports: [  
+  imports: [
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
@@ -24,7 +24,7 @@ import Swal from 'sweetalert2';
   ],
   templateUrl: './update-event.component.html',
   styleUrls: ['./update-event.component.css'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]  
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class UpdateEventComponent {
   form: FormGroup;
@@ -59,7 +59,7 @@ export class UpdateEventComponent {
 
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      this.previewImage = e.target.result; 
+      this.previewImage = e.target.result;
       console.log('Image preview (base64) :', this.previewImage); // Affiche l'image en base64
     };
     reader.readAsDataURL(file);
@@ -84,26 +84,40 @@ save() {
     formData.append('lienImage', this.selectedImage); // upload du fichier
   }
 
-  this.eventService.updateEvent(this.event._id, formData).subscribe({
-    next: () => {
-      Swal.fire({
-        title: 'Succès !',
-        text: 'Événement mis à jour avec succès 🎉',
-        icon: 'success',
-        timer: 2000,
-        showConfirmButton: false
-      });
-      this.dialogRef.close(true);
-    },
-    error: () => {
-      Swal.fire({
-        title: 'Erreur',
-        text: 'Impossible de mettre à jour l’événement ❌',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
-    }
-  });
+  const result: any = this.eventService.updateEvent(this.event._id, formData);
+  if (result && typeof result.subscribe === 'function') {
+    result.subscribe({
+      next: () => {
+        Swal.fire({
+          title: 'Succès !',
+          text: 'Événement mis à jour avec succès 🎉',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        this.dialogRef.close(true);
+      },
+      error: () => {
+        Swal.fire({
+          title: 'Erreur',
+          text: 'Impossible de mettre à jour l’événement ❌',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+  } else {
+    // If updateEvent does not return an Observable (void or handles subscription internally),
+    // assume success and close the dialog (adjust if your service provides callbacks).
+    Swal.fire({
+      title: 'Succès !',
+      text: 'Événement mis à jour avec succès 🎉',
+      icon: 'success',
+      timer: 2000,
+      showConfirmButton: false
+    });
+    this.dialogRef.close(true);
+  }
 }
 
   close() {

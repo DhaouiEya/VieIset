@@ -3,10 +3,11 @@ import { Club } from '../../../models/club';
 import { ClubService } from '../../../services/club.service';
 
 import { Router } from '@angular/router';
+import { HeaderComponent } from "../../header/header.component";
 
 @Component({
   selector: 'app-clubs-list',
-  imports: [],
+  imports: [HeaderComponent],
   templateUrl: './clubs-list.component.html',
   styleUrl: './clubs-list.component.css',
 })

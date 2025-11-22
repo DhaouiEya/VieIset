@@ -82,3 +82,36 @@
     </div>
   }
 </div>
+
+
+
+<!--
+@if (post.comments?.length) {
+  <div class="comments-list">
+    @for (comment of post.comments; track $index) {
+      <div class="comment-item">
+        <strong class="comment-author">{{ comment.userId?.firstName }} {{ comment.userId?.lastName }}</strong>
+        <span class="comment-text">{{ comment.text }}</span>
+        <span class="comment-date">{{ comment.date | date:'short' }}</span>
+      </div>
+    }
+  </div>
+}
+
+<form (ngSubmit)="submitComment(post)" class="comment-form">
+  <div class="form-row">
+    <input
+      type="text"
+      [(ngModel)]="post.newComment"
+      name="commentText"
+      placeholder="Écrire un commentaire..."
+      required
+      class="comment-input">
+    <button type="submit" mat-button class="submit-btn">Envoyer</button>
+  </div>
+</form>
+    }
+
+  </div>
+
+</div> -->

@@ -1,4 +1,40 @@
 {
+<<<<<<< HEAD
+  "timestamp": "2025-11-19T11:23:52.830Z",
+  "method": "POST",
+  "url": "/api/auth/google-login",
+  "ip": "::1",
+  "language": "en-US,en;q=0.9",
+  "errorName": "ReferenceError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "picture is not defined",
+  "stack": "ReferenceError: picture is not defined\n    at exports.googleLogin (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\controllers\\authController.js:267:60)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+},
+{
+  "timestamp": "2025-11-19T17:18:09.484Z",
+  "method": "POST",
+  "url": "/api/auth/google-login",
+  "ip": "::1",
+  "language": "en-US,en;q=0.9",
+  "errorName": "ReferenceError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "picture is not defined",
+  "stack": "ReferenceError: picture is not defined\n    at exports.googleLogin (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\controllers\\authController.js:267:60)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+},
+{
+  "timestamp": "2025-11-19T17:18:46.590Z",
+  "method": "POST",
+  "url": "/api/auth/google-login",
+  "ip": "::1",
+  "language": "en-US,en;q=0.9",
+  "errorName": "ReferenceError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "picture is not defined",
+  "stack": "ReferenceError: picture is not defined\n    at exports.googleLogin (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\controllers\\authController.js:267:60)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+=======
   "timestamp": "2025-11-19T18:25:32.044Z",
   "method": "POST",
   "url": "/api/auth/login",
@@ -9,4 +45,5 @@
   "severity": "danger",
   "errorMessage": "keepmeloggedin is not defined",
   "stack": "ReferenceError: keepmeloggedin is not defined\n    at exports.login (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:469:29)"
+>>>>>>> eef56975829c4f039c9e1b0ccd3b384c2d12e2ef
 },

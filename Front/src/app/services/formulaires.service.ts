@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { DemandeAdhesion } from '../models/demande-adhesion';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class FormulairesService {
   constructor(private http: HttpClient) {}
 
   getSheetData(spreadsheetId: string) {
-    return this.http.post<any[]>(this.sheetUrl, { spreadsheetId });
+    return this.http.post<DemandeAdhesion[]>(this.sheetUrl, { spreadsheetId });
   }
 
   sendMail(data: { email: string; sujet: string; message: string }) {

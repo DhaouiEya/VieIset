@@ -2,7 +2,7 @@ import { Component, Inject, inject, OnInit } from '@angular/core';
 import { EventService } from '../../../services/event.service';
 import { MAT_DIALOG_DATA, MatDialogContent, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Attendee } from '../../../models/attendee.model';
-import { Event } from '../../../models/event';
+import { Event } from '../../../models/event.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { ResponsableMenuComponent } from '../../../responsable-club/responsable-menu/responsable-menu.component';

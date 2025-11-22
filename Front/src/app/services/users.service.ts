@@ -28,7 +28,14 @@ export class UsersService {
       Authorization: `Bearer ${token}`
     });
   }
-
+//get cluub managers
+ getClubManagers() {
+    return this.http.get<any[]>(`${this.apiUrl}/club-managers`);
+  }
+  //remove club manager role
+   removeClubManager(userId: string) {
+    return this.http.put(`${this.apiUrl}/remove-club-manager/${userId}`, {});
+  }
   // Récupérer tous les étudiants
   getAllEtudiants(): Observable<Etudiant[]> {
     return this.http.get<Etudiant[]>(this.apiUrl);

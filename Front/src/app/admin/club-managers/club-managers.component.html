@@ -1,0 +1,54 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+
+  <!-- Layout parent -->
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+    <!-- Sidebar -->
+    <div class="hidden lg:block">
+      <div class="sticky top-6">
+        <app-admin-menu></app-admin-menu>
+      </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="lg:col-span-3">
+
+      <!-- Titre -->
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">
+        Liste des Responsables de Clubs
+      </h2>
+
+      <!-- Tableau -->
+      <div class="overflow-x-auto bg-white shadow-md rounded-lg border border-gray-200">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Nom</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Prénom</th>
+              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Email</th>
+              <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700 uppercase">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody class="bg-white divide-y divide-gray-200">
+            @for (user of managers; track user._id) {
+              <tr class="hover:bg-gray-50 transition duration-200">
+                <td class="px-6 py-4 text-gray-800 font-medium">{{ user.firstName }}</td>
+                <td class="px-6 py-4 text-gray-800 font-medium">{{ user.lastName }}</td>
+                <td class="px-6 py-4 text-gray-600">{{ user.email }}</td>
+                <td class="px-6 py-4 text-center">
+                  <button
+                    class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200 shadow-sm"
+                    (click)="removeRole(user._id)">
+                    Retirer
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

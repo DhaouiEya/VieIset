@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from "./components/header/header.component";
-
+import { BarreComponent } from './barre/barre.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent],
+
+  standalone: true,                    // ✅ obligatoire pour un composant standalone
+  imports: [RouterOutlet, ChatbotComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']    // ✅ pluriel, pas styleUrl
 })
 export class AppComponent {
   title = 'front';
