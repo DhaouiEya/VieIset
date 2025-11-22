@@ -20,24 +20,21 @@ import { PublicationPostComponent } from './responsable-club/publication-post/pu
 import { LogementComponent } from './components/logement/logement.component';
 import { AdmindashboardComponent } from './admin/admindashboard/admindashboard.component';
 import { CompagneComponent } from './admin/compagne/compagne.component';
-<<<<<<< HEAD
 import { ReclamationsComponent } from './admin/reclamations/reclamations.component';
 import { SidebarComponent } from './components/etudiant/sidebar/sidebar.component';
 import { ListeReclamationsComponent } from './components/etudiant/liste-reclamations/liste-reclamations.component';
 import { CreateReclamationComponent } from './components/etudiant/create-reclamation/create-reclamation.component';
-import { ParticipationFormsComponent } from './responsable-club/participation-forms/participation-forms.component';
+
 import { ListeDmandesComponent } from './components/etudiant/liste-dmandes/liste-dmandes.component';
 import { HomeComponent } from './components/homePage/home/home.component';
 import { AppBarHomeComponent } from './components/homePage/app-bar-home/app-bar-home.component';
 import { FooterHomeComponent } from './components/homePage/footer-home/footer-home.component';
 import { AboutUsComponent } from './components/homePage/about-us/about-us.component';
-=======
 import { MyClubComponent } from './components/clubs/my-club/my-club.component';
 import { ProfileComponent } from './components/profile/profile/profile.component';
 import { ParticipationFormsComponent } from './components/responsable-club/participation-forms/participation-forms.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { ListEtudiantsComponent } from './admin/list-etudiants/list-etudiants.component';
->>>>>>> eef56975829c4f039c9e1b0ccd3b384c2d12e2ef
 
 export const routes: Routes = [
  
@@ -63,12 +60,7 @@ export const routes: Routes = [
   // Responsable / publications / participation
   { path: 'dashboard', component: ResponsableDashboardComponent },
   { path: 'publications', component: PublicationPostComponent },
-<<<<<<< HEAD
   { path: 'participation-forms', component: ParticipationFormsComponent  },
-=======
-  { path: 'participation-forms', component: ParticipationFormsComponent },
-  { path: 'mon-club', component: MyClubComponent },
->>>>>>> eef56975829c4f039c9e1b0ccd3b384c2d12e2ef
 
   // Events
   
@@ -84,7 +76,6 @@ export const routes: Routes = [
  
   { path: 'admindashboard', component: AdmindashboardComponent },
   { path: 'compagne', component: CompagneComponent },
-<<<<<<< HEAD
   { path: 'reclamations', component: ReclamationsComponent },
   {path: 'sideBarEtudiant', component: SidebarComponent,
     children:[
@@ -97,11 +88,4 @@ export const routes: Routes = [
   ]
 
   },
-=======
-  { path: 'profile', component: ProfileComponent },
-  //{path:'chatbot', component: ChatbotComponent},
-
-  //admin routes can be added here
-  {path:'etudiants',component:ListEtudiantsComponent}
->>>>>>> eef56975829c4f039c9e1b0ccd3b384c2d12e2ef
 ];

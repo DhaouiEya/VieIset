@@ -57,38 +57,8 @@ export class LoginComponent implements OnInit, OnDestroy , AfterViewInit {
     });
   }
 
-<<<<<<< HEAD
-  onLogin() {
-    if (this.loginForm.invalid) return;
-
-    const { email, password, keepMeLoggedIn } = this.loginForm.value;
-
-this.authService.login(email, password, keepMeLoggedIn).subscribe({
-  next: (res: any) => {
-    console.log("res login ",res)
-    if (res.success) {
-      localStorage.setItem('token', res.token);
-
-      // Redirection selon rôle
-      if (res.user?.role === 'clubManager') {
-        this.router.navigateByUrl('/dashboard');
-      } else {
-        this.router.navigateByUrl('/sideBar/clubs');
-      }
-    } else {
-      console.log("zzz ",res)
-      this.hasError = true;
-      this.message = res.error.message || 'Erreur lors de la connexion';
-    }
-  },
-  error: (err: any) => {
-    console.error('Erreur serveur :', err);
-    this.hasError = true;
-    this.message = err.error?.message || 'Erreur lors de la connexion';
-=======
   get selectedRole(): string {
     return this.loginForm.get('role')?.value;
->>>>>>> eef56975829c4f039c9e1b0ccd3b384c2d12e2ef
   }
 
   selectRole(role: string) {
