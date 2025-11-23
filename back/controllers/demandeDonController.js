@@ -85,6 +85,18 @@ async createDemande(req, res) {
       res.status(500).json({ message: error.message });
     }
   }
+
+  // Récupérer les étudiants ayant envoyé une demande
+async getEtudiantsAyantDemande(req, res) {
+  try {
+    const etudiants = await demandeDonService.getEtudiantsAyantDemande();
+    res.json(etudiants);
+  } catch (error) {
+    console.error('Erreur récupération étudiants:', error);
+    res.status(500).json({ message: error.message });
+  }
+}
+
 }
 
 module.exports = new DemandeDonController();

@@ -9,4 +9,8 @@ router.get('/demandes',demandeAdhesionController.getDemandesAdhesion);
 //get date choisi par l'etudiant 
 router.get('/demandes/:id/choisir-date' , demandeAdhesionController.getDatesChoisies);
 router.get('/demandes', authMiddleware,demandeAdhesionController.getDemandesByEtudiant);
+// router.get('/demandes/:etudiantId',demandeAdhesionController.getDemandesByEtudiant);
 module.exports = router;
+
+
+  

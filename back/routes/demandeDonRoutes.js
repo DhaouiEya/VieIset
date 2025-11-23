@@ -6,6 +6,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const authMiddleware = require('../middlewares/authMiddlewares');
+const DemandeDon = require('../models/demandeDon');
 
 // ------------------ MULTER CONFIG DIRECTEMENT ICI ------------------
 const uploadDir = 'uploads/annexes';
@@ -45,7 +46,39 @@ const upload = multer({
 router.post('/', authMiddleware,upload.single('annexe'), demandeDonController.createDemande);
 
 // Autres routes (sans auth pour tester)
-router.get('/all',authMiddleware, demandeDonController.getAllDemandes);
+// Exemple avec Express + Mongoose
+// demandedon.routes.js ou ton fichier de routes
+router.get('/all', authMiddleware,  async (req, res) => {
+  try {
+    const demandes = await DemandeDon.find()
+      .sort({ dateDemande: -1 })
+      .populate('createdBy', 'firstName lastName email')  // ← Récupère nom, prénom, email
+      .lean()
+      .exec();
+
+    // Protection si un utilisateur a été supprimé (rare mais safe)
+    const result = demandes.map(d => ({
+      ...d,
+      createdBy: d.createdBy || {
+        firstName: 'Compte',
+        lastName: 'supprimé',
+        email: 'inconnu@exemple.com'
+      }
+    }));
+
+    res.json(result);
+  } catch (error) {
+    console.error('Erreur GET /all demandes:', error);
+    res.status(500).json({
+      message: 'Erreur serveur lors du chargement des demandes',
+      error: error.message
+    });
+  }
+});
 router.get('/me', authMiddleware,demandeDonController.getMyDemandes); // temporairement sans auth
+// Mettre à jour le statut d’une demande
+router.patch('/:id/statut', demandeDonController.updateStatut);
+router.get("/etudiants-demandes", authMiddleware,  demandeDonController.getEtudiantsAyantDemande);
+
 
 module.exports = router;

@@ -1,4 +1,6 @@
 const DemandeDon = require('../models/demandeDon');
+const User = require('../models/User');
+
 
 class DemandeDonService {
   
@@ -41,6 +43,46 @@ class DemandeDonService {
   async getDemandeById(id) {
     return await DemandeDon.findById(id).populate('createdBy', 'name email');
   }
+
+async getEtudiantsAyantDemande() {
+  try {
+    // 1. Récupérer les createdBy (ObjectId) depuis les demandes
+    const demandes = await DemandeDon.find({}, { createdBy: 1 }).lean();
+
+    if (!demandes || demandes.length === 0) {
+      console.log("Aucune demande de don trouvée");
+      return [];
+    }
+
+    // 2. Extraire les IDs uniques (garder les ObjectId)
+    const etudiantIds = [...new Set(
+      demandes
+        .map(d => d.createdBy)
+        .filter(Boolean)
+    )];
+
+    console.log('IDs étudiants récupérés (ObjectId) →', etudiantIds);
+
+    if (etudiantIds.length === 0) {
+      return [];
+    }
+
+    // 3. Chercher les utilisateurs correspondants ⚠️ User avec majuscule
+    const etudiants = await User.find(
+      { _id: { $in: etudiantIds } },
+      { password: 0 } // exclure le mot de passe
+    ).lean();
+
+    console.log(`✅ ${etudiants.length} étudiant(s) trouvé(s)`);
+
+    return etudiants;
+
+  } catch (error) {
+    console.error('Erreur lors de la récupération des étudiants:', error.message);
+    throw error;
+  }
 }
+}
+
 
 module.exports = new DemandeDonService();

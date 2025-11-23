@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DemandeDonService,DemandeDon } from '../../services/demandedon.service';
+import { DemandeDonService } from '../../services/demandedon.service';
 import Swal from 'sweetalert2'; // <-- Import SweetAlert2
 import { DatePipe, NgClass } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
+import { DemandeDon } from '../../models/demande-don.model';
 
 @Component({
   selector: 'app-demandedon',
-  imports: [ReactiveFormsModule,NgClass,DatePipe,HeaderComponent,FooterComponent],
+  imports: [ReactiveFormsModule,DatePipe,HeaderComponent,FooterComponent],
   templateUrl: './demandedon.component.html',
   styleUrl: './demandedon.component.css'
 })

@@ -20,12 +20,12 @@ export class DemandeAdhesionService {
     return this.http.post(`${URL}/demandes/${demandeId}/envoyer-dates`, { dates });
   }
 
-//get demandes by etudiant
-   getMesDemandes(): Observable<DemandeAdhesion[]> {
-    return this.http.get<DemandeAdhesion[]>(URL + '/demandes');
-   }
- // getMesDemandes(): Observable<any> {
-   // const token = localStorage.getItem('token'); 
+   getDemandesByEtudiantId(etudiantId: string): Observable<DemandeAdhesion[]> {
+    return this.http.get<DemandeAdhesion[]>(
+      `${URL}/demandes/${etudiantId}`
+    );
+  }
+
 
    // const headers = new HttpHeaders({
      // 'Authorization': `Bearer ${token}`

@@ -20,7 +20,7 @@ export class ConsulterDemandesAdhesionComponent implements OnInit {
   }
 
   chargerDemandes() {
-    this.demandeService.getMesDemandes().subscribe({
+    this.demandeService.getDemandes().subscribe({
       next: (data) => {
         this.demandes = data;
         console.log("DEMANDES REÇUES :", data);
@@ -28,7 +28,7 @@ export class ConsulterDemandesAdhesionComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
-     
+
         this.loading = false;
       }
     });

@@ -13,6 +13,7 @@ function generateToken() {
     // Génère un token aléatoire de 32 octets, puis le convertit en chaîne hexadécimale
     return crypto.randomBytes(32).toString('hex');
 }
+// 
 
 exports.register = async (req, res, next) => {
     try {
@@ -21,12 +22,9 @@ exports.register = async (req, res, next) => {
             lastName,
             email,
             password,
-
         } = req.body;
 
-
         const requiredFields = ['firstName', 'lastName', 'email', 'password'];
-
         const validationError = validateRequiredFields(req.body, requiredFields);
         if (validationError) {
             return res.status(400).json({
@@ -36,6 +34,7 @@ exports.register = async (req, res, next) => {
             });
         }
 
+        // Vérifier si l'email existe déjà
         // Check if email already exists
         const existingUserEmail = await User.findOne({ email: email.toLowerCase() });
         if (existingUserEmail) {
@@ -48,22 +47,33 @@ exports.register = async (req, res, next) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Generate verification tokens
+        // Générer un avatar aléatoire avec DiceBear
+        const seed = Math.random().toString(36).substring(2, 10);
+        const avatar = `https://api.dicebear.com/7.x/personas/svg?seed=${seed}`;
+
+        // Générer token email verification
         const emailVerificationToken = generateToken();
         const tokenExpiry = Date.now() + 3600000; // 1 hour
 
+        // Créer l'utilisateur
         // Create user
         const user = await User.create({
             firstName,
             lastName,
             email: email.toLowerCase(),
             password: hashedPassword,
+            role: 'membre',
+            avatar, // <-- ici on ajoute l'avatar
             role: ['etudiant'],
             emailVerificationToken,
             emailVerificationExpires: tokenExpiry,
             authProvider: 'local'
         });
 
+        // Envoyer l'email de vérification
+        await sendVerificationEmail(user, req, next);
+
+        // Générer JWT token pour login immédiat
         // Send verification email
         await sendVerificationEmail(user, req, next);
 
@@ -76,14 +86,22 @@ exports.register = async (req, res, next) => {
 
         res.status(201).json({
             success: true,
-            message: 'Registration successful. Verification email link  sent.',
-            authToken
+            message: 'Registration successful. Verification email link sent.',
+            authToken,
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                avatar: user.avatar
+            }
         });
 
     } catch (error) {
         next(error);
     }
 };
+
 
 
 
@@ -663,6 +681,17 @@ exports.updateUserProfile = async (req, res, next) => {
                 lastName: user.lastName,
                 firstName: user.firstName,
                 email: user.email,
+                address: user.address,
+                ville: user.ville,
+                dateNaissance: user.dateNaissance,
+                photoProfil: user.photoProfil,
+                numeroTelephone: user.numeroTelephone,
+                filiere: user.filiere,
+                specialite: user.specialite,
+                niveau: user.niveau,
+                classe: user.classe,
+                profileCompletion: user.profileCompletion,
+
                 role: user.role,
                 googleId: user?.googleId
             }

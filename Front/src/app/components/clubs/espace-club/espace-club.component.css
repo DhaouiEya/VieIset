@@ -29,10 +29,11 @@
 
 
 .club-container {
-  max-width: 1200px;
-  margin: auto auto;
-  border-radius: 16px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 0;
   background: #fff;
+  overflow: hidden;
 }
 
 .cover-photo img {
@@ -48,6 +49,9 @@
   gap: 20px;
   padding: 20px;
   position: relative;
+  border-bottom: 1px solid #e0e0e0;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .profile-photo {
@@ -59,118 +63,87 @@
   top: -65px;
   left: 20px;
   background: #fff;
+  object-fit: cover;
 }
 
 .info-section {
   margin-left: 260px;
+  padding-top: 20px;
 }
 
 .info-section h2 {
   margin-bottom: 8px;
-    font-size: 30px;
+  font-size: 30px;
 }
 
-
-/* Barre de navigation (style Facebook) */
 .club-nav {
-    margin:30px ;
+  max-width: 1400px;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-between; /* espace entre les groupes */
+  justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
-  border-top: 2px solid #ccc;     /* bordure en haut */
-  border-bottom: 2px solid #ccc;  /* bordure en bas */
+  padding: 10px 20px;
+  border-bottom: 2px solid #ccc;
 }
 
-.left-buttons button,
-.right-button button {
-  margin: 0 4px;
+.left-buttons button {
+  padding: 1rem 1.5rem;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #65676b;
+  cursor: pointer;
+  border-radius: 6px;
 }
 
-/* Styles indépendants pour hover et active */
-.left-buttons button.active {
-  color: #1976d2;
-  border-bottom: 3px solid #1976d2;
-  border-radius: 0;
-}
-
+.left-buttons button.active,
 .left-buttons button:hover {
   color: #1976d2;
-  border-bottom: 3px solid #1976d2;
-  border-radius: 0;
+  background-color: #e7f3ff;
 }
+
 .right-button button {
-  background-color: #1976d2;  /* bleu principal */
+  background-color: #1976d2;
   color: #fff;
   border: none;
-  border-radius: 50px;
+  border-radius: 8px;
   padding: 10px 24px;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ombre subtile */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .right-button button:hover {
-  background-color: #1565c0; /* bleu plus foncé au survol */
-  transform: translateY(-1px); /* effet “lift” */
+  background-color: #1565c0;
+  transform: translateY(-1px);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-.right-button button:active {
-  background-color: #0d47a1; /* bleu encore plus foncé au clic */
-  transform: translateY(0); } /* retour à la*
-
-
-
-/* Style pour le bouton au survol */
-/* .club-nav button:hover {
-  color: #ff5722;
-  border-bottom: 3px solid #ff5722;
-  border-radius: 0;
-} */
-
-
-
-.posts-section {
-  padding: 20px;
 }
 
 .posts-layout {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   padding: 20px;
-  height: calc(100vh - 250px); /* Ajuste selon ta navbar/couverture */
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* ------------------ Sidebar Général ------------------ */
 .club-sidebar {
-  width: 28%;
-  min-width: 250px;
+  width: 100%;
+  max-width: 320px;
   background: #fff;
   border-radius: 12px;
   padding: 20px;
-  position: sticky;
-  top: 100px;
   height: fit-content;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  animation: fadeIn 0.5s ease;
 }
 
-/* Animation d'apparition */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Sections internes */
 .sidebar-section {
   margin-bottom: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
   border-bottom: 1px solid #eee;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .sidebar-section:last-child {
@@ -179,89 +152,44 @@
   padding-bottom: 0;
 }
 
-/* Hover effect pour interactivité */
-.sidebar-section:hover {
-  transform: translateX(5px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+.club-posts {
+  flex: 1;
+  min-width: 300px;
 }
 
-/* Titres des sections */
-.sidebar-section h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  color: #1976d2;
-}
-
-/* Paragraphes de contenu */
-.sidebar-section p {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #555;
-  margin: 4px 0;
-}
-
-/* Styling des contacts avec icônes */
-.sidebar-section div {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-
-.sidebar-section div span {
-  font-size: 14px;
-  color: #333;
-  word-break: break-word;
-}
-.sidebar-section div span:hover {
-  text-decoration: underline;
-  color: #1976d2; /* facultatif : couleur bleu Facebook */
-}
-
-/* Lord-icon styles */
-lord-icon {
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-lord-icon:hover {
-  transform: scale(1.2);
-}
-
-/* Padding et espacement pour plus de confort */
-.club-sidebar .sidebar-section:last-child {
-  margin-bottom: 0;
-  border-bottom: none;
-}
-
-/* Responsive : réduire largeur sidebar sur petit écran */
 @media (max-width: 992px) {
+  .posts-layout {
+    flex-direction: column;
+  }
   .club-sidebar {
-    width: 100%;
-    position: relative;
-    top: auto;
+    max-width: 100%;
     margin-bottom: 20px;
+  }
+
+  .profile-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-photo {
+    position: static;
+    margin: -100px auto 20px auto;
+  }
+
+  .info-section {
+    margin-left: 0;
+    padding-top: 0;
   }
 }
 
-/* post
-/* Colonne droite (posts) */
-.club-posts {
-  flex: 1;
-  /* overflow-y: auto; */
-  padding-right: 10px;
-}
+@media (max-width: 768px) {
+  .club-nav {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-/* Pour éviter un scrollbar moche */
-.club-posts::-webkit-scrollbar {
-  width: 6px;
+  .profile-photo {
+    width: 180px;
+    height: 180px;
+  }
 }
-.club-posts::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 10px;
-}
-
-

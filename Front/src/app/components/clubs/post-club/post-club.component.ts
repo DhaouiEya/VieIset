@@ -5,10 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Club } from '../../../models/club';
+import { CommentPostComponent } from "../comment-post/comment-post.component";
 
 @Component({
   selector: 'app-post-club',
-  imports: [MatButtonModule,MatCardModule,MatIconModule,DatePipe,NgClass],
+  imports: [MatButtonModule, MatCardModule, MatIconModule, DatePipe, CommentPostComponent],
   standalone:true,
   templateUrl: './post-club.component.html',
   styleUrl: './post-club.component.css'
@@ -18,7 +19,8 @@ export class PostClubComponent implements OnChanges{
   @Input() club: any;
   isExpanded = false;
   userReaction: 'jaime' | 'jaimePas' | null = null;
-
+  isSubmittingComment = false;
+  showComments = false;
   constructor(private postService: PosteService,
     private cdr : ChangeDetectorRef,
   ) {}
@@ -47,5 +49,21 @@ toggleReaction(type: 'jaime' | 'jaimePas') {
   });
 }
 
+
+  submitComment(commentInput: HTMLInputElement): void {
+      const text = commentInput.value.trim();
+      if (!text || !this.post) return;
+
+      this.isSubmittingComment = true;
+      // this.postService.addComment(this.post._id, text).subscribe({
+      //     next: (res) => {
+      //      this.cdr.detectChanges();
+      //     },
+      //     error: (err) => {
+      //         console.error('Failed to submit comment', err);
+      //         this.isSubmittingComment = false;
+      //     }
+      // });
+  }
 
 }

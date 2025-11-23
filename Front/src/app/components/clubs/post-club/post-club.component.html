@@ -1,5 +1,4 @@
-<mat-card class="post-card">
-  <!-- Header -->
+<!-- <mat-card class="post-card">
   <mat-card-header>
     <div mat-card-avatar class="post-avatar">
       <img [src]="club?.imageProfil" alt="">
@@ -8,7 +7,6 @@
     <mat-card-subtitle>{{ post.dateCreation | date:'medium' }}</mat-card-subtitle>
   </mat-card-header>
 
-  <!-- Contenu -->
   <mat-card-content>
     <p class="post-content" [class.expanded]="isExpanded">
       {{ post.description }}
@@ -27,12 +25,10 @@
   }
   </mat-card-content>
 
-  <!-- Image -->
-  @if(post.lienImage) {
+*  @if(post.lienImage) {
 
   <img mat-card-image [src]="post.lienImage" class="post-image" [class.small]="!isExpanded" />
   }
-  <!-- Vidéo -->
   @if(post.lienVideo) {
   <div class="post-video">
     <video width="100%" controls>
@@ -42,7 +38,6 @@
   </div>
   }
 
-  <!-- Actions sociales -->
 <mat-card-actions class="post-actions">
   <button class="action-btn"
           [ngClass]="{ 'active-jaime': userReaction === 'jaime' }"
@@ -57,5 +52,118 @@
     <mat-icon>thumb_down</mat-icon>
     <span>{{ post.nbReactions?.jaimePas || 0 }}</span>
   </button>
-</mat-card-actions>
+</mat-card-actions> -->
 
+
+
+
+
+@if (post) {
+<div class="post-card bg-white rounded-lg shadow-md mb-5 overflow-hidden">
+  <!-- Header -->
+  <div class="p-4 flex items-center">
+    <div class="post-avatar">
+      <img [src]="club.imageProfil" alt="Club Profile Picture">
+    </div>
+    <div class="ml-3">
+      <p class="font-bold text-gray-800">{{ club.nom }}</p>
+      <p class="text-sm text-gray-500">{{ post.dateCreation | date:'medium' }}</p>
+    </div>
+  </div>
+
+  <!-- Contenu -->
+  <div class="px-4 pb-2">
+    <p class="post-content" [class.expanded]="isExpanded">
+      {{ post.description }}
+    </p>
+    @if (!isExpanded && post.description?.length > 150) {
+      <span class="read-more" (click)="isExpanded = true">
+        Lire plus...
+      </span>
+    }
+    @if (isExpanded) {
+      <span class="read-more" (click)="isExpanded = false">
+        Réduire
+      </span>
+    }
+  </div>
+
+  <!-- Image -->
+  @if(post.lienImage) {
+    <img [src]="post.lienImage" class="post-image" [class.small]="!isExpanded" />
+  }
+  <!-- Vidéo -->
+  @if(post.lienVideo) {
+    <div class="post-video px-4">
+      <video class="w-full rounded-lg" controls>
+        <source [src]="post.lienVideo" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo.
+      </video>
+    </div>
+  }
+
+  <!-- Stats -->
+  <div class="flex justify-between items-center px-4 py-2 text-sm text-gray-500">
+      <div>
+          <span class="font-semibold">{{ post.nbReactions?.jaime || 0 }}</span> J'aime
+      </div>
+      <div>
+          <span class="cursor-pointer hover:underline" (click)="showComments= !showComments">
+              {{ post.comments?.length || 0 }} Commentaires
+          </span>
+      </div>
+  </div>
+
+  <hr class="mx-4">
+
+  <!-- Actions sociales -->
+  <div class="post-actions p-2">
+    <button class="action-btn"
+            [class.active-jaime]="post.userReaction === 'jaime'"
+            (click)="toggleReaction('jaime')">
+      <i class="material-icons">thumb_up</i>
+      <span>J'aime</span>
+    </button>
+
+    <button class="action-btn"
+            [class.active-jaimePas]="post.userReaction === 'jaimePas'"
+            (click)="toggleReaction('jaimePas')">
+      <i class="material-icons">thumb_down</i>
+      <span>J'aime pas</span>
+    </button>
+
+    <button class="action-btn" (click)="showComments = true">
+      <i class="material-icons">comment</i>
+      <span>Commenter</span>
+    </button>
+  </div>
+
+  <hr class="mx-4">
+
+
+  <!-- Section Commentaires -->
+  @if(showComments) {
+    <div class="p-4 bg-gray-50">
+      <div class="flex items-start gap-3 mb-4">
+        <img src="blank.png" alt="User avatar" class="w-9 h-9 rounded-full mt-1">
+                <div class="relative flex-1">
+          <input #commentInput (keyup.enter)="submitComment(commentInput)" [disabled]="isSubmittingComment" type="text" placeholder="Écrivez un commentaire..." class="w-full pl-3 pr-10 py-2 border rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <button (click)="submitComment(commentInput)" [disabled]="isSubmittingComment" class="absolute right-2 top-1/2 -translate-y-1/2 text-blue-500 hover:text-blue-700 disabled:text-gray-400">
+             <i class="material-icons">send</i>
+          </button>
+        </div>
+      </div>
+
+       @if (post.comments.length > 0) {
+        <div class="space-y-4">
+            @for(comment of post.comments; track comment.id) {
+                <app-comment-post [comment]="comment"></app-comment-post>
+            }
+        </div>
+       } @else {
+        <p class="text-center text-gray-500 text-sm py-4">Soyez le premier à commenter.</p>
+       }
+    </div>
+  }
+</div>
+}
