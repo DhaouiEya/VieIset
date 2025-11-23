@@ -14,6 +14,7 @@ async function lireSheet(spreadsheetId) {
       scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
     });
 
+
     const client = await auth.getClient();
     const sheets = google.sheets({ version: "v4", auth: client });
 
@@ -54,9 +55,9 @@ async function lireSheet(spreadsheetId) {
         // Vérifier que l'email est valide
         if (email && estEmailValide(email)) {
           data.push({ nom, email, club });
-          console.log(`✅ Étudiant valide: ${nom} - ${email} - ${club}`);
+          console.log(` Étudiant valide: ${nom} - ${email} - ${club}`);
         } else {
-          console.log(`❌ Email invalide: ${email}`);
+          console.log(` Email invalide: ${email}`);
         }
       }
     }
@@ -196,8 +197,6 @@ async function traiterSheet(rows) {
 
   // On suppose que la première ligne contient les titres
  
-  const emailIndex = 1;
-  const clubIndex = 2;
   const demandesCreees = [];
 
   // Parcours des lignes à partir de la deuxième (après les titres)

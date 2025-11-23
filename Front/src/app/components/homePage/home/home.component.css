@@ -5,9 +5,24 @@
   min-height: 100vh;
   color: #f5f5f5;
    width: 100%;
+   padding-bottom: 40px;
+
 }
 
-
+   .image-wrapper {
+     margin-top: 40px;
+     margin-left: 3px;
+     margin-right: 3px;
+      position: relative;
+      width: 97%;
+      height: 540px;
+    }
+    
+    img { 
+      width: 75%;
+      height:700px;
+      transition: all 0.3s  ease; 
+    }
 
 .hero {
   position: relative;
@@ -40,15 +55,17 @@
 }
 
 .hero-text h1 {
-  font-size: 48px;
+  font-size: 60px;
   color: #ffc107;
-  margin-bottom: 15px;
+  margin-bottom: 59px;
+  font-weight: bolder;
 }
 
 .hero-text p {
-  font-size: 20px;
+  font-size: 30px;
   color: #ffffff;
   margin-bottom: 30px;
+  font-weight: bold;
 }
 
 .cta-btn {
@@ -56,7 +73,7 @@
   color: #ffffff;
   border: none;
   padding: 12px 25px;
-  font-size: 18px;
+  font-size: 24px;
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
@@ -79,9 +96,10 @@
 .features-title {
  width: 100%;
   text-align: center;
-  font-size: 36px;
+  font-size: 50px;
   font-weight: bold;
   color: #ffc107;
+  text-decoration: underline;
   margin-bottom: 5px;
   margin-top: 30px;
   letter-spacing: 1px;
@@ -90,7 +108,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-   padding-bottom: 80px;
+   padding-bottom: 100px;
+   padding-top: 100px;
 }
 .features {
   display: flex;
@@ -121,6 +140,8 @@
   margin-top: 15px;
   font-size: 19px;
   font-weight:650;
+  
+
 }
 
 .feature-card p {

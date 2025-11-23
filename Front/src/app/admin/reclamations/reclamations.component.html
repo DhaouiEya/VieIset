@@ -18,9 +18,10 @@
     <tbody>
       @for (r of reclamations; track $index) {
         <tr>
-          <td>{{ r.etudiant.lastName }} {{ r.etudiant.firstName }}</td>
-          <td>{{ r.etudiant.email }}</td>
-
+          <!-- <td>{{ r.etudiant?.lastName }} {{ r.etudiant?.firstName }}</td>
+          <td>{{ r.etudiant?.email }}</td> -->
+ <td>omrani islem</td>
+          <td>islemb ikjhh</td>
           <!-- Sujet avec modal -->
           <td>
             @if(r.sujet.length > 30) {

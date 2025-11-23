@@ -98,7 +98,7 @@
         <tbody>
           @for (d of getPaginatedDemandes(); track d._id) {
             <tr>
-              <td>{{ d.etudiant.lastName || 'n' }}</td>
+              <td>{{ d.etudiant.lastName }}</td>
               <td>{{ d.etudiant.firstName }}</td>
               <td>{{ d.etudiant.email }}</td>
               <td>{{ d.club.nom }}</td>

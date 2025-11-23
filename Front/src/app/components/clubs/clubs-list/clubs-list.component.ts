@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clubs-list',
-  imports: [HeaderComponent, FooterComponent],
+  imports: [ FooterComponent],
   templateUrl: './clubs-list.component.html',
   styleUrl: './clubs-list.component.css',
 })
