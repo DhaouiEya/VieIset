@@ -28,33 +28,51 @@
         <input type="datetime-local" matInput formControlName="endDate">
       </mat-form-field>
     </div>
-  <!-- Row 4 : Description (full width) -->
+
+    <!-- Row 3 : Description (full width) -->
     <div class="form-row">
       <mat-form-field appearance="outline" class="full-col">
         <mat-label>Description</mat-label>
-        <textarea matInput formControlName="description"></textarea>
+        <textarea matInput formControlName="description" rows="4"></textarea>
       </mat-form-field>
     </div>
-    <!-- Row 3 : Capacité + Upload -->
+
+    <!-- Row 4 : Capacité + Upload -->
     <div class="form-row two-cols">
       <mat-form-field appearance="outline" class="col">
         <mat-label>Capacité</mat-label>
-        <input matInput type="number" formControlName="capacity">
+        <input matInput type="number" formControlName="capacity" min="1">
       </mat-form-field>
 
-      <div class="col">
-        <input type="file" (change)="onFileSelected($event)" />
+      <div class="col upload-section">
+        <label for="fileInput" class="file-label">Choisir une image</label>
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          class="file-input"
+        />
         @if (previewImage) {
-        <img  [src]="previewImage" class="preview-img" />
+          <div class="preview-container">
+            <img [src]="previewImage" alt="Aperçu" class="preview-img" />
+            <button
+              type="button"
+              mat-icon-button
+              class="remove-image"
+              title="Supprimer l'image">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
         }
       </div>
     </div>
 
-  
-
-    <div class="actions">
-      <button mat-raised-button class="bleuf" (click)="save()">Enregistrer</button>
-      <button mat-button color="warn" (click)="close()">Annuler</button>
-    </div>
   </form>
 </mat-dialog-content>
+
+<!-- Actions séparées du mat-dialog-content -->
+<mat-dialog-actions class="actions">
+  <button mat-button color="warn" (click)="close()">Annuler</button>
+  <button mat-raised-button class="bleuf" (click)="save()">Enregistrer</button>
+</mat-dialog-actions>

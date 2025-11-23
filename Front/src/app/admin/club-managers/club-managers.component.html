@@ -1,45 +1,63 @@
-<div class="p-6 bg-gray-50 min-h-screen">
-
-  <!-- Layout parent -->
-  <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-
-    <!-- Sidebar -->
-    <div class="hidden lg:block">
-      <div class="sticky top-6">
-        <app-admin-menu></app-admin-menu>
+<div class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-6">
+  <div class="container mx-auto max-w-7xl">
+    <!-- En-tête avec statistiques -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">Responsables de Clubs</h1>
+          <p class="text-gray-600">Gérez les responsables de vos clubs sportifs</p>
+        </div>
+        <div class="bg-blue-600 text-white px-6 py-4 rounded-xl shadow-lg">
+          <div class="text-3xl font-bold">{{ managers.length }}</div>
+          <div class="text-sm opacity-90">Total</div>
+        </div>
       </div>
     </div>
 
-    <!-- Contenu principal -->
-    <div class="lg:col-span-3">
-
-      <!-- Titre -->
-      <h2 class="text-3xl font-bold text-gray-800 mb-6">
-        Liste des Responsables de Clubs
-      </h2>
-
-      <!-- Tableau -->
-      <div class="overflow-x-auto bg-white shadow-md rounded-lg border border-gray-200">
+    <!-- Tableau -->
+    <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+      <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-100">
+          <thead class="bg-gradient-to-r from-gray-100 to-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Nom</th>
-              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Prénom</th>
-              <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase">Email</th>
-              <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700 uppercase">Actions</th>
+              <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Nom
+              </th>
+              <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Prénom
+              </th>
+              <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Email
+              </th>
+              <th class="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Actions
+              </th>
             </tr>
           </thead>
-
           <tbody class="bg-white divide-y divide-gray-200">
             @for (user of managers; track user._id) {
-              <tr class="hover:bg-gray-50 transition duration-200">
-                <td class="px-6 py-4 text-gray-800 font-medium">{{ user.firstName }}</td>
+              <tr class="hover:bg-blue-50 transition duration-200">
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-md">
+                      {{ user.firstName.charAt(0) }}
+                    </div>
+                    <span class="text-gray-800 font-semibold">{{ user.firstName }}</span>
+                  </div>
+                </td>
                 <td class="px-6 py-4 text-gray-800 font-medium">{{ user.lastName }}</td>
-                <td class="px-6 py-4 text-gray-600">{{ user.email }}</td>
+                <td class="px-6 py-4">
+                  <a href="mailto:{{ user.email }}" class="text-blue-600 hover:text-blue-800 hover:underline">
+                    {{ user.email }}
+                  </a>
+                </td>
                 <td class="px-6 py-4 text-center">
                   <button
-                    class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200 shadow-sm"
+                    class="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition duration-200 shadow-md hover:shadow-lg transform hover:scale-105 font-medium inline-flex items-center gap-2"
                     (click)="removeRole(user._id)">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
                     Retirer
                   </button>
                 </td>
@@ -49,6 +67,16 @@
         </table>
       </div>
 
+      <!-- Message si vide -->
+      @if (managers.length === 0) {
+        <div class="text-center py-12 px-4">
+          <svg class="w-20 h-20 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <p class="text-gray-500 text-lg font-medium">Aucun responsable trouvé</p>
+          <p class="text-gray-400 text-sm mt-2">La liste est actuellement vide</p>
+        </div>
+      }
     </div>
   </div>
 </div>

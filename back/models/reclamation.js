@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ReclamationSchema = new mongoose.Schema({
   etudiant: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Etudiant',
+    ref: 'User',
     required: true
   },
   sujet: { type: String, required: true },

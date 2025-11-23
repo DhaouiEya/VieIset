@@ -1,172 +1,291 @@
-.c {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /* toute la hauteur de la page */
- 
-  padding: 20px;
-  box-sizing: border-box;
-}
-.events-container {
-  background-color: #fff;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 70%;
-  margin: auto;
-  overflow: hidden;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+/* ===== VARIABLES COULEURS ===== */
+:root {
+  --bleu-principal: #1976d2;
+  --bleu-clair: #4791ff;
+  --jaune-header: #ffb300;
+  --gris-fond: #f5f5f5;
+  --gris-bordure: #e0e0e0;
+  --texte-principal: #333;
+  --danger: #d32f2f;
 }
 
-/* Bande jaune */
+/* ===== CONTENEUR PRINCIPAL ===== */
+.c {
+  padding: 20px;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+.events-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== HEADER JAUNE + BOUTON AJOUT ===== */
 .header-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fbc02d; /* jaune */
-  color: #333;
-  padding: 10px 20px;
-  border-radius: 12px 12px 0 0;
+  background:#ffb300;
+  padding: 16px 24px;
+  color: white;
 }
 
 .header-bar h2 {
   margin: 0;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 500;
 }
 
-/* Table */
+.header-bar button.bleuf {
+  background: white;
+  color: #1976d2;
+}
+
+.header-bar button.bleuf:hover {
+  background: #e3f2fd;
+}
+
+/* ===== TABLEAU ===== */
 .events-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: center;
+  font-size: 0.95rem;
 }
 
 .events-table th {
-  background-color: #f5f5f5;
-  padding: 12px;
-  font-weight: bold;
+  background: #fafafa;
+  text-align: left;
+  padding: 14px 12px;
+  font-weight: 500;
+  color: #555;
+  border-bottom: 2px solid #e0e0e0;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
 }
-.view-btn{
-  font-size: 12px;
-  padding: 16px 15px; 
-border : solid 1px #87CEEB;
-border-radius: 5px;
-
-}
-
 
 .events-table td {
-  padding: 10px;
-  border-top: 1px solid #ddd;
+  padding: 14px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: middle;
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+.events-table tr:hover {
+  background-color: #f9f9f9;
 }
 
-.modal {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-}
-
-.large-modal {
-  width: 600px;
-}
-
-.event-image-preview {
-  width: 100%;
-  max-height: 350px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.action-buttons {
-  display: flex;           /* aligne les boutons en ligne */
-  gap: 8px;                /* espace entre les boutons */
-}
-
-.edit-btn mat-icon {
-  color: #1E3A5F;          /* bleu material */
-}
+/* Troncature description */
 .truncate {
-  max-width: 180px;
+  max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.image-modal {
-  position: relative;
-  border-radius: 12px;
-  padding: 0;
-  width: 400px;       /* largeur fixe pour toutes les images */
-  height: 420px;      /* hauteur fixe pour toutes les images */
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  background: #000;   /* fond noir */
-  animation: fadeIn 0.3s ease;
+
+/* Padding spécifique pour colonnes avec boutons */
+.td-padding {
+  padding: 8px 4px !important;
+  text-align: center;
+}
+
+/* Boutons dans le tableau */
+.view-btn {
+  font-size: 12px;
+  line-height: 20px;
+  padding: 4px 8px;
+  min-width: unset;
+}
+
+.btn-icon {
+  margin-right: 4px;
+  font-size: 14px;
+}
+
+.action-buttons {
   display: flex;
+  gap: 8px;
   justify-content: center;
-  align-items: center;
-  margin-left: 250px;
-  margin-top: 50px;
 }
 
-.event-image-preview {
-  margin-top: 50px;
-  width: 600px;       /* largeur fixe pour toutes les images */
-  height: 400px;
-  object-fit:scale-down; /* garde le ratio sans déformer */
-  display: block;
+.action-buttons button {
+  padding: 6px;
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(0,0,0,0.5);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 20px;
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background 0.2s;
+.edit-btn {
+  color: #1976d2;
 }
 
-.close-btn:hover {
-  background: rgba(0,0,0,0.8);
+.edit-btn:hover {
+  background: rgba(25, 118, 210, 0.1);
 }
 
+button[color="warn"] {
+  color: var(--danger);
+}
+
+button[color="warn"]:hover {
+  background: rgba(211, 47, 47, 0.1);
+}
+
+/* ===== MODAL PARTICIPANTS ===== */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.7);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.3s ease-out;
 }
 
+.modal {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s ease-out;
+}
+
+.modal h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #1976d2;
+}
+
+.modal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.modal ul li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.modal ul li:last-child {
+  border-bottom: none;
+}
+
+/* ===== MODAL IMAGE ===== */
+.image-modal {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 90vw;
+  max-height: 90vh;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  animation: zoomIn 0.4s ease-out;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.event-image-preview {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  display: block;
+}
+
+/* ===== ANIMATIONS ===== */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .events-table {
+    font-size: 0.85rem;
+  }
+
+  .header-bar {
+    padding: 12px 16px;
+  }
+
+  .header-bar h2 {
+    font-size: 1.2rem;
+  }
+
+  .truncate {
+    max-width: 120px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: #fff;
+  }
+
+  td {
+    border: none;
+    position: relative;
+    padding-left: 50% !important;
+    text-align: right;
+  }
+
+  td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 12px;
+    width: 45%;
+    font-weight: bold;
+    text-align: left;
+    color: #555;
+  }
 }

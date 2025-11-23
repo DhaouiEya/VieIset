@@ -4,6 +4,8 @@
   height: 100vh;
 
 }
+
+
 .content {
   flex: 1;
   display: flex;
@@ -134,3 +136,4 @@ button[mat-dialog-close]:hover {
   margin-bottom: 8px;
 
 }
+

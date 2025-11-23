@@ -43,6 +43,10 @@ import { ListEtudiantsComponent } from './admin/list-etudiants/list-etudiants.co
 import { DemandedonComponent } from './components/demandedon/demandedon.component';
 import { ClubManagersComponent } from './admin/club-managers/club-managers.component';
 import { ListeDemandeDonsComponent } from './admin/liste-demande-dons/liste-demande-dons.component';
+import { ProfileComponent } from './components/profile/profile/profile.component';
+import { ClubmanagerDashComponent } from './components/responsable-club/clubmanager-dash/clubmanager-dash.component';
+import { MyClubComponent } from './components/clubs/my-club/my-club.component';
+import { AdminDashComponent } from './admin/admin-dash/admin-dash.component';
 
 
 export const routes: Routes = [
@@ -60,6 +64,33 @@ export const routes: Routes = [
       {path:'aboutUs',component:AboutUsComponent}
     ]
   },
+
+  //********************RESPONSABLE CLUB*********************** */
+  {path:'clubManagerDash',component:ClubmanagerDashComponent,children:[
+ { path: 'events/create', component: EventCreateComponent },
+   { path: 'createClub', component: CreateClubComponent },
+    { path: 'consulter-events', component:EventsComponent},
+    { path: 'publications', component: PublicationPostComponent },
+    {path:"updateEvent/:id",component:UpdateEventComponent},
+    {path: 'participation-forms', component: ParticipationFormsComponent},
+    {path:'mon-club',component:MyClubComponent}
+  ]},
+
+  //***************************************************************** */
+
+  // ********************ADMIN***********************
+  {path:'admindashboard', component:AdminDashComponent,children:
+    [
+  { path: 'home', component: AdmindashboardComponent },
+  { path: 'compagne', component: CompagneComponent },
+  { path: 'reclamations', component: ReclamationsComponent },
+  {path:'etudiants',component:ListEtudiantsComponent},
+  {path:'managers',component:ClubManagersComponent},
+  {path:'liste-demande-dons', component: ListeDemandeDonsComponent},
+    {path: 'reclamations', component: ListeReclamationsComponent},
+    ],
+  },
+  //************************************************ */
   {path: 'footer', component: FooterHomeComponent},
 
 
@@ -73,11 +104,11 @@ export const routes: Routes = [
 
   // Events
 
-  { path: 'events/create', component: EventCreateComponent },
+
   { path: 'events/:id', component: EventDetailComponent },
 
   // Clubs
-  { path: 'createClub', component: CreateClubComponent },
+
   { path: 'espaceClub/:id', component: EspaceClubComponent },
 
 
@@ -86,8 +117,7 @@ export const routes: Routes = [
   // {path: 'espaceClub',component:EspaceClubComponent },
 
 
-  {path:"res_club", component:ResSideBarComponent,children:
-  [
+  {path:"res_club", component:ResSideBarComponent},
     {path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     {path: 'dashboard', component: ResponsableDashboardComponent },
     { path: 'consulter-events', component:EventsComponent},
@@ -97,8 +127,7 @@ export const routes: Routes = [
     {path: 'participation-forms', component: ParticipationFormsComponent},
 
 
-  ],
-  },
+
   {path:"consulter-demandes", component:ConsulterDemandesAdhesionComponent},
 { path: 'espaceClub/:id', component: EspaceClubComponent },
   { path: 'clubs', component: ClubsListComponent },
@@ -106,12 +135,10 @@ export const routes: Routes = [
 
   // Other pages
 
-  { path: 'admindashboard', component: AdmindashboardComponent },
-  { path: 'compagne', component: CompagneComponent },
-  { path: 'reclamations', component: ReclamationsComponent },
+
   {path: 'sideBarEtudiant', component: SidebarComponent},
      { path: 'clubs', component: ClubsListComponent },
-     {path: 'reclamations', component: ListeReclamationsComponent},
+
      {path:'newReclamation', component: CreateReclamationComponent},
      {path : 'mesDemandes', component: ListeDmandesComponent},
     { path: 'events', component: EventListComponent },
@@ -122,6 +149,8 @@ export const routes: Routes = [
   {path:'etudiants',component:ListEtudiantsComponent},
   {path:'managers',component:ClubManagersComponent},
   {path:'liste-demande-dons', component: ListeDemandeDonsComponent},
+   {path:'demandedonetudiant', component: DemandedonComponent},
+   {path:'profile',component:ProfileComponent}
 
 ];
 

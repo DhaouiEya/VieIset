@@ -34,11 +34,11 @@
           <td>{{ event.startDate | date: 'short' }} </td>
           <td>{{ event.endDate | date: 'short' }}</td>
           <td>{{ event.capacity || 0 }}</td>
-         
+
           <td class="td-padding">
             <button mat-stroked-button class="view-btn" (click)="viewAttendees(event)" >
                <span class="btn-icon">👁️</span>
-  <span style="font-size: 12px;">voir({{ event.attendees?.length || 0 }})</span>  
+  <span style="font-size: 12px;">voir({{ event.attendees?.length || 0 }})</span>
             </button>
           </td>
             <td class="td-padding">
@@ -78,14 +78,14 @@
   <div class="modal-overlay" (click)="closenewModal()">
     <div class="image-modal" (click)="$event.stopPropagation()">
       <button class="close-btn" (click)="closenewModal()">✕</button>
-      <img [src]="'http://localhost:9000' + selectedEvent?.lienImage" 
+      <img [src]="'http://localhost:9000' + selectedEvent?.lienImage"
            alt="{{selectedEvent?.title}}" class="event-image-preview">
     </div>
   </div>
 }
 
 </div>
-</div> 
+</div>
 
 
 
@@ -94,5 +94,3 @@
 
 
 
-
-v

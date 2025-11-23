@@ -22,7 +22,7 @@
   font-size: 2.5rem;
   font-weight: 800;
    color: #1a237e;
-  background: linear-gradient(135deg, #3a86ff, #8338ec);
+  background: #ffb300;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -122,7 +122,7 @@ form {
 button[type="submit"] {
   width: 100%;
   padding: 1.25rem;
-  background: linear-gradient(135deg, #3a86ff, #8338ec);
+  background: #ffb300;
   color: white;
   border: none;
   border-radius: 12px;

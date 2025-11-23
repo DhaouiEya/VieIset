@@ -1,0 +1,19 @@
+.layout {
+  display: flex;
+}
+
+/* .sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+} */
+
+.content {
+  flex: 1;
+  padding: 20px;
+  padding-left: 0;        /* ← colle vraiment à la sidebar */
+  background: #f8f9fa;
+  min-width: 0;
+}

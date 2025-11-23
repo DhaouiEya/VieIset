@@ -15,4 +15,15 @@ export class CompagneService {
   getAllCompagnes(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+   // Supprimer une campagne par son ID
+  deleteCompagne(id: string): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
+  }
+
+  // Optionnel : mise à jour d'une campagne (si tu en auras besoin plus tard)
+  // updateCompagne(id: string, data: any): Observable<any> {
+  //   return this.http.put(`${this.apiUrl}/${id}`, data);
+  // }
 }
