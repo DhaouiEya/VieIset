@@ -6,10 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import Swal from 'sweetalert2';
+import { EtudiantBannerComponent } from "../etudiant-banner/etudiant-banner.component";
 
 @Component({
   selector: 'app-logement',
-  imports:[DatePipe, FormsModule, FooterComponent],
+  imports: [DatePipe, FormsModule, FooterComponent, EtudiantBannerComponent],
   templateUrl: './logement.component.html',
   styleUrls: ['./logement.component.css']
 })

@@ -6,10 +6,11 @@ import { AuthService } from '../../../services/auth.service';
 import { ReclamationService } from '../../../services/reclamation.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateReclamationComponent } from '../create-reclamation/create-reclamation.component';
+import { EtudiantBannerComponent } from "../../etudiant-banner/etudiant-banner.component";
 
 @Component({
   selector: 'app-liste-reclamations',
-  imports: [SlicePipe,DatePipe],
+  imports: [SlicePipe, DatePipe, EtudiantBannerComponent],
   templateUrl: './liste-reclamations.component.html',
   styleUrl: './liste-reclamations.component.css'
 })
@@ -24,7 +25,7 @@ export class ListeReclamationsComponent implements OnInit{
   dialog = inject(MatDialog);
 
 
- 
+
   ngOnInit(): void {
     console.log("id de user connecté :",this.id);
     this.loadReclamations();
@@ -35,6 +36,7 @@ export class ListeReclamationsComponent implements OnInit{
     this.reclamationService.getReclamationsByEtudiantId(this.id).subscribe({
       next: (data) => {
         this.reclamations = data;
+        console.log("reclamations ",data);
       },
       error: (err) => console.error(err)
     });
@@ -47,11 +49,11 @@ export class ListeReclamationsComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'created') {
-        this.loadReclamations(); 
+        this.loadReclamations();
       }
     });
   }
-  
+
   openDescription(content: any, description: string) {
     this.descriptionToShow = description;
     this.modalService.open(content, { size: 'lg' });

@@ -1,90 +1,113 @@
+<div>
+  <!-- Page Header -->
+     <app-etudiant-banner [titre]="'Découvrez nos événements'" [description]="'Explorez les événements passionnants et les opportunités qui vous attendent.'"></app-etudiant-banner>
 
-<div class="events-header">
-   <app-header></app-header>
-    <div class="header-content">
+  <!-- Section principale avec un fond gris clair -->
+  <div class="container mx-auto px-3 sm:px-4 lg:px-6 py-6">
+    <!-- Conteneur centré avec padding horizontal réduit -->
 
-      <h1 class="page-title">Événements à venir</h1>
-      <p class="page-subtitle">Découvrez les prochains événements passionnants et rejoignez la communauté</p>
-
-
-    </div>
-
-</div>
+  
 
 
-<div class="events-grid">
-  @for (event of events; track event?.id ?? $index) {
-    <div class="event-card" (click)="viewEvent(event)">
-
-
-      @if (event.lienImage) {
-        <div class="card-image-wrapper">
-          <img
-            [src]="'http://localhost:9000' + event.lienImage"
-            alt="{{ event.title }}"
-            loading="lazy"
-            class="card-img-top"
-          />
-          <div class="image-overlay">
+    <main class="py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- State Handling -->
+        @if (loading) {
+        <!-- Loading State Skeleton -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          @for (_ of [1,2,3,4,5,6]; track $index) {
+          <div class="bg-white rounded-xl shadow-sm p-4 animate-pulse">
+            <div class="bg-slate-200 h-40 rounded-lg"></div>
+            <div class="mt-4 h-6 bg-slate-200 rounded w-3/4"></div>
+            <div class="mt-2 h-4 bg-slate-200 rounded w-1/2"></div>
+            <div class="flex gap-2 mt-4">
+              <div class="h-5 bg-slate-200 rounded-full w-16"></div>
+              <div class="h-5 bg-slate-200 rounded-full w-20"></div>
+            </div>
+            <div class="mt-4 h-2 bg-slate-200 rounded-full"></div>
           </div>
+          }
         </div>
-      }
-
-
-
-
-      <div class="card-header">
-        <div class="date-section">
-          <div class="date-badge">
-            <span class="date-day">{{ event.startDate | date:'dd' }}</span>
-            <span class="date-month">{{ event.startDate | date:'MMM' | uppercase }}</span>
-          </div>
-          <div class="time-info">
-            <i class="time-icon">🕒</i>
-            {{ event.startDate | date:'HH:mm' }}
-          </div>
+        } @else if (error) {
+        <!-- Error State -->
+        <div class="bg-white rounded-lg shadow-sm p-8 text-center max-w-2xl mx-auto">
+          <svg class="mx-auto h-12 w-12 text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+          </svg>
+          <h3 class="mt-4 text-xl font-bold text-slate-800">Oops, something went wrong!</h3>
+          <p class="mt-2 text-slate-500">{{ error }}</p>
+          <button (click)="fetchEvents()"
+            class="mt-6 bg-blue-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md">
+            Try Again
+          </button>
         </div>
+        } @else {
+        @if (events.length > 0) {
+        <!-- Events Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          @for (event of events; track event.id) {
+          <div (click)="viewEvent(event)"
+            class="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col">
+            <!-- Image Section -->
+            <div class="relative">
+              <div class="w-full h-60 bg-slate-100 rounded-t-xl overflow-hidden">
+                <img [src]="event.lienImage" [alt]="event.title" class=" w-full object-cover" />
+              </div>
+              <!-- Date Badge -->
+              <div
+                class="absolute top-4 left-4 bg-yellow-400 text-slate-900 rounded-lg px-3 py-2 text-center leading-none font-bold">
+                <span class="block text-2xl">{{ event.startDate | date:'dd' }}</span>
+                <span class="block text-xs uppercase">{{ event.startDate | date:'MMM' }}</span>
+              </div>
+              <!-- Attendee Badge -->
+              <div
+                class="absolute bottom-2 right-2 bg-yellow-400 backdrop-blur-sm text-white rounded-full px-3 py-1 text-xs font-semibold">
+                <span>+{{ event.nombreParticipants }}</span>
+              </div>
+            </div>
 
-        <div class="event-meta">
-          <h3 class="event-title">{{ event.title }}</h3>
-          <div class="event-location">
-            <i class="location-icon">📍</i>
-            <span class="location-text">{{ event.localisation }}</span>
-          </div>
-        </div>
-      </div>
+            <!-- Content Section -->
+            <div class="p-5 flex-grow flex flex-col">
+              <h3 class="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors"
+                [title]="event.title">{{ event.title }}</h3>
+              <div class="flex items-center gap-2 text-slate-500 text-sm mt-1">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 0 0 .281-.14c.186-.1.4-.27.61-.474a10.835 10.835 0 0 0 2.453-2.288c1.398-1.799 2.59-3.928 2.59-6.516A6.5 6.5 0 0 0 10 2.5 6.5 6.5 0 0 0 3.5 9c0 2.588 1.192 4.717 2.59 6.516.621.8 1.341 1.562 2.453 2.288.21.203.424.373.61.473a5.742 5.742 0 0 0 .28.141l.019.008.006.003c.001 0 .002.001.003.001a.75.75 0 0 0 .704 0l.003-.001Z"
+                    clip-rule="evenodd" />
+                </svg>
+                <span>{{ event.localisation }}</span>
+              </div>
 
+              <!-- Capacity Progress Bar -->
+              <div class="mt-auto pt-4">
+                <span class="text-xs font-semibold text-slate-500">Capacity</span>
+                <div class="w-full bg-slate-200 rounded-full h-2 mt-1">
+                  <div class="bg-yellow-400 h-2 rounded-full" [style.width.%]="getParticipantPercentage(event)"></div>
+                </div>
+              </div>
 
-      <div class="card-body">
-        <p class="event-description">{{ event.description }}</p>
-
-
-        <div class="event-tags">
-          <span class="event-tag">#Tech</span>
-          <span class="event-tag">#Networking</span>
-          <span class="event-tag">#Communauté</span>
-        </div>
-      </div>
-
-
-      <div class="card-footer">
-        <div class="footer-content">
-          <div class="capacity-section">
-            <div class="progress-container">
             </div>
           </div>
+          }
         </div>
-      </div>
-
-
-      <div class="card-overlay">
-        <div class="overlay-content">
-          <i class="overlay-icon">👁️</i>
-          <span class="overlay-text">Voir les détails</span>
+        } @else {
+        <!-- Empty State -->
+        <div class="text-center py-20 bg-white rounded-lg shadow-sm">
+          <svg class="mx-auto h-12 w-12 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25M3 18.75A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0h18M12 12.75h.008v.008H12v-.008Z" />
+          </svg>
+          <h3 class="mt-4 text-lg font-medium text-slate-900">No events found</h3>
+          <p class="mt-1 text-sm text-slate-500">There are currently no upcoming events. Please check back later.</p>
         </div>
+        }
+        }
       </div>
-    </div>
-  }
+    </main>
+  </div>
+
 </div>
-
-<app-footer></app-footer>

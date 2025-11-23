@@ -141,11 +141,10 @@ export class PosteService {
 //   addComment(postId: string, text: string) {
 //   return this.http.post(`http://localhost:9000/posts/${postId}/comments`, { text });
 // }
-  addComment(postId: string, text: string, token: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
+  addComment(postId: string, text: string): Observable<any> {
+        const headers = this.getAuthHeaders();
+
+
 
     return this.http.post(`${this.apiUrl}/${postId}/comment`, { text }, { headers });
   }

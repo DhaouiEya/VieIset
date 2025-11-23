@@ -1,72 +1,48 @@
 // src/app/models/etudiant.model.ts
 
-export interface Volunteering {
-  organization?: string;
-  role?: string;
-  description?: string;
-  startDate?: Date;
-  endDate?: Date;
-}
-
-export interface Certification {
-  title: string;
-  institution?: string;
-  description?: string;
-  issueDate?: Date;
-  expiryDate?: Date;
-  documentURL?: string;
-}
 
 export interface UserModel {
-  _id?: string; // MongoDB id
+  _id?: string;
 
   email: string;
   emailVerified?: boolean;
   emailVerificationToken?: string;
   emailVerificationExpires?: Date;
 
-  password?: string;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
 
-  cin?: string;
   firstName: string;
   lastName: string;
-  gender?: 'Homme' | 'Femme';
-  age?: number;
-  phone?: string;
-  city?: string;
-  postalCode?: string;
-  address?: string;
 
-  department?: 'Technology' | 'Management';
-  niveau?: 'L1' | 'L2' | 'L3' | 'M1' | 'M2';
-  speciality?: 'DSI' | 'RSI' | 'IOT' | 'MAF' | 'LET' | 'MIN' | 'QHSE' | 'CO-CMI';
-  classe?: string;
+  adresse?: string;
+  ville?: string;
 
-  hobbies?: string[];
-  skills?: string[];
+  photoProfil?: string;          // default: 'blank.png'
+  dateNaissance?: Date;
+  numeroTelephone?: string;
 
-  volunteering?: Volunteering[];
-  certifications?: Certification[];
-
-  linkedin?: string;
-  github?: string;
-
-  allergies?: string[];
-  accessibilityNeeds?: string;
+  filiere?: string;              // Informatique, Gestion, Génie Civil, ...
+  specialite?: string;           // Développement Web, Réseaux, IA, ...
+  niveau?: string;               // L1, L2, L3, M1, M2
+  classe?: string;               // 2ème année B, Groupe 3, …
 
   isActive?: boolean;
   isOnline?: boolean;
 
   googleId?: string;
+
+  authProvider?: 'local' | 'google' | 'both';
+
   refreshToken?: string;
   lastLogin?: Date;
+  profileCompletion?: number;
 
   preRegistered?: boolean;
-  role?: 'membre' | 'admin' | 'clubManager';
 
-    authToken: string;
+  role?: ('etudiant' | 'clubManager' | 'admin')[];
+
+  authToken?: string;
 
   createdAt?: Date;
   updatedAt?: Date;

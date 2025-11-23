@@ -152,8 +152,8 @@ const addComment = async (req, res) => {
 
     // Populer les commentaires pour renvoyer le nom de l'utilisateur
     const populatedPost = await Poste.findById(postId)
-      .populate("comments.userId", "firstName lastName")
-      .populate("clubManager", "firstName lastName");
+      .populate("comments.userId", "firstName lastName photoProfil")
+      .populate("clubManager", "firstName lastName photoProfil");
 
     res.status(201).json({ message: "Commentaire ajouté.", comments: populatedPost.comments });
   } catch (error) {

@@ -94,7 +94,13 @@ exports.getClubById = async (req, res) => {
 
     // Récupérer les posts liés au manager du club (ou tu peux créer un champ clubId si tu veux)
     // Exemple pour inclure la réaction actuelle de l'utilisateur
-    const posts = await Poste.find({ clubManager: club.manager._id }).sort({ dateCreation: -1 }).lean();
+const posts = await Poste.find({ clubManager: club.manager._id })
+  .sort({ dateCreation: -1 })
+  .populate({
+    path: 'comments.userId',
+    select: '_id firstName lastName photoProfil'
+  })
+  .lean();
     posts.forEach(post => {
       const reactions = post.reactions || []; // si undefined, on utilise un tableau vide
       const userReaction = reactions.find(r => r.userId.toString() === req.user._id.toString());

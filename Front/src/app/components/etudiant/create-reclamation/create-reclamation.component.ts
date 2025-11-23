@@ -18,7 +18,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    
+
     MatNativeDateModule,],
   templateUrl: './create-reclamation.component.html',
   styleUrl: './create-reclamation.component.css'
@@ -30,12 +30,13 @@ dialogRef = inject(MatDialogRef<CreateReclamationComponent>);
 
   form: FormGroup = this.fb.group({
     sujet: ['', [Validators.required, Validators.minLength(5)]],
-    description: ['', [Validators.required, Validators.minLength(20)]],
+    description: ['', [Validators.required, Validators.minLength(10)]],
   });
 
   submit() {
+    console.log("eeeee")
     if (this.form.invalid) return;
-
+    console.log(this.form.value);
     const data = this.form.value;
 
     this.reclamationService.createReclamation(data).subscribe({

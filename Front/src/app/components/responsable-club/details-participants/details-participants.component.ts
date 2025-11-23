@@ -9,7 +9,7 @@ import { ResponsableMenuComponent } from '../../../responsable-club/responsable-
 
 @Component({
   selector: 'app-details-participants',
-  imports: [ MatDialogModule,MatDialogContent,MatButtonModule,MatTableModule,ResponsableMenuComponent],
+  imports: [ MatDialogModule,MatDialogContent,MatButtonModule,MatTableModule],
   templateUrl: './details-participants.component.html',
   styleUrl: './details-participants.component.css'
 })

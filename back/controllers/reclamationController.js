@@ -1,11 +1,11 @@
-const Etudiant = require('../models/etudiant');
+const User = require('../models/user');
 const Reclamation = require('../models/reclamation');
 
 
 const createReclamation = async (req, res) => {
   try {
     const { etudiantId, sujet, description } = req.body;
-    const etudiant = await Etudiant.findById(etudiantId);
+    const etudiant = await User.findById(etudiantId);
     if (!etudiant) {
       return res.status(404).json({ message: 'Étudiant non trouvé' });
     }
@@ -34,7 +34,8 @@ const getAllReclamations = async (req, res) => {
 const getReclamationsByEtudiantId = async (req, res) => {
   try {
     const { etudiantId } = req.params;
-    const etudiant = await Etudiant.findById(etudiantId);
+    const etudiant = await User.findById(etudiantId);
+    console.log
     if (!etudiant) {
       return res.status(404).json({ message: 'Étudiant non trouvé' });
     }

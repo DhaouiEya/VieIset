@@ -16,7 +16,7 @@ enum ErrorStates {
 @Component({
   selector: 'app-forgot-password',
   standalone:true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, HeaderComponent],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css'],
 })

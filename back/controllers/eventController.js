@@ -4,7 +4,22 @@ const Participation = require('../models/participation');
 // 🔹 Récupérer tous les événements
 exports.getEvents = async (req, res) => {
   try {
-    const events = await Event.find();
+    
+    // Récupérer tous les événements
+    const rawEvents = await Event.find().sort({ startDate: -1 });
+
+    // Ajouter le nombre de participants pour chaque événement
+    const events = await Promise.all(
+      rawEvents.map(async (event) => {
+        const count = await Participation.countDocuments({ event: event._id });
+        return {
+          ...event.toObject(), // Convertit le doc Mongoose en objet JS
+          nombreParticipants: count
+        };
+      })
+    );
+
+    // Renvoyer directement le tableau
     res.json(events);
   } catch (err) {
     console.error('Erreur lors de la récupération des événements :', err);
@@ -15,9 +30,27 @@ exports.getEvents = async (req, res) => {
 // 🔹 Récupérer un événement par ID
 exports.getEvent = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const id_user=req.user ? req.user._id : null;
+    console.log("req.user dans getEvent:", req.user?._id);
+  const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: 'Événement non trouvé.' });
-    res.json(event);
+
+    let userInscrit = false;
+
+    if (id_user) {
+      // Vérifie si une participation existe pour cet user et cet event
+      const participation = await Participation.findOne({
+        etudiant: id_user,
+        event: event._id
+      });
+
+      console.log("participation:", participation);
+
+      userInscrit = !!participation; // true si participation trouvée, false sinon
+    }
+    // Récupère le nombre total de participants pour cet événement
+    const nombreParticipants = await Participation.countDocuments({ event: event._id });
+    res.json({ event, userInscrit ,nombreParticipants});
   } catch (err) {
     console.error('Erreur lors de la récupération de l’événement :', err);
     res.status(500).json({ message: 'Erreur serveur.' });

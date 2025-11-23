@@ -123,7 +123,8 @@ export class RegistrationComponent {
       next: (res) => {
         console.log('Inscription réussie:', res.success);
         if (res.success) {
-          this.router.navigate(['/send-verification-email']);
+this.authService.currentUserValue = { ...res.user };
+          this.router.navigate(['/home/send-verification-email']);
         }
       },
       error: (err) => {
@@ -238,7 +239,7 @@ export class RegistrationComponent {
             return;
           }
           console.log('Google authentication successful, navigating to clubs');
-            this.router.navigateByUrl('/clubs');
+            this.router.navigateByUrl('/etudiant/clubs');
         }
       }),
 

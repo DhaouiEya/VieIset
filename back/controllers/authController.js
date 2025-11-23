@@ -93,7 +93,7 @@ exports.register = async (req, res, next) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
-                avatar: user.avatar
+                photoProfil: user.photoProfil
             }
         });
 
@@ -103,12 +103,10 @@ exports.register = async (req, res, next) => {
 };
 
 
-
-
 const sendVerificationEmail = async (user, req, next) => {
     try {
         // Lien de vérification pour Vie Étudiante ISET
-        const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${user.emailVerificationToken}`;
+        const verificationLink = `${process.env.FRONTEND_URL}/home/verify-email?token=${user.emailVerificationToken}`;
 
         // En-tête de l'email
         const header = `
@@ -125,7 +123,7 @@ const sendVerificationEmail = async (user, req, next) => {
             <footer style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;
                            padding:20px;text-align:center;color:#666;font-size:12px;">
                 <p>© ${new Date().getFullYear()} Vie Étudiante ISET. 
-                   <a href="${process.env.FRONTEND_URL}/auth/login">Se connecter</a>
+                   <a href="${process.env.FRONTEND_URL}/home/login">Se connecter</a>
                 </p>
             </footer>
         `;
@@ -166,8 +164,6 @@ const sendVerificationEmail = async (user, req, next) => {
     }
 };
 
-
-
 exports.verifyEmail = async (req, res, next) => {
     try {
         const { token } = req.params;
@@ -201,10 +197,11 @@ exports.verifyEmail = async (req, res, next) => {
     }
 };
 
-
 exports.resendVerificationEmail = async (req, res, next) => {
     try {
         const { email } = req.body;
+
+        console.log("email ", email)
 
         const user = await User.findOne({ email });
 
@@ -345,7 +342,9 @@ exports.googleLogin = async (req, res, next) => {
         lastName: user.lastName,
         email: user.email,
         role: user.role,
-        authProvider: user.authProvider
+        authProvider: user.authProvider,
+        photoProfil: user.photoProfil
+
       }
     });
 
@@ -448,7 +447,7 @@ exports.login = async (req, res, next) => {
         }
 
         // Check if user has a password (OAuth users won't have one)
-        const isOAuthUser = user.googleId;
+        const isOAuthUser = user.authProvider === 'google' ;
         console.log("authGoogle ", isOAuthUser)
 
         // If user is an OAuth user, they should use OAuth to login
@@ -498,7 +497,11 @@ exports.login = async (req, res, next) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                photoProfil: user.photoProfil,
+                        authProvider: user.authProvider,
+
+
             }
         });
 
@@ -539,7 +542,8 @@ exports.requestPasswordReset = async (req, res, next) => {
         await user.save();
 
         // Send reset password email
-        const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+        const resetLink = `${process.env.FRONTEND_URL}/home/reset-password?token=${resetToken}`;
+        console.log("resetLink ", resetLink)
         await sendResetPasswordEmail(user.email, resetLink);
 
         return res.json({
@@ -608,7 +612,7 @@ const sendResetPasswordEmail = (email, resetLink) => {
     <footer style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;
                    padding:20px;text-align:center;color:#666;font-size:12px;">
       <p>© ${new Date().getFullYear()} Vie Étudiante ISET. 
-         <a href="${process.env.FRONTEND_URL}/login">Se connecter</a>
+         <a href="${process.env.FRONTEND_URL}/home/login">Se connecter</a>
       </p>
     </footer>
   `;

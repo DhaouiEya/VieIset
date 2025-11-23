@@ -1,10 +1,8 @@
-<app-header></app-header>
+  <app-etudiant-banner [titre]="'Publier une demande de don'" [description]="'Nous sommes là pour vous accompagner dans vos moments difficiles.'"></app-etudiant-banner>
 
 <div class="demande-container">
-  <div class="header-section">
-    <h2>Publier une demande de don</h2>
-    <p class="subtitle">Nous sommes là pour vous accompagner dans vos moments difficiles</p>
-  </div>
+
+
 
   <form [formGroup]="demandeForm" (ngSubmit)="submitDemande()" enctype="multipart/form-data" class="don-form">
     <div class="form-group">

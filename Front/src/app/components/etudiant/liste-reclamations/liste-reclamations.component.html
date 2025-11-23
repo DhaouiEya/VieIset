@@ -1,4 +1,6 @@
+<app-etudiant-banner [titre]="'Faites des réclamations'" [description]="'Nous sommes à votre écoute pour améliorer votre expérience.'"></app-etudiant-banner>
 <div class="container">
+
   <div class="header-strip mx-auto">
     <h4> Liste des réclamations</h4>
     <button class="btn btn-primary float-end" (click)="openCreateDialog()">Ajouter une réclamation</button>
@@ -9,7 +11,7 @@
       <table class="table table-bordered table-hover table-striped">
         <thead class="thead-dark">
           <tr>
-          
+
             <th>Sujet</th>
             <th>Description</th>
             <th>Date de création</th>
@@ -19,7 +21,7 @@
         <tbody>
           @for (r of reclamations; track $index) {
             <tr>
-             
+
 
               <!-- Sujet avec modal -->
               <td class="sujet-cell">

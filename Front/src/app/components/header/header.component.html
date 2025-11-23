@@ -8,12 +8,12 @@
 
     <!-- Navigation -->
    <ul class="nav-links hidden md:flex">
-      <li><a routerLink="/home" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
-      <li><a routerLink="/clubs" routerLinkActive="active-link">Clubs</a></li>
-      <li><a routerLink="/events" routerLinkActive="active-link">Events</a></li>
-      <li><a routerLink="/about" routerLinkActive="active-link">À Propos</a></li>
-      <li><a routerLink="/logement" routerLinkActive="active-link">Logements</a></li>
-             <li><a routerLink="/demandedonetudiant" routerLinkActive="active-link">Demande don</a></li>
+      <li><a routerLink="/etudiant/home" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
+      <li><a routerLink="/etudiant/clubs" routerLinkActive="active-link">Clubs</a></li>
+      <li><a routerLink="/etudiant/events" routerLinkActive="active-link">Events</a></li>
+      <li><a routerLink="/etudiant/reclamations" routerLinkActive="active-link">reclamations</a></li>
+      <li><a routerLink="/etudiant/logements" routerLinkActive="active-link">Logements</a></li>
+             <li><a routerLink="/etudiant/demande-dons" routerLinkActive="active-link">Demande don</a></li>
 
 
     </ul>
@@ -21,19 +21,20 @@
     <!-- Profil + dropdown -->
     <div class="relative" (click)="toggleMenu()">
       <!-- Icon -->
-      <button class="flex items-center justify-center w-20 h-10 rounded-full hover:bg-yellow-400 transition">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-      </button>
-
+      <!-- Photo de profil -->
+  <button class="flex items-center justify-center w-12 h-12 rounded-xl overflow-hidden hover:bg-yellow-400 transition">
+    <img
+      [src]="user?.photoProfil "
+      alt="Profil"
+      class="w-full h-full object-cover"
+    />
+  </button>
       <!-- Dropdown menu -->
        @if (menuOpen) {
       <div
            class="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50">
 
-        <a routerLink="/profile"
+        <a routerLink="/etudiant/profile"
            class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
           Mon Profil
         </a>
@@ -48,3 +49,4 @@
 
   </nav>
 </header>
+<router-outlet></router-outlet>

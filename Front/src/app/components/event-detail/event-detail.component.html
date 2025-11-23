@@ -1,169 +1,198 @@
-
 <div class="event-detail-container">
-   <app-header></app-header>
   <!-- Navigation -->
   <nav class="breadcrumb-nav" aria-label="Fil d'Ariane">
-    <a routerLink="/events" class="breadcrumb-link">
+    <a routerLink="/etudiant/events" class="breadcrumb-link">
       <i class="breadcrumb-icon fas fa-arrow-left"></i>
       Retour aux événements
     </a>
   </nav>
 
   @if (!event) {
-    <div class="loading-state" aria-live="polite" aria-label="Chargement en cours">
-      <div class="spinner-container">
-        <div class="spinner" role="status">
-          <span class="sr-only">Chargement...</span>
-        </div>
+  <div class="loading-state" aria-live="polite" aria-label="Chargement en cours">
+    <div class="spinner-container">
+      <div class="spinner" role="status">
+        <span class="sr-only">Chargement...</span>
       </div>
-      <h3>Chargement de l'événement</h3>
-      <p>Préparation des détails...</p>
     </div>
+    <h3>Chargement de l'événement</h3>
+    <p>Préparation des détails...</p>
+  </div>
   }
 
   <!-- Contenu principal -->
   @if (event) {
-    <div class="event-layout">
-      <!-- Colonne principale -->
-      <main class="event-main">
-        <header class="event-header">
-          <h1 class="event-title">{{ event.title }}</h1>
+  <div class="event-layout">
+    <!-- Colonne principale -->
+    <main class="event-main">
+      <header class="event-header">
+        <h1 class="event-title">{{ event.title }}</h1>
 
-          @if (event.lienImage) {
-            <figure class="event-image-container">
-              <img
-                [src]="'http://localhost:9000' + event.lienImage"
-                alt="{{ event.title }}"
-                class="event-image"
-                loading="lazy"
-              />
-            </figure>
+        @if (event.lienImage) {
+        <figure class="event-image-container">
+          <img [src]=" event.lienImage" alt="{{ event.title }}" class="event-image" loading="lazy" />
+        </figure>
+        }
+
+        <div class="event-meta-grid">
+          <div class="meta-item">
+            <div class="meta-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="meta-content">
+              <span class="meta-label">Date de début</span>
+              <span class="meta-value">{{ event.startDate | date:'fullDate' }}</span>
+              <span class="meta-subvalue">{{ event.startDate | date:'HH:mm' }}</span>
+            </div>
+          </div>
+
+          <div class="meta-item">
+            <div class="meta-icon">
+              <i class="fas fa-flag-checkered"></i>
+            </div>
+            <div class="meta-content">
+              <span class="meta-label">Date de fin</span>
+              <span class="meta-value">{{ event.endDate | date:'fullDate' }}</span>
+              <span class="meta-subvalue">{{ event.endDate | date:'HH:mm' }}</span>
+            </div>
+          </div>
+
+          <div class="meta-item">
+            <div class="meta-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="meta-content">
+              <span class="meta-label">Lieu</span>
+              <span class="meta-value">{{ event.localisation }}</span>
+            </div>
+          </div>
+
+          <div class="meta-item">
+            <div class="meta-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="meta-content">
+              <span class="meta-label">Participants</span>
+              <span class="meta-value">{{ nombreParticipants }} / {{ event.capacity}}</span>
+              @if (event.capacity && event.attendees?.length) {
+              <div class="capacity-progress">
+                <div class="progress-bar">
+
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Description -->
+      <section class="event-description-section" aria-labelledby="description-title">
+        <h2 id="description-title" class="section-title">À propos de cet événement</h2>
+        <div class="description-content">
+          <p>{{ event.description }}</p>
+        </div>
+      </section>
+
+    </main>
+    <!-- Sidebar -->
+    <aside class="event-sidebar" aria-labelledby="registration-title">
+      <div class="registration-card">
+        <div class="card-header">
+          <h3 id="registration-title" class="card-title">Rejoindre l'événement</h3>
+        </div>
+
+        <div class="card-body">
+          <!-- Right Column: Details Card -->
+          <div class="lg:col-span-1 mb-5">
+            <ul class="mt-4 space-y-4 text-slate-700">
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-slate-400 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0h18" />
+                </svg>
+                <span>{{ event.startDate | date:'mediumDate' }} - {{ event.endDate | date:'mediumDate' }}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-slate-400 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <span>{{ event.startDate | date:'shortTime' }}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-slate-400 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                </svg>
+                <span>{{ event.localisation }}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-slate-400 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>
+                <span>{{ nombreParticipants }} / {{ event.capacity }} attendees</span>
+              </li>
+            </ul>
+
+          </div>
+          @if (alreadyRegistered) {
+          <div class="already-registered">
+            <i class="fas fa-check-circle"></i>
+            <p class="info-text">Vous êtes déjà inscrit à cet événement.</p>
+          </div>
+          } @else {
+
+          <div class="registration-button">
+            <button (click)="inscrire()" class="btn-inscrire" [disabled]="alreadyRegistered "
+              aria-label="S'inscrire à cet événement">
+
+              S'inscrire
+            </button>
+          </div>
           }
 
-          <div class="event-meta-grid">
-            <div class="meta-item">
-              <div class="meta-icon">
-                <i class="fas fa-calendar-alt"></i>
-              </div>
-              <div class="meta-content">
-                <span class="meta-label">Date de début</span>
-                <span class="meta-value">{{ event.startDate | date:'fullDate' }}</span>
-                <span class="meta-subvalue">{{ event.startDate | date:'HH:mm' }}</span>
-              </div>
-            </div>
-
-            <div class="meta-item">
-              <div class="meta-icon">
-                <i class="fas fa-flag-checkered"></i>
-              </div>
-              <div class="meta-content">
-                <span class="meta-label">Date de fin</span>
-                <span class="meta-value">{{ event.endDate | date:'fullDate' }}</span>
-                <span class="meta-subvalue">{{ event.endDate | date:'HH:mm' }}</span>
-              </div>
-            </div>
-
-            <div class="meta-item">
-              <div class="meta-icon">
-                <i class="fas fa-map-marker-alt"></i>
-              </div>
-              <div class="meta-content">
-                <span class="meta-label">Lieu</span>
-                <span class="meta-value">{{ event.localisation }}</span>
-              </div>
-            </div>
-
-            <div class="meta-item">
-              <div class="meta-icon">
-                <i class="fas fa-users"></i>
-              </div>
-              <div class="meta-content">
-                <span class="meta-label">Participants</span>
-                <span class="meta-value">{{ participantCount }} / {{ event.capacity}}</span>
-                @if (event.capacity && event.attendees?.length) {
-                  <div class="capacity-progress">
-                    <div class="progress-bar">
-
-                    </div>
-                  </div>
-                }
-              </div>
-            </div>
+          @if (event.capacity && nombreParticipants && nombreParticipants.length >= event.capacity) {
+          <div class="capacity-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Capacité maximale atteinte</p>
           </div>
-        </header>
-
-        <!-- Description -->
-        <section class="event-description-section" aria-labelledby="description-title">
-          <h2 id="description-title" class="section-title">À propos de cet événement</h2>
-          <div class="description-content">
-            <p>{{ event.description }}</p>
-          </div>
-        </section>
-
-      </main>
-      <!-- Sidebar -->
-      <aside class="event-sidebar" aria-labelledby="registration-title">
-        <div class="registration-card">
-          <div class="card-header">
-            <h3 id="registration-title" class="card-title">Rejoindre l'événement</h3>
-          </div>
-
-          <div class="card-body">
-            @if (alreadyRegistered) {
-              <div class="already-registered">
-                <i class="fas fa-check-circle"></i>
-                <p class="info-text">Vous êtes déjà inscrit à cet événement.</p>
-              </div>
-            } @else {
-               <!-- (click)="inscrire()" -->
-              <div class="registration-button">
-                <button
-                
-                  class="btn-inscrire"
-                  [disabled]="alreadyRegistered "
-                  aria-label="S'inscrire à cet événement">
-                  S'inscrire
-                </button>
-              </div>
-            }
-
-            @if (event.capacity && event.attendees && event.attendees.length >= event.capacity) {
-              <div class="capacity-warning">
-                <i class="fas fa-exclamation-triangle"></i>
-                <p>Capacité maximale atteinte</p>
-              </div>
-            }
-          </div>
+          }
         </div>
-      </aside>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Messages -->
+  @if (successMessage) {
+  <div class="status-message success" role="alert" aria-live="assertive">
+    <div class="message-content">
+      <i class="message-icon fas fa-check-circle"></i>
+      <div class="message-text">
+        <h4>Inscription réussie !</h4>
+        <p>{{ successMessage }}</p>
+      </div>
     </div>
+    <button class="message-close" (click)="successMessage = ''" aria-label="Fermer le message">×</button>
+  </div>
+  }
 
-    <!-- Messages -->
-    @if (successMessage) {
-      <div class="status-message success" role="alert" aria-live="assertive">
-        <div class="message-content">
-          <i class="message-icon fas fa-check-circle"></i>
-          <div class="message-text">
-            <h4>Inscription réussie !</h4>
-            <p>{{ successMessage }}</p>
-          </div>
-        </div>
-        <button class="message-close" (click)="successMessage = ''" aria-label="Fermer le message">×</button>
+  @if (errorMessage) {
+  <div class="status-message error" role="alert" aria-live="assertive">
+    <div class="message-content">
+      <i class="message-icon fas fa-exclamation-circle"></i>
+      <div class="message-text">
+        <h4>Erreur d'inscription</h4>
+        <p>{{ errorMessage }}</p>
       </div>
-    }
-
-    @if (errorMessage) {
-      <div class="status-message error" role="alert" aria-live="assertive">
-        <div class="message-content">
-          <i class="message-icon fas fa-exclamation-circle"></i>
-          <div class="message-text">
-            <h4>Erreur d'inscription</h4>
-            <p>{{ errorMessage }}</p>
-          </div>
-        </div>
-        <button class="message-close" (click)="errorMessage = ''" aria-label="Fermer le message">×</button>
-      </div>
-    }
+    </div>
+    <button class="message-close" (click)="errorMessage = ''" aria-label="Fermer le message">×</button>
+  </div>
+  }
   }
 </div>
-

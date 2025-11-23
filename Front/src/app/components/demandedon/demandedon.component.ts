@@ -6,10 +6,11 @@ import { DatePipe, NgClass } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { DemandeDon } from '../../models/demande-don.model';
+import { EtudiantBannerComponent } from "../etudiant-banner/etudiant-banner.component";
 
 @Component({
   selector: 'app-demandedon',
-  imports: [ReactiveFormsModule,DatePipe,HeaderComponent,FooterComponent],
+  imports: [ReactiveFormsModule, DatePipe, FooterComponent, EtudiantBannerComponent],
   templateUrl: './demandedon.component.html',
   styleUrl: './demandedon.component.css'
 })

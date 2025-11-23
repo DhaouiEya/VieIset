@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy , AfterViewInit {
             this.router.navigateByUrl('/dashboard');
           }
           else if(this.selectedRole === 'etudiant' && res.user.role.includes('etudiant')){
-            this.router.navigateByUrl('/clubs');
+            this.router.navigateByUrl('/etudiant/clubs');
           }
           else if(this.selectedRole === 'admin' && res.user.role.includes('admin')){
             this.router.navigateByUrl('/admindashboard');
@@ -162,7 +162,7 @@ export class LoginComponent implements OnInit, OnDestroy , AfterViewInit {
             return;
           }
           console.log('Google authentication successful, navigating to clubs');
-            this.router.navigateByUrl('/clubs');
+            this.router.navigateByUrl('/etudiant/clubs');
         }
       }),
 

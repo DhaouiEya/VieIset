@@ -12,7 +12,7 @@
   } @else if (club) {
     <div class="club-container shadow-lg">
       <div class="cover-photo">
-        <img [src]="club.imageFond" alt="Image de couverture" class="w-full h-full object-cover">
+        <img [src]="club.imageFond" alt="Image de couverture" class="w-full h-full " style="object-fit: cover;">
       </div>
 
       <div class="profile-section">
@@ -75,7 +75,7 @@
 
         <div class="club-posts">
           @for (post of posts; track post._id) {
-            <app-post-club [post]="post" [club]="club"></app-post-club>
+            <app-post-club [post]="post" [club]="club" [user]="user"></app-post-club>
           }
         </div>
       </div>
@@ -85,33 +85,3 @@
 
 
 
-<!--
-@if (post.comments?.length) {
-  <div class="comments-list">
-    @for (comment of post.comments; track $index) {
-      <div class="comment-item">
-        <strong class="comment-author">{{ comment.userId?.firstName }} {{ comment.userId?.lastName }}</strong>
-        <span class="comment-text">{{ comment.text }}</span>
-        <span class="comment-date">{{ comment.date | date:'short' }}</span>
-      </div>
-    }
-  </div>
-}
-
-<form (ngSubmit)="submitComment(post)" class="comment-form">
-  <div class="form-row">
-    <input
-      type="text"
-      [(ngModel)]="post.newComment"
-      name="commentText"
-      placeholder="Écrire un commentaire..."
-      required
-      class="comment-input">
-    <button type="submit" mat-button class="submit-btn">Envoyer</button>
-  </div>
-</form>
-    }
-
-  </div>
-
-</div> -->

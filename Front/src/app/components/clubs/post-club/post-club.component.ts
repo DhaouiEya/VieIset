@@ -17,18 +17,23 @@ import { CommentPostComponent } from "../comment-post/comment-post.component";
 export class PostClubComponent implements OnChanges{
    @Input() post: any;
   @Input() club: any;
+  @Input() user: any;
   isExpanded = false;
   userReaction: 'jaime' | 'jaimePas' | null = null;
   isSubmittingComment = false;
   showComments = false;
+
   constructor(private postService: PosteService,
     private cdr : ChangeDetectorRef,
-  ) {}
+  ) {
+  }
+
  ngOnChanges(changes: SimpleChanges): void {
     if (changes['post'] && this.post) {
       this.userReaction = this.post.userReaction; // initialise à chaque fois que le post change
     }
   }
+
 toggleReaction(type: 'jaime' | 'jaimePas') {
   if (this.userReaction === type) {
     this.userReaction = null; // annuler
@@ -42,6 +47,7 @@ toggleReaction(type: 'jaime' | 'jaimePas') {
   this.postService.reactToPost(this.post._id, this.userReaction).subscribe({
     next: (res) => {
       // mettre à jour les compteurs depuis backend
+      console.log("res reaction ",res)
       this.post.nbReactions = res.data.nbReactions;
       this.cdr.detectChanges();
     },
@@ -54,16 +60,34 @@ toggleReaction(type: 'jaime' | 'jaimePas') {
       const text = commentInput.value.trim();
       if (!text || !this.post) return;
 
+
       this.isSubmittingComment = true;
-      // this.postService.addComment(this.post._id, text).subscribe({
-      //     next: (res) => {
-      //      this.cdr.detectChanges();
-      //     },
-      //     error: (err) => {
-      //         console.error('Failed to submit comment', err);
-      //         this.isSubmittingComment = false;
-      //     }
-      // });
+      this.postService.addComment(this.post._id, text).subscribe({
+          next: (res) => {
+             this.post.comments=res.comments;
+            console.log("res comment ",this.post)
+              commentInput.value = '';
+              this.showComments = true; // Ensure comments are visible after adding
+              this.isSubmittingComment = false;
+
+           this.cdr.detectChanges();
+          },
+          error: (err) => {
+              console.error('Failed to submit comment', err);
+              this.isSubmittingComment = false;
+          }
+      });
   }
+
+formatDescription(desc: string): string {
+  if (!desc) return '';
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  return desc.replace(urlRegex, (url) =>
+    `<a href="${url}" target="_blank" class="text-blue-600 underline">${url}</a>`
+  );
+}
+
+
 
 }

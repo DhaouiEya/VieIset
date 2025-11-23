@@ -1,3 +1,4 @@
+import { ProfileHeaderComponent } from './components/profile/profile-header/profile-header.component';
 import { Routes } from '@angular/router';
 
 import { RegistrationComponent } from './components/auth/registration/registration.component';
@@ -16,8 +17,6 @@ import { ClubsListComponent } from './components/clubs/clubs-list/clubs-list.com
 
 import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
 import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
-
-
 
 import { EventsComponent } from './components/responsable-club/events/events.component';
 import { ResSideBarComponent } from './components/responsable-club/res-side-bar/res-side-bar.component';
@@ -45,13 +44,14 @@ import { ListEtudiantsComponent } from './admin/list-etudiants/list-etudiants.co
 import { DemandedonComponent } from './components/demandedon/demandedon.component';
 import { ClubManagersComponent } from './admin/club-managers/club-managers.component';
 import { ListeDemandeDonsComponent } from './admin/liste-demande-dons/liste-demande-dons.component';
-
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
+import { HeaderComponent } from './components/header/header.component';
+import { MesReclamationsComponent } from './components/etudiant/mes-reclamations/mes-reclamations.component';
+import { DemandeDonsEtudiantComponent } from './components/dons/demande-dons-etudiant/demande-dons-etudiant.component';
 
 export const routes: Routes = [
-
-
   // Auth
- {
+  {
     path: 'home',
     component: AppBarHomeComponent,
     children: [
@@ -59,75 +59,90 @@ export const routes: Routes = [
       { path: 'register', component: RegistrationComponent },
       { path: 'login', component: LoginComponent },
       { path: 'contentHome', component: HomeComponent },
-      {path:'aboutUs',component:AboutUsComponent}
-    ]
+      { path: 'aboutUs', component: AboutUsComponent },
+
+      {
+        path: 'send-verification-email',
+        component: EmailVerificationComponent,
+      },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'reset-password', component: ResetPasswordComponent },
+
+      { path: 'verify-email', component: VerifyEmailComponent },
+    ],
   },
-  {path: 'footer', component: FooterHomeComponent},
+  { path: 'footer', component: FooterHomeComponent },
 
+  {
+    path: 'etudiant',
+    component: HeaderComponent,
+    children: [
+      { path: 'home', component: HomeComponent },
 
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'send-verification-email', component: EmailVerificationComponent },
-  { path: 'verify-email', component: VerifyEmailComponent },
+      { path: 'clubs', component: ClubsListComponent },
+      { path: 'espaceClub/:id', component: EspaceClubComponent },
+      { path: 'events/:id', component: EventDetailComponent },
+
+      { path: 'events', component: EventListComponent },
+
+      { path: 'reclamations', component: MesReclamationsComponent },
+      { path: 'newReclamation', component: CreateReclamationComponent },
+
+      { path: 'mesDemandes', component: ListeDmandesComponent },
+      { path: 'logements', component: LogementComponent },
+      { path: 'demande-dons', component: DemandeDonsEtudiantComponent },
+      { path: 'profile', component: ProfileHeaderComponent },
+    ],
+  },
+
   // Responsable / publications / participation
   { path: 'dashboard', component: ResponsableDashboardComponent },
   { path: 'publications', component: PublicationPostComponent },
-  { path: 'participation-forms', component: ParticipationFormsComponent  },
+  { path: 'participation-forms', component: ParticipationFormsComponent },
 
   // Events
 
   { path: 'events/create', component: EventCreateComponent },
-  { path: 'events/:id', component: EventDetailComponent },
 
   // Clubs
   { path: 'createClub', component: CreateClubComponent },
+
+  //il faut  avec id
   { path: 'espaceClub/:id', component: EspaceClubComponent },
-
-
-//il faut  avec id
-  {path: 'espaceClub/:id',component:EspaceClubComponent },
   // {path: 'espaceClub',component:EspaceClubComponent },
 
-
-  {path:"res_club", component:ResSideBarComponent,children:
-  [
-    {path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-    {path: 'dashboard', component: ResponsableDashboardComponent },
-    { path: 'consulter-events', component:EventsComponent},
-    { path: 'publications', component: PublicationPostComponent },
-    {path:'createClub',component:CreateClubComponent},
-    {path:"updateEvent/:id",component:UpdateEventComponent},
-    {path: 'participation-forms', component: ParticipationFormsComponent},
-
-
-  ],
+  {
+    path: 'res_club',
+    component: ResSideBarComponent,
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: ResponsableDashboardComponent },
+      { path: 'consulter-events', component: EventsComponent },
+      { path: 'publications', component: PublicationPostComponent },
+      { path: 'createClub', component: CreateClubComponent },
+      { path: 'updateEvent/:id', component: UpdateEventComponent },
+      { path: 'participation-forms', component: ParticipationFormsComponent },
+    ],
   },
-  {path:"consulter-demandes", component:ConsulterDemandesAdhesionComponent},
-{ path: 'espaceClub/:id', component: EspaceClubComponent },
+  { path: 'consulter-demandes', component: ConsulterDemandesAdhesionComponent },
+  { path: 'espaceClub/:id', component: EspaceClubComponent },
   { path: 'clubs', component: ClubsListComponent },
-
 
   // Other pages
 
   { path: 'admindashboard', component: AdmindashboardComponent },
   { path: 'compagne', component: CompagneComponent },
   { path: 'reclamations', component: ReclamationsComponent },
-  {path: 'sideBarEtudiant', component: SidebarComponent},
-     { path: 'clubs', component: ClubsListComponent },
-     {path: 'reclamations', component: ListeReclamationsComponent},
-     {path:'newReclamation', component: CreateReclamationComponent},
-     {path : 'mesDemandes', component: ListeDmandesComponent},
-    { path: 'events', component: EventListComponent },
-     { path: 'logements', component: LogementComponent },
-
+  { path: 'sideBarEtudiant', component: SidebarComponent },
+  { path: 'clubs', component: ClubsListComponent },
+  { path: 'reclamations', component: ListeReclamationsComponent },
+  { path: 'newReclamation', component: CreateReclamationComponent },
+  { path: 'mesDemandes', component: ListeDmandesComponent },
+  { path: 'events', component: EventListComponent },
+  { path: 'logements', component: LogementComponent },
 
   //admin routes can be added here
-  {path:'etudiants',component:ListEtudiantsComponent},
-  {path:'managers',component:ClubManagersComponent},
-  {path:'liste-demande-dons', component: ListeDemandeDonsComponent},
-
+  { path: 'etudiants', component: ListEtudiantsComponent },
+  { path: 'managers', component: ClubManagersComponent },
+  { path: 'liste-demande-dons', component: ListeDemandeDonsComponent },
 ];
-
-
-
-
-

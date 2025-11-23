@@ -1,5 +1,5 @@
 const DemandeDon = require('../models/demandeDon');
-const User = require('../models/User');
+const User = require('../models/user');
 
 
 class DemandeDonService {
@@ -12,12 +12,12 @@ class DemandeDonService {
 
   // Récupérer toutes les demandes (admin)
   async getAllDemandes() {
-    return await DemandeDon.find().populate('createdBy', 'name email');
+    return await DemandeDon.find().populate('createdBy', 'name email').sort({ createdAt: -1 });;
   }
 
   // Récupérer les demandes d'un membre
   async getMyDemandes(userId) {
-    return await DemandeDon.find({ createdBy: userId }).populate('createdBy', 'name email');
+    return await DemandeDon.find({ createdBy: userId }).populate('createdBy', 'name email').sort({ createdAt: -1 });
   }
 
   // Mettre à jour le statut d'une demande

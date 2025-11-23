@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { PasswordStrengthMeterComponent } from 'angular-password-strength-meter';
+import { passwordValidator } from '../../validators/password.validator';
 
 enum ErrorStates {
   NotSubmitted,
@@ -58,14 +59,13 @@ export class ResetPasswordComponent implements OnInit {
 
   initForm() {
     this.resetPasswordForm = this.fb.group({
-      password: [
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(100),
-        ]),
-      ],
+            password: [
+                '',
+                [
+                  Validators.required, passwordValidator
+                ],
+              ],
+    
 
         cPassword: [
           '',
@@ -121,7 +121,7 @@ export class ResetPasswordComponent implements OnInit {
         next: (res: any | undefined) => {
           if (res.success) {
             this.errorState = ErrorStates.NoError;
-            this.router.navigate(['/login']); // Redirect to login
+            this.router.navigate(['/home/login']); // Redirect to login
           } else {
             this.errorState = ErrorStates.HasError;
             if (res.message)

@@ -41,7 +41,7 @@ statusMessage = '';
         this.statusMessage = err.error?.message || 'Erreur serveur, réessayez plus tard.';
         this.verificationSuccess = false;
         // Redirection automatique après quelques secondes si voulu
-        setTimeout(() => this.router.navigate(['/login']), 3000);
+        setTimeout(() => this.router.navigate(['/home/login']), 3000);
       }
     });
   }

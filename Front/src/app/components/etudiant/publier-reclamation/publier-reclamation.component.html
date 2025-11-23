@@ -1,0 +1,51 @@
+<div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+  <h2 class="text-2xl font-semibold text-blue-800 mb-5">Nouvelle Réclamation</h2>
+  <form [formGroup]="form" (ngSubmit)="ajouterReclamation()" class="space-y-4">
+    <div>
+      <label for="sujet" class="block text-sm font-medium text-blue-700 mb-1">sujet</label>
+      <input
+        id="sujet"
+        type="text"
+        formControlName="sujet"
+        placeholder="Ex: Problème d'inscription..."
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 transition duration-150 ease-in-out"
+        [class.border-red-500]="sujet?.invalid && (sujet?.touched || sujet?.dirty)">
+      @if (sujet?.invalid && (sujet?.touched || sujet?.dirty)) {
+        <div class="text-red-600 text-sm mt-1">
+          @if (sujet?.errors?.['required']) {
+            <p>Le sujet est requis.</p>
+          }
+          @if (sujet?.errors?.['minlength']) {
+            <p>Le sujet doit comporter au moins 5 caractères.</p>
+          }
+        </div>
+      }
+    </div>
+    <div>
+      <label for="description" class="block text-sm font-medium text-blue-700 mb-1">Description</label>
+      <textarea
+        id="description"
+        rows="5"
+        formControlName="description"
+        placeholder="Décrivez votre problème en détail ici..."
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 transition duration-150 ease-in-out"
+        [class.border-red-500]="description?.invalid && (description?.touched || description?.dirty)"></textarea>
+      @if (description?.invalid && (description?.touched || description?.dirty)) {
+        <div class="text-red-600 text-sm mt-1">
+          @if (description?.errors?.['required']) {
+            <p>La description est requise.</p>
+          }
+          @if (description?.errors?.['minlength']) {
+            <p>La description doit comporter au moins 10 caractères.</p>
+          }
+        </div>
+      }
+    </div>
+    <button
+      type="submit"
+      [disabled]="!form.valid"
+      class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md  text-sm font-bold  bg-yellow-400 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 disabled:bg-yellow-400/50 disabled:cursor-not-allowed transition duration-150 ease-in-out">
+      Soumettre la Réclamation
+    </button>
+  </form>
+</div>

@@ -1,63 +1,3 @@
-<!-- <mat-card class="post-card">
-  <mat-card-header>
-    <div mat-card-avatar class="post-avatar">
-      <img [src]="club?.imageProfil" alt="">
-    </div>
-    <mat-card-title>{{ club?.nom }}</mat-card-title>
-    <mat-card-subtitle>{{ post.dateCreation | date:'medium' }}</mat-card-subtitle>
-  </mat-card-header>
-
-  <mat-card-content>
-    <p class="post-content" [class.expanded]="isExpanded">
-      {{ post.description }}
-    </p>
-
-        @if (!isExpanded && post.description?.length > 100) {
-
-    <span class="read-more" (click)="isExpanded = true">
-      Lire plus...
-    </span>
-  }
-    @if (isExpanded) {
-    <span  class="read-more" (click)="isExpanded = false">
-      Réduire
-    </span>
-  }
-  </mat-card-content>
-
-*  @if(post.lienImage) {
-
-  <img mat-card-image [src]="post.lienImage" class="post-image" [class.small]="!isExpanded" />
-  }
-  @if(post.lienVideo) {
-  <div class="post-video">
-    <video width="100%" controls>
-      <source [src]="post.lienVideo" type="video/mp4">
-      Votre navigateur ne supporte pas la vidéo.
-    </video>
-  </div>
-  }
-
-<mat-card-actions class="post-actions">
-  <button class="action-btn"
-          [ngClass]="{ 'active-jaime': userReaction === 'jaime' }"
-          (click)="toggleReaction('jaime')">
-    <mat-icon>thumb_up</mat-icon>
-    <span>{{ post.nbReactions?.jaime || 0 }}</span>
-  </button>
-
-  <button class="action-btn"
-          [ngClass]="{ 'active-jaimePas': userReaction === 'jaimePas' }"
-          (click)="toggleReaction('jaimePas')">
-    <mat-icon>thumb_down</mat-icon>
-    <span>{{ post.nbReactions?.jaimePas || 0 }}</span>
-  </button>
-</mat-card-actions> -->
-
-
-
-
-
 @if (post) {
 <div class="post-card bg-white rounded-lg shadow-md mb-5 overflow-hidden">
   <!-- Header -->
@@ -73,8 +13,7 @@
 
   <!-- Contenu -->
   <div class="px-4 pb-2">
-    <p class="post-content" [class.expanded]="isExpanded">
-      {{ post.description }}
+    <p class="post-content" [class.expanded]="isExpanded" [innerHTML]="formatDescription(post.description)">
     </p>
     @if (!isExpanded && post.description?.length > 150) {
       <span class="read-more" (click)="isExpanded = true">
@@ -142,11 +81,15 @@
 
 
   <!-- Section Commentaires -->
+
+
+
   @if(showComments) {
     <div class="p-4 bg-gray-50">
+      <!-- Comment Input -->
       <div class="flex items-start gap-3 mb-4">
-        <img src="blank.png" alt="User avatar" class="w-9 h-9 rounded-full mt-1">
-                <div class="relative flex-1">
+        <img [src]="user.photoProfil" alt="Your avatar" class="w-9 h-9 rounded-full">
+        <div class="relative flex-1">
           <input #commentInput (keyup.enter)="submitComment(commentInput)" [disabled]="isSubmittingComment" type="text" placeholder="Écrivez un commentaire..." class="w-full pl-3 pr-10 py-2 border rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
           <button (click)="submitComment(commentInput)" [disabled]="isSubmittingComment" class="absolute right-2 top-1/2 -translate-y-1/2 text-blue-500 hover:text-blue-700 disabled:text-gray-400">
              <i class="material-icons">send</i>
@@ -154,6 +97,7 @@
         </div>
       </div>
 
+      <!-- Liste des commentaires -->
        @if (post.comments.length > 0) {
         <div class="space-y-4">
             @for(comment of post.comments; track comment.id) {
@@ -166,4 +110,6 @@
     </div>
   }
 </div>
+
 }
+

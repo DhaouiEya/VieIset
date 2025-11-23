@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Club } from '../../../models/club';
 import { ClubService } from '../../../services/club.service';
-
 import { Router } from '@angular/router';
-import { HeaderComponent } from "../../header/header.component";
+import { EtudiantBannerComponent } from "../../etudiant-banner/etudiant-banner.component";
+import { EtudiantBanner2Component } from "../../etudiant-banner2/etudiant-banner2.component";
 
 @Component({
   selector: 'app-clubs-list',
-  imports: [HeaderComponent],
+  imports: [EtudiantBanner2Component, EtudiantBannerComponent],
   templateUrl: './clubs-list.component.html',
   styleUrl: './clubs-list.component.css',
 })
@@ -36,6 +35,6 @@ export class ClubsListComponent implements OnInit {
   }
 
   goToClubSpace(id: string | undefined) {
-    this.router.navigate(['/espaceClub', id]);
+    this.router.navigate(['/etudiant/espaceClub', id]);
   }
 }

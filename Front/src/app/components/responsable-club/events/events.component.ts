@@ -75,7 +75,7 @@ loadEvents() {
     cancelButtonText: 'Annuler'
   }).then((result) => {
     if (result.isConfirmed) {
-      this.eventService.deleteEvent(event.id || '').subscribe({
+      this.eventService.deleteEvent(event._id || '').subscribe({
         next: () => {
           this.loadEvents();
           Swal.fire(

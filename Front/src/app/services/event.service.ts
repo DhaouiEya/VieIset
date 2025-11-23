@@ -13,8 +13,15 @@ import { Participation } from '../models/participation';
 export class EventService {
   constructor(private http: HttpClient) {}
 
-  getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(URL);
+  getEvents(): Observable<any> {
+       const token = JSON.parse(localStorage.getItem('authenticationToken') || '{}').authToken;
+ // JWT stocké après login
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.get<any>(URL, { headers });
   }
 
 
@@ -27,8 +34,15 @@ getEventParticipations(eventId: string): Observable<Participation[]> {
   return this.http.get<Participation[]>(`${URL}/${eventId}/participations`);
 }
 
-  getEvent(id: string): Observable<Event> {
-    return this.http.get<Event>(`${URL}/${id}`);
+  getEvent(id: string): Observable<any> {
+       const token = JSON.parse(localStorage.getItem('authenticationToken') || '{}').authToken;
+ // JWT stocké après login
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.get<any>(`${URL}/${id}`, { headers });
   }
 
   createEvent(event: Omit<Event, 'id' | 'attendees'>): Observable<Event> {
@@ -38,26 +52,24 @@ getEventParticipations(eventId: string): Observable<Participation[]> {
       return this.http.post<Event>(URL, formData);
     }
 
-  register(eventId: string, student: Attendee): Observable<any> {
-    return this.http.post<any>(`${URL}/${eventId}/register`, student);
-  }
+
   deleteEvent(eventId: string): Observable<Event> {
     return this.http.delete<any>(`${URL}/${eventId}`);
   }
   updateEvent(eventId: string, event: any): Observable<Event> {
     return this.http.put<Event>(`${URL}/${eventId}`, event);
   }
-    
-//   register(eventId: string): Observable<any> {
-//    const token = JSON.parse(localStorage.getItem('authenticationToken') || '{}').authToken;
-//  // JWT stocké après login
 
-//     const headers = new HttpHeaders({
-//       'Authorization': `Bearer ${token}`,
-//       'Content-Type': 'application/json'
-//     });
-//     console.log("Registering for event with ID:", eventId);
-//     return this.http.post(`${this.apiUrl}/${eventId}/inscrire`, {}, { headers });
-//   }
+  register(eventId: string): Observable<any> {
+   const token = JSON.parse(localStorage.getItem('authenticationToken') || '{}').authToken;
+ // JWT stocké après login
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    console.log("Registering for event with ID:", eventId);
+    return this.http.post(`${URL}/${eventId}/register`, {}, { headers });
+  }
 
 }

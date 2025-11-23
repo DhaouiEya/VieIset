@@ -15,7 +15,7 @@ const authMiddleware = require('../middlewares/authMiddlewares');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads'));
+    cb(null, 'uploads/'); // assure-toi que le dossier existe
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -37,7 +37,7 @@ const upload = multer({
   }
 });
 
-router.post('/:eventId/inscrire', authMiddleware, registerToEvent);
+router.post('/:eventId/register', authMiddleware, registerToEvent);
         
 router.post('/', upload.fields([{ name: 'image', maxCount: 1 }]), createEvent);
 
@@ -50,6 +50,6 @@ router.get('/:eventId/participations', async (req, res) => {
     res.status(500).json({ error: 'Impossible de récupérer les participations.' });
   }
 });
-router.get('/', getEvents);     
-router.get('/:id', getEvent); 
+router.get('/', authMiddleware, getEvents);     
+router.get('/:id', authMiddleware, getEvent); 
 module.exports = router;

@@ -23,7 +23,6 @@ module.exports = async function (req, res, next) {
     // Charger l'utilisateur depuis la base de données
     const user = await User.findById(decoded._id)
  
- console.log(" user:", user);
     if (!user) {
       return res.status(404).json({
         error: {

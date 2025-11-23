@@ -14,7 +14,7 @@ import { HeaderComponent } from '../header/header.component';
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [FormsModule, DatePipe, CommonModule, RouterLink,HeaderComponent],
+  imports: [FormsModule, DatePipe, CommonModule, RouterLink],
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.css']
 })
@@ -22,11 +22,11 @@ export class EventDetailComponent implements OnInit {
   event?: Event;
   id!:any;
 
+  nombreParticipants:any;
   successMessage = '';
   errorMessage = '';
   alreadyRegistered = false;
   participations: Participation[] = [];
-participantCount = 0;
   constructor(
     private eventSvc: EventService,
     private route: ActivatedRoute,
@@ -35,37 +35,39 @@ participantCount = 0;
     private http: HttpClient // ✅ injection manquante
   ) {}
 
-  ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
+  loadEvent(): void {
     if (this.id) {
       this.eventSvc.getEvent(this.id).subscribe({
         next: (data) => {
-          this.event = { ...data, id: (data as any)._id || data.id };
+          this.alreadyRegistered = data.userInscrit;
+          console.log('Event data received:', this.alreadyRegistered  ,data);
+          this.nombreParticipants=data.nombreParticipants;
+          this.event = data.event;
         },
         error: () => {
           this.errorMessage = 'Impossible de charger cet événement.';
         }
       });
 
-     /* this.eventSvc.getEventParticipations(this.id).subscribe({
-      next: (data: Participation[]) => {
-        this.participations = data;
-        this.participantCount = data.length; // nombre de participants
-      },
-      error: (err) => console.error(err)
-    });*/
     }
   }
+  ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id');
+    console.log('Event ID from route:', this.id);
+    this.loadEvent();
+  }
 
- /* inscrire(): void {
+ inscrire(): void {
     this.eventSvc.register(this.id).subscribe({
       next: (res) => {
+
         Swal.fire({
           icon: 'success',
           title: 'Inscription réussie',
           text: res.message || 'Vous êtes inscrit à cet événement.',
-          confirmButtonText: 'OK'
+
         });
+        this.loadEvent();
       },
       error: (err) => {
         const msg = err.error?.message || 'Erreur lors de l’inscription.';
@@ -77,6 +79,6 @@ participantCount = 0;
         });
       }
     });
-  }*/
+  }
 
 }

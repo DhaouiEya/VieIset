@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth.service';
 import { ClubService } from './../../../services/club.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, signal } from '@angular/core';
@@ -34,7 +35,8 @@ export class EspaceClubComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private clubService: ClubService,
-    private posteservice: PosteService
+    private posteservice: PosteService,
+    private authService :AuthService,
   ) {}
     isLoading = signal<boolean>(true);
   error = signal<string | null>(null);
@@ -42,24 +44,13 @@ export class EspaceClubComponent implements OnInit {
   id_club: any;
   club: Club | any;
   posts: any[] = [];
-  token: string = '';
+  user:any;
 
   ngOnInit(): void {
+this.user=this.authService.getUser()?.user;
+    console.log("post in post club ",this.posts)
 
-    /** 🔥 Récupération CORRECTE du JWT depuis localStorage */
-    const stored = localStorage.getItem('authenticationToken');
-
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        this.token = parsed.authToken;  // 👉 On récupère le vrai token
-      } catch (e) {
-        console.error("Erreur parsing token", e);
-      }
-    }
-
-    console.log("TOKEN TROUVÉ :", this.token);
-
+    console.log("user 555 ",this.user)
     this.id_club = this.activatedRoute.snapshot.paramMap.get('id');
     this.loadClubEspace();
   }
@@ -69,8 +60,10 @@ export class EspaceClubComponent implements OnInit {
 
     this.clubService.getClubById(this.id_club).subscribe(
       (res)=>{
+        console.log("res ",res)
         this.club=res.data.club;
         this.posts=res.data.posts;
+        console.log("posttt ",this.posts)
         this.isLoading.set(false);
 
         console.log(res)
@@ -83,23 +76,5 @@ this.error.set('Failed to load club data.');
     )
   }
 
-  submitComment(post: any) {
-    console.log("TOKEN UTILISÉ DANS COMMENT :", this.token);
-
-    if (!post.newComment) return;
-
-    if (!this.token) {
-      console.error('Token manquant !');
-      return;
-    }
-
-    this.posteservice.addComment(post._id, post.newComment, this.token).subscribe(
-      (res) => {
-        post.comments = res.comments;
-        post.newComment = '';
-      },
-      (err) => console.error(err)
-    );
-  }
 
 }
