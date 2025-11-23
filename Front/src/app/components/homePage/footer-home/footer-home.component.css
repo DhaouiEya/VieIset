@@ -1,4 +1,5 @@
 .footer {
+  
   background-color: #09026b;
   color: #ffc107;
   padding: 40px 20px 10px;
@@ -12,7 +13,8 @@
   justify-content: center;
   gap: 80px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
+  margin-top: 25px;
 }
 
 /* Chaque colonne contient 2 items */
@@ -41,5 +43,5 @@
   color: #ffc107;
   border-top: 1px solid #c09106;
 
-  padding-top: 10px;
+  padding-top: 25px;
 }

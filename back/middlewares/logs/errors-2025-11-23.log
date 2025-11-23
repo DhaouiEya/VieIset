@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-11-23T13:51:49.430Z",
+  "method": "PUT",
+  "url": "/api/events/6905f0ebaa63267a041abd26",
+  "ip": "::1",
+  "language": "en-US,en;q=0.9",
+  "errorName": "MulterError",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorCode": "LIMIT_UNEXPECTED_FILE",
+  "errorMessage": "Unexpected field",
+  "stack": "MulterError: Unexpected field\n    at wrappedFileFilter (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\multer\\index.js:40:19)\n    at Multipart.<anonymous> (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\multer\\lib\\make-middleware.js:132:7)\n    at Multipart.emit (node:events:519:28)\n    at HeaderParser.cb (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\busboy\\lib\\types\\multipart.js:358:14)\n    at HeaderParser.push (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\busboy\\lib\\types\\multipart.js:162:20)\n    at SBMH.ssCb [as _cb] (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\busboy\\lib\\types\\multipart.js:394:37)\n    at feed (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\streamsearch\\lib\\sbmh.js:248:10)\n    at SBMH.push (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\streamsearch\\lib\\sbmh.js:104:16)\n    at Multipart._write (C:\\Users\\islem\\Desktop\\vieIsetch\\back\\node_modules\\busboy\\lib\\types\\multipart.js:567:19)\n    at writeOrBuffer (node:internal/streams/writable:570:12)"
+},

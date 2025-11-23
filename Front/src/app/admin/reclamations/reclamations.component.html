@@ -1,35 +1,36 @@
-<div class="min-h-screen bg-gray-50 pt-6 pl-6 pr-6">
-  <div class="header-strip ">
-    <h4> Liste des réclamations</h4>
-  </div>
-  <div class="table-container ">
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th>Étudiant</th>
-            <th>Email</th>
-            <th>Sujet</th>
-            <th>Description</th>
-            <th>Statut</th>
-            <th>Date de création</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (r of reclamations; track $index) {
-            <tr>
-              <td>{{ r.etudiant?.lastName || '' }} {{ r.etudiant?.firstName || '' }}</td>
-              <td>{{ r.etudiant?.email || '' }}</td>
-
-              <!-- Sujet avec modal -->
-              <td>
-                @if(r.sujet.length > 30) {
-                  {{ r.sujet | slice:0:30 }}...
-                  <a href="#" (click)="openSujet(modalSujet, r.sujet); $event.preventDefault()">Voir plus</a>
-                } @else {
-                  {{ r.sujet }}
-                }
-              </td>
+<div class="container">
+<div class="header-strip mx-auto">
+  <h4> Liste des réclamations</h4>
+</div>
+<div class="table-container mx-auto">
+<div class="table-responsive">
+  <table class="table table-bordered table-hover table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Étudiant</th>
+        <th>Email</th>
+        <th>Sujet</th>
+        <th>Description</th>
+        <th>Statut</th>
+        <th>Date de création</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (r of reclamations; track $index) {
+        <tr>
+          <!-- <td>{{ r.etudiant?.lastName }} {{ r.etudiant?.firstName }}</td>
+          <td>{{ r.etudiant?.email }}</td> -->
+ <td>omrani islem</td>
+          <td>islemb ikjhh</td>
+          <!-- Sujet avec modal -->
+          <td>
+            @if(r.sujet.length > 30) {
+              {{ r.sujet | slice:0:30 }}...
+              <a href="#" (click)="openSujet(modalSujet, r.sujet); $event.preventDefault()">Voir plus</a>
+            } @else {
+              {{ r.sujet }}
+            }
+          </td>
 
               <!-- Description avec modal -->
               <td>

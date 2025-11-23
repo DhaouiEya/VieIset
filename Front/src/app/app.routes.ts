@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { RegistrationComponent } from './components/auth/registration/registration.component';
+//import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
@@ -58,7 +58,7 @@ export const routes: Routes = [
     component: AppBarHomeComponent,
     children: [
       { path: '', redirectTo: 'contentHome', pathMatch: 'full' },
-      { path: 'register', component: RegistrationComponent },
+      //{ path: 'register', component: RegistrationComponent },
       { path: 'login', component: LoginComponent },
       { path: 'contentHome', component: HomeComponent },
       {path:'aboutUs',component:AboutUsComponent}

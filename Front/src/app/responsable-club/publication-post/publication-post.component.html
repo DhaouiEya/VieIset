@@ -52,7 +52,6 @@
       </div>
     </div>
 
-    <!-- Historique -->
     <div class="post-history">
       <h2>Historique des publications</h2>
       <table class="history-table">
@@ -83,7 +82,7 @@
                 </button>
 
 
-    <!-- Bouton Modifier -->
+ 
     <button class="btn btn"  (click)="openModal(poste)"
             title="Voir le poste" >
       <i class="bi bi-eye-fill"></i>
@@ -95,7 +94,6 @@
         </tbody>
       </table>
 
-      <!-- Pagination Controls -->
       <div class="pagination" *ngIf="totalPages > 1">
         <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 1">Précédent</button>
         <span *ngFor="let page of [].constructor(totalPages); let i = index">

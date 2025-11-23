@@ -47,9 +47,9 @@ filterStatus: string = 'all'; // valeurs possibles: 'all', 'acceptée', 'refusé
   private pollingSubscription?: Subscription;
    ngOnInit() {
      this.chargerDemandesExistantes();
-      this.pollingSubscription = interval(1000).subscribe(() => {
-      this.chargerDemandesExistantes();
-    });
+    //   this.pollingSubscription = interval(1000).subscribe(() => {
+      
+    // });
   }
 
 chargerDemandesExistantes() {
@@ -68,8 +68,12 @@ chargerDemandesExistantes() {
 }
 
  importerDemandes() {
-  if (!this.spreadsheetId.trim()) {
-    alert("Veuillez saisir un Spreadsheet ID !");
+   if (!this.spreadsheetId.trim()) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Attention',
+      text: 'Veuillez saisir un Spreadsheet ID !'
+    });
     return;
   }
 
@@ -79,7 +83,7 @@ chargerDemandesExistantes() {
       console.log('Import réussi:', res);
       const nouvellesDemandes = res.data || [];
 
-      // ✅ Fusionner sans doublons (basé sur _id, ou étudiant+club)
+      //Fusionner sans doublons (basé sur _id, ou étudiant+club)
       nouvellesDemandes.forEach((nouvelle) => {
         const existe = this.demandes.some(
           (d) =>
