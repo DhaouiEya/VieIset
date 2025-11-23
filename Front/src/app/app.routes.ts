@@ -17,8 +17,6 @@ import { ClubsListComponent } from './components/clubs/clubs-list/clubs-list.com
 import { ResponsableDashboardComponent } from './responsable-club/responsable-dashboard/responsable-dashboard.component';
 import { PublicationPostComponent } from './responsable-club/publication-post/publication-post.component';
 
-
-
 import { EventsComponent } from './components/responsable-club/events/events.component';
 import { ResSideBarComponent } from './components/responsable-club/res-side-bar/res-side-bar.component';
 
