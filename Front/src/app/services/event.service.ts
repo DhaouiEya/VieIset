@@ -54,7 +54,7 @@ getEventParticipations(eventId: string): Observable<Participation[]> {
 
 
   deleteEvent(eventId: string): Observable<Event> {
-    return this.http.delete<any>(`${URL}/${eventId}`);
+    return this.http.delete<Event>(`${URL}/${eventId}`);
   }
   updateEvent(eventId: string, event: any): Observable<Event> {
     return this.http.put<Event>(`${URL}/${eventId}`, event);

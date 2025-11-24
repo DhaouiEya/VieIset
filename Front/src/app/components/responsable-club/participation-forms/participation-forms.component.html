@@ -1,7 +1,4 @@
 <div class="dashboard-container">
-   <aside class="sidebar">
-  <app-responsable-menu></app-responsable-menu>
-  </aside>
   <div class="main-content">
     <div class="input-help-container">
       <!-- Section input à gauche -->
@@ -98,7 +95,7 @@
         <tbody>
           @for (d of getPaginatedDemandes(); track d._id) {
             <tr>
-              <td>{{ d.etudiant.lastName || 'n' }}</td>
+              <td>{{ d.etudiant.lastName }}</td>
               <td>{{ d.etudiant.firstName }}</td>
               <td>{{ d.etudiant.email }}</td>
               <td>{{ d.club.nom }}</td>

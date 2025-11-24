@@ -11,7 +11,8 @@ const eventRoutes=require('./eventRoutes');
 const sheetRoutes=require('./sheetRoutes');
 const reclamationRoutes=require('./reclamationRoutes');
 const demandeDonRoutes=require('./demandeDonRoutes');
-
+const adminStatRoutes=require('./adminStatRoutes');
+router.use('/adminStats',adminStatRoutes);
 router.use('/demandedon',demandeDonRoutes);
 router.use('/users',etudiantRoutes);
 router.use('/compagnes',compagneRoutes);

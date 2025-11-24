@@ -10,7 +10,7 @@ import { EtudiantBannerComponent } from "../etudiant-banner/etudiant-banner.comp
 
 @Component({
   selector: 'app-logement',
-  imports: [DatePipe, FormsModule, FooterComponent, EtudiantBannerComponent],
+  imports:[DatePipe, FormsModule, FooterComponent,HeaderComponent],
   templateUrl: './logement.component.html',
   styleUrls: ['./logement.component.css']
 })

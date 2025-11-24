@@ -5,14 +5,14 @@
   <!-- Navigation -->
   <div class="sidebar-nav">
     <ul>
-      <li class="nav-item active" routerLink="/admindashboard">
+      <li class="nav-item active" routerLink="/admindashboard/home">
         <i class="fas fa-th-large icon"></i>
         <span>Tableau de bord</span>
       </li>
 
-  
 
-      <li class="nav-item dropdown" routerLink="/managers">
+
+      <li class="nav-item dropdown" routerLink="/admindashboard/managers">
         <div class="dropdown-header">
           <i class="fas fa-user-graduate icon"></i>
           <span>Responsabes de clubs</span>
@@ -21,7 +21,7 @@
 
       </li>
 
-        <li class="nav-item dropdown" routerLink="/liste-demande-dons">
+        <li class="nav-item dropdown" routerLink="/admindashboard/liste-demande-dons">
         <div class="dropdown-header">
           <i class="fas fa-heart icon"></i>
           <span>Demandes de dons</span>
@@ -29,7 +29,7 @@
 
       </li>
 
-      <li class="nav-item dropdown" routerLink="/compagne">
+      <li class="nav-item dropdown" routerLink="/admindashboard/compagne">
         <div class="dropdown-header">
           <i class="fas fa-heart icon"></i>
           <span>Campagnes de dons</span>
@@ -37,15 +37,8 @@
 
       </li>
 
-      <li class="nav-item dropdown">
-        <div class="dropdown-header">
-          <i class="fas fa-lock icon"></i>
-          <span>Contrôle d'accès</span>
-        </div>
 
-      </li>
-
-      <li class="nav-item dropdown" routerLink="/etudiants">
+      <li class="nav-item dropdown" routerLink="/admindashboard/etudiants">
         <div class="dropdown-header">
           <i class="fas fa-user-graduate icon"></i>
           <span>Liste Etudiants</span>
@@ -53,15 +46,17 @@
 
       </li>
 
-      <li class="nav-item" routerLink="/statistiques">
-        <i class="fas fa-chart-bar icon"></i>
-        <span>Statistiques</span>
+
+      <li class="nav-item dropdown" routerLink="/admindashboard/reclamations">
+        <div class="dropdown-header">
+          <i class="fas fa-exclamation-triangle icon"></i>
+
+          <span>Reclamations</span>
+        </div>
+
       </li>
 
-      <li class="nav-item" routerLink="/parametres">
-        <i class="fas fa-cog icon"></i>
-        <span>Paramètres</span>
-      </li>
+
     </ul>
   </div>
 

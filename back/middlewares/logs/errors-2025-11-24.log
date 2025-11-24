@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-11-24T17:25:24.154Z",
+  "method": "POST",
+  "url": "/api/auth/google-login",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "Error",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Wrong recipient, payload audience != requiredAudience",
+  "stack": "Error: Wrong recipient, payload audience != requiredAudience\n    at OAuth2Client.verifySignedJwtWithCertsAsync (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:787:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async OAuth2Client.verifyIdTokenAsync (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:541:23)\n    at async exports.googleLogin (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:255:20)"
+},
+{
+  "timestamp": "2025-11-24T17:25:55.972Z",
+  "method": "POST",
+  "url": "/api/auth/google-login",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "Error",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Wrong recipient, payload audience != requiredAudience",
+  "stack": "Error: Wrong recipient, payload audience != requiredAudience\n    at OAuth2Client.verifySignedJwtWithCertsAsync (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:787:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async OAuth2Client.verifyIdTokenAsync (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:541:23)\n    at async exports.googleLogin (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:255:20)"
+},
+{
+  "timestamp": "2025-11-24T17:35:02.971Z",
+  "method": "POST",
+  "url": "/api/auth/google-login",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "Error",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Wrong recipient, payload audience != requiredAudience",
+  "stack": "Error: Wrong recipient, payload audience != requiredAudience\n    at OAuth2Client.verifySignedJwtWithCertsAsync (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:787:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async OAuth2Client.verifyIdTokenAsync (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:541:23)\n    at async exports.googleLogin (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:255:20)"
+},
+{
+  "timestamp": "2025-11-24T17:47:02.282Z",
+  "method": "POST",
+  "url": "/api/auth/google-login",
+  "ip": "::1",
+  "language": "fr,fr-FR;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+  "errorName": "Error",
+  "errorType": "Unknown",
+  "severity": "danger",
+  "errorMessage": "Wrong recipient, payload audience != requiredAudience",
+  "stack": "Error: Wrong recipient, payload audience != requiredAudience\n    at OAuth2Client.verifySignedJwtWithCertsAsync (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:787:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async OAuth2Client.verifyIdTokenAsync (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\node_modules\\google-auth-library\\build\\src\\auth\\oauth2client.js:541:23)\n    at async exports.googleLogin (C:\\Users\\dhaou\\OneDrive\\Desktop\\DSI3\\Sem1\\projet Scrum\\VieIset\\back\\controllers\\authController.js:250:20)"
+},

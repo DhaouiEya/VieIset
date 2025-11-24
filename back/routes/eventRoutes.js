@@ -8,7 +8,9 @@ const {
   getEvents,
   getEvent,
   createEvent,
-  registerToEvent
+  registerToEvent,
+  deleteEvent,
+  updateEvent
 } = require('../controllers/eventController');
 
 const authMiddleware = require('../middlewares/authMiddlewares');
@@ -50,6 +52,8 @@ router.get('/:eventId/participations', async (req, res) => {
     res.status(500).json({ error: 'Impossible de récupérer les participations.' });
   }
 });
-router.get('/', authMiddleware, getEvents);     
-router.get('/:id', authMiddleware, getEvent); 
+router.get('/', getEvents);     
+router.get('/:id', getEvent); 
+router.delete('/:id', deleteEvent);
+router.put('/:id', upload.fields([{ name: 'image', maxCount: 1 }]), updateEvent);
 module.exports = router;

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const reclamationController = require('../controllers/reclamationController');
-
+//const authMiddleware = require('../middlewares/authMiddlewares');
 
 router.post('/create', reclamationController.createReclamation);
 router.get('/', reclamationController.getAllReclamations);

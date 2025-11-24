@@ -34,8 +34,7 @@ exports.register = async (req, res, next) => {
             });
         }
 
-        // Vérifier si l'email existe déjà
-        // Check if email already exists
+$        // Check if email already exists
         const existingUserEmail = await User.findOne({ email: email.toLowerCase() });
         if (existingUserEmail) {
             return res.status(400).json({
@@ -47,9 +46,6 @@ exports.register = async (req, res, next) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Générer un avatar aléatoire avec DiceBear
-        const seed = Math.random().toString(36).substring(2, 10);
-        const avatar = `https://api.dicebear.com/7.x/personas/svg?seed=${seed}`;
 
         // Générer token email verification
         const emailVerificationToken = generateToken();
@@ -62,8 +58,6 @@ exports.register = async (req, res, next) => {
             lastName,
             email: email.toLowerCase(),
             password: hashedPassword,
-            role: 'membre',
-            avatar, // <-- ici on ajoute l'avatar
             role: ['etudiant'],
             emailVerificationToken,
             emailVerificationExpires: tokenExpiry,
@@ -248,6 +242,7 @@ exports.resendVerificationEmail = async (req, res, next) => {
  * - ou comptes existants avec email/mot de passe ET rôle 'etudiant'
  */
 exports.googleLogin = async (req, res, next) => {
+    console.log("aaaa hdhhd")
   const { idToken, keepmeloggedin } = req.body;
 
   try {

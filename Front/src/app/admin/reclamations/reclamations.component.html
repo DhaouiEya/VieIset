@@ -18,9 +18,10 @@
     <tbody>
       @for (r of reclamations; track $index) {
         <tr>
-          <td>{{ r.etudiant.lastName }} {{ r.etudiant.firstName }}</td>
-          <td>{{ r.etudiant.email }}</td>
-
+          <!-- <td>{{ r.etudiant?.lastName }} {{ r.etudiant?.firstName }}</td>
+          <td>{{ r.etudiant?.email }}</td> -->
+ <td>omrani islem</td>
+          <td>islemb ikjhh</td>
           <!-- Sujet avec modal -->
           <td>
             @if(r.sujet.length > 30) {
@@ -31,65 +32,54 @@
             }
           </td>
 
-          <!-- Description avec modal -->
-          <td>
-            @if(r.description.length > 50) {
-              {{ r.description | slice:0:50 }}...
-              <a href="#" (click)="openDescription(modalDesc, r.description); $event.preventDefault()">Voir plus</a>
-            } @else {
-              {{ r.description }}
-            }
-          </td>
+              <!-- Description avec modal -->
+              <td>
+                @if(r.description.length > 50) {
+                  {{ r.description | slice:0:50 }}...
+                  <a href="#" (click)="openDescription(modalDesc, r.description); $event.preventDefault()">Voir plus</a>
+                } @else {
+                  {{ r.description }}
+                }
+              </td>
 
-          <td>
-            <span class="badge" [ngClass]="{
-              'bg-secondary': r.statut==='Nouvelle',
-              'bg-info text-dark': r.statut==='En cours',
-              'bg-success': r.statut==='Résolue',
-              'bg-danger': r.statut==='Rejetée'
-            }">
-              {{ r.statut }}
-            </span>
-          </td>
-          <td>{{ r.dateCreation | date:'short' }}</td>
-        </tr>
-      }
-    </tbody>
-  </table>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-secondary': r.statut==='Nouvelle',
+                  'bg-info text-dark': r.statut==='En cours',
+                  'bg-success': r.statut==='Résolue',
+                  'bg-danger': r.statut==='Rejetée'
+                }">
+                  {{ r.statut }}
+                </span>
+              </td>
+              <td>{{ r.dateCreation | date:'short' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-</div>
-</div>
+
 <!-- Modal Description très simple et centrée -->
 <ng-template #modalDesc let-modal>
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content border-0 shadow-none">
-
-  
-
       <!-- Corps de la modal -->
       <div class="modal-body p-3 text-center">
         <p class="mb-0">{{ descriptionToShow }}</p>
       </div>
-
     </div>
   </div>
 </ng-template>
 
-
-
-
 <!-- Modal Sujet -->
 <ng-template #modalSujet let-modal>
- <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content border-0 shadow-none">
-
-      <!-- <div class="modal-header border-0 p-2">
-        <button type="button" class="btn-close ms-0" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-      </div> -->
- 
-       <div class="modal-body p-3 text-center">
+      <div class="modal-body p-3 text-center">
         <p>{{ sujetToShow }}</p>
-        </div>
- </div>
+      </div>
+    </div>
   </div>
 </ng-template>

@@ -7,7 +7,7 @@ import { ChatbotComponent } from './chatbot/chatbot.component';
   selector: 'app-root',
 
   standalone: true,                    // ✅ obligatoire pour un composant standalone
-  imports: [RouterOutlet, ChatbotComponent],
+  imports: [RouterOutlet,  ChatbotComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']    // ✅ pluriel, pas styleUrl
 })

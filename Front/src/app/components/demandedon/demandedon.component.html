@@ -72,9 +72,11 @@
                 <td>{{ d.dateDemande | date:'dd MMM yyyy' }}</td>
                 <td>
                   @if (d.annexe) {
-                    <a [href]="'http://localhost:9000/' + d.annexe" target="_blank" class="link-view">
+                    <!-- <a [href]="'http://localhost:9000/' + d.annexe" target="_blank" class="link-view">
+
                       Voir
-                    </a>
+                    </a> -->
+                    <img src=" 'http://localhost:9000/' + d.annexe" alt="">
                   } @else {
                     <span class="no-file">—</span>
                   }

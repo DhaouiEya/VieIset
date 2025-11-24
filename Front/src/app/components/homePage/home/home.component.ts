@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit{
     //Add 'implements OnInit' to the class.
      //pour defiler les image
     this.startSlider();
-
   }
     startSlider() {
     setInterval(() => {
