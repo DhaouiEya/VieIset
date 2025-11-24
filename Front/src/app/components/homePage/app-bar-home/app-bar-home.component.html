@@ -1,8 +1,12 @@
   <header class="app-bar">
-    <img src="logo-bg.png" alt="" width="100px" height="55px" class="logo" routerLink="/home">
+    <img src="isetlogoo.png" alt="" width="100px" height="55px" class="logo" routerLink="/home">
 
     <nav class="menu">
-
+    <div>
+      <a routerLink="/home/aboutUs">A propos</a>
+      <a (click)="scrollToServices()">Services</a>
+      <a (click)="scrollToFooter()">Contact</a>
+      </div>
       <div>
       <button class="signup-btn" routerLink="/home/register">S'inscrire</button>
       <button  class="login-btn" routerLink="/home/login">Se connecter</button>
@@ -11,9 +15,7 @@
   </header>
   <div>
     <router-outlet></router-outlet>
-
+    
 
   </div>
   <app-footer-home id="footer"></app-footer-home>
-   <!-- <app-footer></app-footer> -->
-

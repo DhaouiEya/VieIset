@@ -51,6 +51,7 @@ export class PublierDemandeDonsComponent implements OnInit {
 
     this.demandeService.createDemande(formData).subscribe({
       next: (res) => {
+        console.log("createDemande ",res)
                 this.demandeDonsAjoutee.emit(res);
 
         Swal.fire({
@@ -59,7 +60,7 @@ export class PublierDemandeDonsComponent implements OnInit {
           text: 'Votre demande a été soumise avec succès.',
           confirmButtonText: 'OK',
         });
-        
+
         this.demandeForm.reset();
         this.selectedFile = null;
         // this.loadMyDemandes();

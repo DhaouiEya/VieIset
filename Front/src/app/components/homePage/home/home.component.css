@@ -1,13 +1,26 @@
 /* Page background (ne recouvre pas la vidéo car hero est au-dessus) */
 .page-container {
-
-  background-color: var(--blue-900);
+  
+  background-color:#09026b;
   min-height: 100vh;
   color: #f5f5f5;
    width: 100%;
+   padding-bottom: 40px;
 }
-
-
+   .image-wrapper {
+     margin-top: 40px;
+     margin-left: 3px;
+     margin-right: 3px;
+      position: relative;
+      width: 97%;
+      height: 540px;
+    }
+    
+    img { 
+      width: 75%;
+      height:700px;
+      transition: all 0.3s  ease; 
+    }
 
 .hero {
   position: relative;
@@ -40,23 +53,25 @@
 }
 
 .hero-text h1 {
-  font-size: 48px;
-  color: var(--yellow-400);
-  margin-bottom: 15px;
+  font-size: 60px;
+  color: #ffc107;
+  margin-bottom: 59px;
+  font-weight: bolder;
 }
 
 .hero-text p {
-  font-size: 20px;
+  font-size: 30px;
   color: #ffffff;
   margin-bottom: 30px;
+  font-weight: bold;
 }
 
 .cta-btn {
-  background-color:var(--yellow-400);
+  background-color: #ffc107;
   color: #ffffff;
   border: none;
   padding: 12px 25px;
-  font-size: 18px;
+  font-size: 24px;
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
@@ -64,7 +79,7 @@
 
 .cta-btn:hover {
   transform: scale(1.05);
-  background-color: var(--yellow-400);;
+  background-color: #e4ad06;
 }
 
 
@@ -79,9 +94,10 @@
 .features-title {
  width: 100%;
   text-align: center;
-  font-size: 36px;
+  font-size: 50px;
   font-weight: bold;
   color: #ffc107;
+  text-decoration: underline;
   margin-bottom: 5px;
   margin-top: 30px;
   letter-spacing: 1px;
@@ -90,15 +106,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-   padding-bottom: 80px;
+   padding-bottom: 100px;
+   padding-top: 100px;
 }
 .features {
   display: flex;
   justify-content: center;
   gap: 40px;
   padding: 100px 20px 40px;
-  margin-top: 10px;
+  margin-top: 10px; 
   text-align: center;
+
 }
 
 .feature-card {
@@ -107,12 +125,12 @@
   width: 260px;
   border-radius: 12px;
   transition: 0.3s;
-  border: 1px solid #333;
+  border: 1px solid #c8d9e2;
 }
 
 .feature-card:hover {
   transform: translateY(-10px);
-
+ 
   border:3px solid #ffc107;
 }
 
@@ -121,6 +139,8 @@
   margin-top: 15px;
   font-size: 19px;
   font-weight:650;
+  
+
 }
 
 .feature-card p {

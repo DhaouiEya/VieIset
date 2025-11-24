@@ -48,8 +48,11 @@ import { ResetPasswordComponent } from './components/auth/reset-password/reset-p
 import { HeaderComponent } from './components/header/header.component';
 import { MesReclamationsComponent } from './components/etudiant/mes-reclamations/mes-reclamations.component';
 import { DemandeDonsEtudiantComponent } from './components/dons/demande-dons-etudiant/demande-dons-etudiant.component';
+import { TabLogementsComponent } from './components/annonce-logement/tab-logements/tab-logements.component';
 
 export const routes: Routes = [
+{ path: '', redirectTo: '/home', pathMatch: 'full' },
+
   // Auth
   {
     path: 'home',
@@ -89,7 +92,7 @@ export const routes: Routes = [
       { path: 'newReclamation', component: CreateReclamationComponent },
 
       { path: 'mesDemandes', component: ListeDmandesComponent },
-      { path: 'logements', component: LogementComponent },
+      { path: 'logements', component: TabLogementsComponent },
       { path: 'demande-dons', component: DemandeDonsEtudiantComponent },
       { path: 'profile', component: ProfileHeaderComponent },
     ],

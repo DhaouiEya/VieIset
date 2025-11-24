@@ -1,0 +1,23 @@
+<div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+  <h2 class="text-2xl font-semibold text-blue-800 mb-5">Publier une Demande</h2>
+  <form [formGroup]="demandeForm" (ngSubmit)="submitDemande()" class="space-y-4">
+    <div>
+      <label for="logement-titre" class="block text-sm font-medium text-blue-700 mb-1">Titre de votre recherche</label>
+      <input id="logement-titre" formControlName="titre" type="text" placeholder="Ex: Cherche studio meublé..." class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out">
+       @if (demandeForm.controls['titre'].invalid && (demandeForm.controls['titre'].dirty || demandeForm.controls['titre'].touched)) {
+        <p class="text-red-500 text-xs mt-1">Le titre doit comporter au moins 10 caractères.</p>
+      }
+    </div>
+    <div>
+      <label for="logement-description" class="block text-sm font-medium text-blue-700 mb-1">Description de vos besoins</label>
+      <textarea id="logement-description" formControlName="description" rows="5" placeholder="Décrivez le type de logement que vous cherchez, le secteur, votre budget..." class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out"></textarea>
+      @if (demandeForm.controls['description'].invalid && (demandeForm.controls['description'].dirty || demandeForm.controls['description'].touched)) {
+        <p class="text-red-500 text-xs mt-1">La description doit comporter au moins 25 caractères.</p>
+      }
+    </div>
+    <button type="submit" [disabled]="demandeForm.invalid"
+    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md  text-sm font-bold  bg-yellow-400 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 disabled:bg-yellow-400/50 disabled:cursor-not-allowed transition duration-150 ease-in-out">
+      Publier ma Demande
+    </button>
+  </form>
+</div>

@@ -1,0 +1,21 @@
+<h2 class="text-2xl font-semibold text-blue-800 mb-5">Mon Historique de Demandes</h2>
+<div class="space-y-4">
+  @if (demandes.length === 0) {
+    <div class="bg-white text-center p-8 rounded-xl shadow-lg border border-gray-200">
+      <p class="text-gray-500">Vous n'avez aucune demande de logement pour le moment.</p>
+    </div>
+  } @else {
+    @for (demande of demandes; track $index) {
+      <div class="bg-white p-5 rounded-xl border border-gray-200 hover:shadow-lg hover:border-yellow-4000 transition-all duration-300 ease-in-out">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-bold text-blue-900 mb-2">{{ demande.titre }}</h3>
+
+        </div>
+        <p class="text-gray-600 mb-3">{{ demande.description }}</p>
+        <div class="text-right text-sm text-gray-500 border-t border-gray-100 pt-3 mt-3">
+          <span>Publié le : {{ demande.dateCreation | date:'dd/MM/yyyy à HH:mm' }}</span>
+        </div>
+      </div>
+    }
+  }
+</div>

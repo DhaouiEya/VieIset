@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const User=require('./user')
 const annonceLogementSchema = new mongoose.Schema({
   titre: {
     type: String,
@@ -14,7 +14,12 @@ const annonceLogementSchema = new mongoose.Schema({
   dateCreation: {
     type: Date,
     default: Date.now
-  }
+  },
+    createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',           // Le modèle s'appelle 'User'
+    required: true
+  },
 });
 
 // ✅ Création du modèle à partir du schéma

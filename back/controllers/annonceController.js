@@ -2,12 +2,18 @@ const annonceService = require('../services/annonceService');
 
 const createAnnonce = async (req, res) => {
   try {
-    const annonce = await annonceService.createAnnonce(req.body);
+    const { titre, description } = req.body;
+    const createdBy = req.user._id; 
+
+    const annonce = await annonceService.createAnnonce({ titre, description, createdBy });
     res.status(201).json(annonce);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
+
+
+
 
 const listAnnonces = async (req, res) => {
   try {
@@ -28,8 +34,23 @@ const getAnnonce = async (req, res) => {
   }
 };
 
+
+// Récupérer les annonces d'un utilisateur
+const getAnnoncesByUser = async (req, res) => {
+  try {
+    console.log("aaaaaaaa")
+    const userId = req.user._id; 
+    const annonces = await annonceService.getAnnoncesByUserId(userId);
+    res.json(annonces);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
 module.exports = {
   createAnnonce,
   listAnnonces,
   getAnnonce,
+  getAnnoncesByUser
 };

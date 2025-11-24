@@ -4,7 +4,9 @@ const AnnonceController = require('../controllers/annonceController');
 const authMiddleware = require('../middlewares/authMiddlewares');
 
 // Routes
-router.post('/', AnnonceController.createAnnonce); // Créer une annonce
+router.get('/my-annonces', authMiddleware, AnnonceController.getAnnoncesByUser);
+
+router.post('/', authMiddleware,AnnonceController.createAnnonce); // Créer une annonce
 router.get('/', AnnonceController.listAnnonces); // Lister toutes les annonces
 router.get('/:id', AnnonceController.getAnnonce); // Récupérer une annonce par ID
 

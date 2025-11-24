@@ -1,0 +1,40 @@
+<h2 class="text-2xl font-semibold text-gray-800 mb-5">Offres de Logement</h2>
+<div class="space-y-6">
+  @for (logement of logements; track $index) {
+<div
+          class="bg-white p-5 rounded-xl  border border-gray-200 hover:shadow-lg hover:border-yellow-400 transition-all duration-300 ease-in-out">
+      <!-- Author Info Header -->
+      <div class="flex items-center mb-4">
+        <img [src]="logement.createdBy.photoProfil" alt="Photo de profil de {{logement.createdBy.firstName}}" class="h-12 w-12 rounded-full object-cover mr-4 border-2 border-white ring-2 ">
+        <div>
+          <p class="font-semibold text-gray-900">{{ logement.createdBy.firstName }} {{ logement.createdBy.lastName }}</p>
+          <p class="text-sm text-gray-500">Publié le {{ logement.dateCreation | date:'dd/MM/yyyy' }}</p>
+                    <p class="text-sm text-blue-700"> {{ logement.createdBy.email  }}</p>
+
+        </div>
+      </div>
+
+      <!-- Post Content -->
+      <div class="pl-0">
+        <h3 class="text-lg font-bold text-gray-800 mb-2">{{ logement.titre }}</h3>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">{{ logement.description }}</p>
+      </div>
+
+        <!-- <div class="border-t border-gray-100 pt-4 flex justify-end">
+      <button
+    (click)="contacterUser(logement.createdBy.email)"
+    class="px-4 py-2 bg-indigo-600 text-white rounded-lg
+           hover:bg-indigo-700 focus:outline-none focus:ring-2
+           focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md">
+    Contacter
+  </button>
+
+      </div> -->
+    </div>
+  }
+</div>
+@if(logements.length === 0) {
+    <div class="bg-white text-center p-8 rounded-xl shadow-lg border border-gray-200 mt-6">
+      <p class="text-gray-500">Aucune offre de logement disponible pour le moment.</p>
+    </div>
+}

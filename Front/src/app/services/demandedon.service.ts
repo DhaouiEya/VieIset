@@ -41,8 +41,8 @@ export class DemandeDonService {
     );
   }
 
-  getMyDemandes(): Observable<DemandeDon[]> {
-    return this.http.get<DemandeDon[]>(`${this.baseUrl}/me`, {
+  getMyDemandes(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/me`, {
       headers: this.getAuthHeaders()
     }).  pipe(
       catchError(err => {

@@ -25,6 +25,7 @@
   font-size: 14px;
   line-height: 1.5;
   color: var(--text-primary);
+  margin-top: 50px;
 }
 
 /* Bouton flottant - TAILLE AUGMENTÉE */
@@ -110,7 +111,7 @@
   width: 420px;
   height: 650px;
   background: linear-gradient(135deg, #3a86ff, #ffd700);
-  border-radius: var(--radius);
+  border-radius: 20px;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
@@ -118,6 +119,7 @@
   z-index: 999;
   animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid var(--gold-vibrant);
+   height: 70vh;
 }
 
 @keyframes slideUp {

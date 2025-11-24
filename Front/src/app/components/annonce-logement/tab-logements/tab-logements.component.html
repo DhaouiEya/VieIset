@@ -1,0 +1,40 @@
+<app-etudiant-banner></app-etudiant-banner>
+     <div class="container mb-6">
+         <!-- Logement Sub-navigation -->
+        <div class="mb-6 mt-5">
+            <div class="lg:hidden">
+              <label for="tabs" class="sr-only">Select a tab</label>
+              <select id="tabs" name="tabs" class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                <option (select)="setLogementView('consulter')" [selected]="activeLogementView === 'consulter'">Consulter les offres</option>
+                <option (select)="setLogementView('demandes')" [selected]="activeLogementView=== 'demandes'">Mes Demandes</option>
+              </select>
+            </div>
+            <div class="hidden lg:block">
+              <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                  <button (click)="setLogementView('consulter')" [class]="activeLogementView === 'consulter' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" class="whitespace-nowrap border-b-2 py-3 px-1 text-lg font-medium">
+                    Consulter les offres
+                  </button>
+                  <button (click)="setLogementView('demandes')" [class]="activeLogementView=== 'demandes' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" class="whitespace-nowrap border-b-2 py-3 px-1 text-lg font-medium">
+                    Mes Demandes
+                  </button>
+                </nav>
+              </div>
+            </div>
+        </div>
+
+        @if(activeLogementView === 'consulter') {
+          <app-consulter-logements></app-consulter-logements>
+        }
+        @if(activeLogementView === 'demandes') {
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div class="lg:col-span-1" style="margin-top: 45px;">
+    <app-publier-demande-logement (demandePubliee)="onDemandePubliee($event)"></app-publier-demande-logement>
+              </div>
+              <div class="lg:col-span-2">
+    <app-historique-demandes-logement #historique></app-historique-demandes-logement>
+              </div>
+          </div>
+        }
+      </div>
+

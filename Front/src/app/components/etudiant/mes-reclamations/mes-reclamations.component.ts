@@ -53,9 +53,8 @@ export class MesReclamationsComponent implements  OnInit{
 
 
   onReclamationAjoutee($event: any) {
-    // console.log("eee ",$event)
-    this.reclamations.push($event)
-    this.cdr.detectChanges()
+    console.log("eee ",$event)
+    this.reclamations.unshift($event)
 }
 
 
